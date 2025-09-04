@@ -178,11 +178,19 @@
   background-color: #e9ecef;
 }
 
+/* 필터 및 정렬 영역 */
+.filter-sort-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0px;
+  gap: 12px;
+}
+
 .category-filters {
   display: flex;
   gap: 6px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .filter-tag {
@@ -214,12 +222,23 @@
 
 .sort-select {
   padding: 4px 8px;
-  border: 1px solid #d5d5d5;
+  border: none;
   border-radius: 4px;
   font-size: 11px;
-  background-color: #ffffff;
+  background-color: transparent;
   cursor: pointer;
   color: #666666;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 4px center;
+  background-repeat: no-repeat;
+  background-size: 12px;
+  padding-right: 20px;
+}
+
+.sort-select:hover {
+  background-color: #f8f8f8;
 }
 
 .place-item {

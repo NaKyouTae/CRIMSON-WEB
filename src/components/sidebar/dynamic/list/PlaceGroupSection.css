@@ -30,7 +30,7 @@
 .filter-tabs {
   display: flex;
   gap: 3px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .filter-tab {

@@ -94,18 +94,20 @@ const PlaceGroupDetail = ({ placeGroup, onBack }) => {
             className="search-input"
           />
         </div>
-        <div className="category-filters">
-          <button className="filter-tag active">카페</button>
-          <button className="filter-tag">요리주점</button>
-          <button className="filter-tag">문화</button>
-          <button className="filter-tag">음식점</button>
-        </div>
-        <div className="sort-section">
-          <select className="sort-select">
-            <option>최신 저장 순</option>
-            <option>이름 순</option>
-            <option>평점 순</option>
-          </select>
+        <div className="filter-sort-container">
+          <div className="category-filters">
+            <button className="filter-tag active">카페</button>
+            <button className="filter-tag">요리주점</button>
+            <button className="filter-tag">문화</button>
+            <button className="filter-tag">음식점</button>
+          </div>
+          <div className="sort-section">
+            <select className="sort-select">
+              <option>최신 저장 순</option>
+              <option>이름 순</option>
+              <option>평점 순</option>
+            </select>
+          </div>
         </div>
       </div>
 
