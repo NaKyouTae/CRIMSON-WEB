@@ -7,7 +7,7 @@ const CreateSection = ({ onCreateClick }) => {
       <div className="create-card" onClick={onCreateClick}>
         <div className="create-icon">📍</div>
         <div className="create-content">
-          <h3>새로운 리스트 생성하기</h3>
+          <h3>새로운 플레이스 그룹 생성하기</h3>
           <p>원하는 장소를 저장하고 공유해 보세요.</p>
         </div>
       </div>

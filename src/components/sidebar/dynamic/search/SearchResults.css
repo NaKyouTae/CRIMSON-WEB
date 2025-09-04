@@ -1,0 +1,88 @@
+/* SearchResults.css */
+.search-results {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 0 24px 20px;
+  /* 개발용 border - 보라색 */
+  border: 2px solid #8800ff;
+  border-radius: 4px;
+  margin: 2px;
+}
+
+.search-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0 12px;
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.search-results-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin: 0;
+}
+
+.results-count {
+  font-size: 12px;
+  color: #666666;
+  font-weight: 500;
+}
+
+.place-list {
+  flex: 1;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 0 0;
+  background-color: transparent;
+  border-top: none;
+}
+
+.pagination-btn {
+  padding: 6px 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #666666;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #f8f8f8;
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-btn.active {
+  background-color: #ff6b6b;
+  border-color: #ff6b6b;
+  color: #ffffff;
+}
+
+.pagination-btn.active:hover {
+  background-color: #e55a5a;
+  border-color: #e55a5a;
+}

@@ -1,0 +1,140 @@
+/* PlaceItem.css */
+.place-item {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  align-items: center;
+  /* 개발용 border - 파란색 */
+  border: 2px solid #0066ff;
+}
+
+.place-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.place-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.place-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.place-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  justify-content: center;
+  min-height: 60px;
+}
+
+.place-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.place-name-section {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.place-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin: 0;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.place-pin {
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.place-pin:hover {
+  transform: scale(1.1);
+}
+
+.place-category {
+  font-size: 11px;
+  color: #666666;
+  font-weight: 500;
+  line-height: 1.1;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.place-status {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  line-height: 1.1;
+}
+
+.status-text {
+  font-weight: 500;
+}
+
+.separator {
+  color: #cccccc;
+  margin: 0 3px;
+}
+
+.location {
+  color: #666666;
+}
+
+.place-meta {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  color: #999999;
+  line-height: 1.1;
+}
+
+.saved-count,
+.review-count {
+  color: #666666;
+}
+
+.place-maps {
+  display: flex;
+  gap: 6px;
+  margin-top: 0;
+}
+
+.map-link {
+  font-size: 10px;
+  color: #999999;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  line-height: 1.1;
+}
+
+.map-link:hover {
+  color: #ff6b6b;
+}

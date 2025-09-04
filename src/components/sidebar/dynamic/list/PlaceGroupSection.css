@@ -1,5 +1,5 @@
-/* ListSection 컴포넌트 스타일 */
-.list-section {
+/* PlaceGroupSection 컴포넌트 스타일 */
+.place-group-section {
   flex: 1;
   padding: 0 24px 20px;
   display: flex;
@@ -10,7 +10,7 @@
   margin: 2px;
 }
 
-.list-header h3 {
+.place-group-header h3 {
   font-size: 16px;
   font-weight: 600;
   color: #2c2c2c;
@@ -66,7 +66,7 @@
 }
 
 /* 리스트 아이템들 */
-.list-items {
+.place-group-items {
   flex: 1;
   display: flex;
   flex-direction: column;

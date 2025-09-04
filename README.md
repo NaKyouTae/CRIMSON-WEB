@@ -56,18 +56,34 @@ src/
 │       ├── index.js          # 사이드바 컴포넌트 export
 │       ├── Sidebar.jsx       # 메인 사이드바 컴포넌트
 │       ├── Sidebar.css       # 사이드바 스타일
-│       ├── SidebarHeader.jsx # 사이드바 헤더
-│       ├── SidebarHeader.css # 사이드바 헤더 스타일
-│       ├── TabNavigation.jsx # 탭 네비게이션
-│       ├── TabNavigation.css # 탭 네비게이션 스타일
-│       ├── SearchSection.jsx # 검색 섹션
-│       ├── SearchSection.css # 검색 섹션 스타일
-│       ├── CreateSection.jsx # 새 리스트 생성 섹션
-│       ├── CreateSection.css # 새 리스트 생성 섹션 스타일
-│       ├── ListSection.jsx   # 리스트 섹션
-│       ├── ListSection.css   # 리스트 섹션 스타일
-│       ├── ListItem.jsx      # 리스트 아이템
-│       └── ListItem.css      # 리스트 아이템 스타일
+│       ├── static/           # 고정 영역 컴포넌트들
+│       │   ├── index.js      # 고정 컴포넌트 export
+│       │   ├── SidebarHeader.jsx # 사이드바 헤더
+│       │   ├── SidebarHeader.css # 사이드바 헤더 스타일
+│       │   ├── TabNavigation.jsx # 탭 네비게이션
+│       │   ├── TabNavigation.css # 탭 네비게이션 스타일
+│       │   ├── SearchSection.jsx # 검색 섹션
+│       │   ├── SearchSection.css # 검색 섹션 스타일
+│       │   ├── CreateSection.jsx # 새 리스트 생성 섹션
+│       │   └── CreateSection.css # 새 리스트 생성 섹션 스타일
+│       └── dynamic/          # 동적 영역 컴포넌트들
+│           ├── index.js      # 동적 컴포넌트 export
+│           ├── list/         # 리스트 관련 컴포넌트
+│           │   ├── index.js  # 리스트 컴포넌트 export
+│           │   ├── ListSection.jsx # 리스트 섹션
+│           │   ├── ListSection.css # 리스트 섹션 스타일
+│           │   ├── ListItem.jsx # 리스트 아이템
+│           │   └── ListItem.css # 리스트 아이템 스타일
+│           ├── search/       # 검색 결과 관련 컴포넌트
+│           │   ├── index.js  # 검색 컴포넌트 export
+│           │   ├── SearchResults.jsx # 검색 결과 섹션
+│           │   ├── SearchResults.css # 검색 결과 스타일
+│           │   ├── PlaceItem.jsx # 장소 아이템
+│           │   └── PlaceItem.css # 장소 아이템 스타일
+│           └── create/       # 리스트 생성 관련 컴포넌트
+│               ├── index.js  # 생성 컴포넌트 export
+│               ├── CreateListForm.jsx # 리스트 생성 폼
+│               └── CreateListForm.css # 리스트 생성 폼 스타일
 └── assets/                   # 정적 자산
 ```
 

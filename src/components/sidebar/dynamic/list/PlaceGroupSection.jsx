@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import ListItem from './ListItem';
-import './ListSection.css';
+import PlaceGroupItem from './PlaceGroupItem';
+import './PlaceGroupSection.css';
 
-const ListSection = ({ activeFilter, setActiveFilter, sortOrder, setSortOrder }) => {
+const PlaceGroupSection = ({ activeFilter, setActiveFilter, sortOrder, setSortOrder }) => {
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
   const handleDropdownToggle = (itemId) => {
@@ -14,7 +14,7 @@ const ListSection = ({ activeFilter, setActiveFilter, sortOrder, setSortOrder })
   };
 
   // 샘플 데이터
-  const listItems = [
+  const placeGroupItems = [
     {
       id: 1,
       icon: '🔴',
@@ -62,9 +62,9 @@ const ListSection = ({ activeFilter, setActiveFilter, sortOrder, setSortOrder })
   ];
 
   return (
-    <div className="list-section">
-      <div className="list-header">
-        <h3>My List List</h3>
+    <div className="place-group-section">
+      <div className="place-group-header">
+        <h3>My Place Groups</h3>
       </div>
 
       {/* 필터 탭 */}
@@ -108,10 +108,10 @@ const ListSection = ({ activeFilter, setActiveFilter, sortOrder, setSortOrder })
         </select>
       </div>
 
-      {/* 리스트 아이템들 */}
-      <div className="list-items">
-        {listItems.map((item) => (
-          <ListItem 
+      {/* 플레이스 그룹 아이템들 */}
+      <div className="place-group-items">
+        {placeGroupItems.map((item) => (
+          <PlaceGroupItem 
             key={item.id} 
             item={item} 
             isOpen={openDropdownId === item.id}
@@ -133,4 +133,4 @@ const ListSection = ({ activeFilter, setActiveFilter, sortOrder, setSortOrder })
   );
 };
 
-export default ListSection;
+export default PlaceGroupSection;

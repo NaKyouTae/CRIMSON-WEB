@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './CreateListForm.css';
+import './CreatePlaceGroupForm.css';
 
-const CreateListForm = ({ onBack }) => {
+const CreatePlaceGroupForm = ({ onBack }) => {
   const [formData, setFormData] = useState({
     icon: '🐷',
     name: '특별한 날 가기 좋은 가성비 데이트 장소',
@@ -66,7 +66,7 @@ const CreateListForm = ({ onBack }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Creating list:', formData);
+    console.log('Creating place group:', formData);
     onBack();
   };
 
@@ -74,7 +74,7 @@ const CreateListForm = ({ onBack }) => {
     <div className="create-form-container">
       <div className="form-header">
         <button className="back-button" onClick={onBack}>‹</button>
-        <h2>리스트 생성하기</h2>
+        <h2>플레이스 그룹 생성하기</h2>
       </div>
 
         <form className="create-form" onSubmit={handleSubmit}>
@@ -104,6 +104,7 @@ const CreateListForm = ({ onBack }) => {
                 className="form-input"
                 value={formData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
+                placeholder="플레이스 그룹 이름을 입력하세요"
               />
               <button 
                 type="button" 
@@ -126,7 +127,7 @@ const CreateListForm = ({ onBack }) => {
                   checked={formData.isPublic}
                   onChange={() => handleInputChange('isPublic', true)}
                 />
-                공개 리스트
+                공개 그룹
               </label>
               <label className={`radio-option ${!formData.isPublic ? 'selected' : ''}`}>
                 <input
@@ -135,7 +136,7 @@ const CreateListForm = ({ onBack }) => {
                   checked={!formData.isPublic}
                   onChange={() => handleInputChange('isPublic', false)}
                 />
-                비공개 리스트
+                비공개 그룹
               </label>
             </div>
           </div>
@@ -252,11 +253,11 @@ const CreateListForm = ({ onBack }) => {
 
           {/* 생성하기 버튼 */}
           <button type="submit" className="create-button">
-            생성하기
+            그룹 생성하기
           </button>
         </form>
     </div>
   );
 };
 
-export default CreateListForm;
+export default CreatePlaceGroupForm;

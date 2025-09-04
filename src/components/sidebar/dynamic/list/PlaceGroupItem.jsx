@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
-import './ListItem.css';
+import './PlaceGroupItem.css';
 
-const ListItem = ({ item, isOpen, onToggle, onClose }) => {
+const PlaceGroupItem = ({ item, isOpen, onToggle, onClose }) => {
   const dropdownRef = useRef(null);
 
   // 외부 클릭 시 드롭다운 닫기
@@ -24,11 +24,11 @@ const ListItem = ({ item, isOpen, onToggle, onClose }) => {
   };
 
   return (
-    <div className="list-item">
-      <div className="list-icon">{item.icon}</div>
-      <div className="list-content">
+    <div className="place-group-item">
+      <div className="place-group-icon">{item.icon}</div>
+      <div className="place-group-content">
         <h4>{item.title}</h4>
-        <div className="list-meta">
+        <div className="place-group-meta">
           <span className={`role ${item.role}`}>{item.roleText}</span>
           <span className={`privacy ${item.privacy}`}>{item.privacyText}</span>
           <span className="members">멤버 {item.members}</span>
@@ -72,4 +72,4 @@ const ListItem = ({ item, isOpen, onToggle, onClose }) => {
   );
 };
 
-export default ListItem;
+export default PlaceGroupItem;
