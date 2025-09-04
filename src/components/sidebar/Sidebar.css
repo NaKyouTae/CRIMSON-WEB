@@ -1,0 +1,13 @@
+/* Sidebar 메인 컴포넌트 스타일 */
+.sidebar {
+  width: 380px;
+  background-color: #fef9f0;
+  border-right: 1px solid #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  /* 개발용 border - 핫핑크 */
+  border: 3px solid #ff1493;
+  border-radius: 6px;
+  margin: 2px;
+}

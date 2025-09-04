@@ -1,0 +1,108 @@
+/* ListSection 컴포넌트 스타일 */
+.list-section {
+  flex: 1;
+  padding: 0 24px 20px;
+  display: flex;
+  flex-direction: column;
+  /* 개발용 border - 보라색 */
+  border: 2px solid #8800ff;
+  border-radius: 4px;
+  margin: 2px;
+}
+
+.list-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin: 0 0 12px 0;
+}
+
+/* 필터 탭 */
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  padding: 6px 12px;
+  background-color: #f8f8f8;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #666666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.filter-tab.active {
+  background-color: #ff6b6b;
+  border-color: #ff6b6b;
+  color: #ffffff;
+}
+
+.filter-tab:hover:not(.active) {
+  background-color: #f0f0f0;
+}
+
+/* 정렬 섹션 */
+.sort-section {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sort-select {
+  padding: 6px 10px;
+  border: 1px solid #d5d5d5;
+  border-radius: 4px;
+  font-size: 12px;
+  background-color: #ffffff;
+  cursor: pointer;
+  color: #666666;
+}
+
+/* 리스트 아이템들 */
+.list-items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.page-button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #e5e5e5;
+  background-color: #ffffff;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-button:hover {
+  background-color: #f8f8f8;
+}
+
+.page-button.active {
+  background-color: #ff6b6b;
+  border-color: #ff6b6b;
+  color: #ffffff;
+}

@@ -1,0 +1,349 @@
+/* CreateListForm 컴포넌트 스타일 */
+
+.create-form-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background-color: #fef9f0;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #e8e8e8;
+  background-color: #ffffff;
+  /* 개발용 border - 청록색 */
+  border: 2px solid #00ffff;
+  border-radius: 4px;
+  margin: 2px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #666666;
+  cursor: pointer;
+  padding: 4px;
+  margin-right: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #f5f5f5;
+}
+
+.form-header h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin: 0;
+}
+
+.create-form {
+  padding: 16px 20px;
+}
+
+.form-section {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin-bottom: 6px;
+}
+
+.optional {
+  font-weight: 400;
+  color: #999999;
+  font-size: 11px;
+}
+
+/* 아이콘 선택기 */
+.icon-selector {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.icon-button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  background-color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button:hover {
+  border-color: #ff6b6b;
+}
+
+.icon-button.selected {
+  border-color: #ff6b6b;
+  background-color: #fff5f5;
+}
+
+/* 입력 필드 */
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 36px 10px 10px;
+  border: 1px solid #d5d5d5;
+  border-radius: 6px;
+  font-size: 13px;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.1);
+}
+
+.clear-button {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #999999;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.clear-button:hover {
+  background-color: #f5f5f5;
+  color: #666666;
+}
+
+/* 라디오 버튼 그룹 */
+.radio-group {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.radio-option:hover {
+  border-color: #ff6b6b;
+}
+
+.radio-option.selected {
+  border-color: #ff6b6b;
+  background-color: #fff5f5;
+  color: #ff6b6b;
+}
+
+.radio-option input[type="radio"] {
+  margin-right: 6px;
+  accent-color: #ff6b6b;
+}
+
+/* 셀렉트 박스 */
+.form-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d5d5d5;
+  border-radius: 6px;
+  font-size: 13px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.1);
+}
+
+/* 멤버 관리 */
+.member-input-container {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.member-input-container .form-input {
+  flex: 1;
+}
+
+.add-button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #d5d5d5;
+  border-radius: 6px;
+  background-color: #f8f8f8;
+  color: #666666;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-button:hover {
+  background-color: #e9ecef;
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.member-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.member-id {
+  flex: 1;
+  font-size: 13px;
+  color: #2c2c2c;
+}
+
+.member-permission {
+  padding: 3px 6px;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  font-size: 11px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.remove-button {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  background-color: #ffffff;
+  color: #999999;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-button:hover {
+  background-color: #ffebee;
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+/* 텍스트 영역 */
+.form-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d5d5d5;
+  border-radius: 6px;
+  font-size: 13px;
+  background-color: #ffffff;
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.1);
+}
+
+/* 생성하기 버튼 */
+.create-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff6b6b;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 6px;
+}
+
+.create-button:hover {
+  background-color: #e55a5a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.create-button:active {
+  transform: translateY(0);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 10px;
+  }
+  
+  .modal-content {
+    max-height: 95vh;
+  }
+  
+  .create-form {
+    padding: 16px;
+  }
+  
+  .form-section {
+    margin-bottom: 20px;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .icon-selector {
+    gap: 6px;
+  }
+  
+  .icon-button {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}

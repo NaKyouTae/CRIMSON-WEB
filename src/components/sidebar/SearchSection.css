@@ -1,0 +1,47 @@
+/* SearchSection 컴포넌트 스타일 */
+.search-section {
+  padding: 16px 24px 20px;
+  border-bottom: none;
+  /* 개발용 border - 노란색 */
+  border: 2px solid #ffdd00;
+  border-radius: 4px;
+  margin: 2px;
+}
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  border: 1px solid #d5d5d5;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.15);
+}
+
+.search-input::placeholder {
+  color: #999999;
+}
+
+.search-button {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #999999;
+  padding: 4px;
+}
