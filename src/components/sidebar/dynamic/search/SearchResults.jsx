@@ -2,7 +2,7 @@ import React from 'react';
 import PlaceItem from './PlaceItem';
 import './SearchResults.css';
 
-const SearchResults = ({ searchQuery, results, currentPage, totalPages, onPageChange }) => {
+const SearchResults = ({ searchQuery, results, currentPage, totalPages, onPageChange, onItemClick }) => {
   return (
     <div className="search-results">
       <div className="search-results-header">
@@ -12,7 +12,7 @@ const SearchResults = ({ searchQuery, results, currentPage, totalPages, onPageCh
       
       <div className="place-list">
         {results.map((place, index) => (
-          <PlaceItem key={place.id || index} place={place} />
+          <PlaceItem key={place.id || index} place={place} onItemClick={onItemClick} />
         ))}
       </div>
       

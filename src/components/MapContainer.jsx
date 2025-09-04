@@ -4,9 +4,6 @@ import './MapContainer.css';
 const MapContainer = () => {
   return (
     <div className="map-container">
-      <div className="map-header">
-        <button className="logout-button">로그아웃</button>
-      </div>
       <div className="map-placeholder">
         <div className="map-content">
           <h2>서울 지도</h2>

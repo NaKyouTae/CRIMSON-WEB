@@ -74,7 +74,7 @@ const CreatePlaceGroupForm = ({ onBack }) => {
     <div className="create-form-container">
       <div className="form-header">
         <button className="back-button" onClick={onBack}>‹</button>
-        <h2>플레이스 그룹 생성하기</h2>
+        <h4>플레이스 그룹 생성하기</h4>
       </div>
 
         <form className="create-form" onSubmit={handleSubmit}>

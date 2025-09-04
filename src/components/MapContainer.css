@@ -6,32 +6,8 @@
   background-color: #f8f8f8;
   /* 개발용 border - 청록색 */
   border: 3px solid #00ffff;
-  border-radius: 6px;
-  margin: 2px;
 }
 
-.map-header {
-  padding: 12px 20px;
-  display: flex;
-  justify-content: flex-end;
-  border-bottom: 1px solid #e5e5e5;
-  background-color: #ffffff;
-}
-
-.logout-button {
-  padding: 6px 12px;
-  background-color: #666666;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.logout-button:hover {
-  background-color: #555555;
-}
 
 .map-placeholder {
   flex: 1;

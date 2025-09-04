@@ -1,7 +1,7 @@
 import React from 'react';
 import './PlaceItem.css';
 
-const PlaceItem = ({ place }) => {
+const PlaceItem = ({ place, onItemClick }) => {
   const getStatusColor = (status) => {
     switch (status) {
       case '영업중':
@@ -17,8 +17,14 @@ const PlaceItem = ({ place }) => {
     return isSaved ? '#ff6b6b' : '#cccccc';
   };
 
+  const handleItemClick = () => {
+    if (onItemClick) {
+      onItemClick(place);
+    }
+  };
+
   return (
-    <div className="place-item">
+    <div className="place-item" onClick={handleItemClick}>
       <div className="place-image">
         <img src={place.image} alt={place.name} />
       </div>

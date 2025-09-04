@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PlaceGroupItem from './PlaceGroupItem';
 import './PlaceGroupSection.css';
 
-const PlaceGroupSection = ({ activeFilter, setActiveFilter, sortOrder, setSortOrder }) => {
+const PlaceGroupSection = ({ activeFilter, setActiveFilter, sortOrder, setSortOrder, onItemClick }) => {
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
   const handleDropdownToggle = (itemId) => {
@@ -67,56 +67,60 @@ const PlaceGroupSection = ({ activeFilter, setActiveFilter, sortOrder, setSortOr
         <h3>My Place Groups</h3>
       </div>
 
-      {/* 필터 탭 */}
-      <div className="filter-tabs">
-        <button 
-          className={`filter-tab ${activeFilter === 'captain' ? 'active' : ''}`}
-          onClick={() => setActiveFilter('captain')}
-        >
-          캡틴
-        </button>
-        <button 
-          className={`filter-tab ${activeFilter === 'editor' ? 'active' : ''}`}
-          onClick={() => setActiveFilter('editor')}
-        >
-          에디터
-        </button>
-        <button 
-          className={`filter-tab ${activeFilter === 'viewer' ? 'active' : ''}`}
-          onClick={() => setActiveFilter('viewer')}
-        >
-          뷰어
-        </button>
-        <button 
-          className={`filter-tab ${activeFilter === 'ghost' ? 'active' : ''}`}
-          onClick={() => setActiveFilter('ghost')}
-        >
-          고스트
-        </button>
-      </div>
+      {/* 필터 및 정렬 영역 */}
+      <div className="filter-sort-container">
+        {/* 필터 탭 */}
+        <div className="filter-tabs">
+          <button 
+            className={`filter-tab ${activeFilter === 'captain' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('captain')}
+          >
+            캡틴
+          </button>
+          <button 
+            className={`filter-tab ${activeFilter === 'editor' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('editor')}
+          >
+            에디터
+          </button>
+          <button 
+            className={`filter-tab ${activeFilter === 'viewer' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('viewer')}
+          >
+            뷰어
+          </button>
+          <button 
+            className={`filter-tab ${activeFilter === 'ghost' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('ghost')}
+          >
+            고스트
+          </button>
+        </div>
 
-      {/* 정렬 옵션 */}
-      <div className="sort-section">
-        <select 
-          className="sort-select"
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-        >
-          <option value="latest">최신 생성 순</option>
-          <option value="oldest">오래된 순</option>
-          <option value="name">이름 순</option>
-        </select>
+        {/* 정렬 옵션 */}
+        <div className="sort-section">
+          <select 
+            className="sort-select"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+          >
+            <option value="latest">최신 생성 순</option>
+            <option value="oldest">오래된 순</option>
+            <option value="name">이름 순</option>
+          </select>
+        </div>
       </div>
 
       {/* 플레이스 그룹 아이템들 */}
       <div className="place-group-items">
         {placeGroupItems.map((item) => (
-          <PlaceGroupItem 
-            key={item.id} 
-            item={item} 
+          <PlaceGroupItem
+            key={item.id}
+            item={item}
             isOpen={openDropdownId === item.id}
             onToggle={() => handleDropdownToggle(item.id)}
             onClose={handleDropdownClose}
+            onItemClick={onItemClick}
           />
         ))}
       </div>

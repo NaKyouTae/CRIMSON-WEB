@@ -1,6 +1,6 @@
 /* Sidebar 메인 컴포넌트 스타일 */
 .sidebar {
-  width: 380px;
+  width: 25%;
   background-color: #fef9f0;
   border-right: 1px solid #e8e8e8;
   display: flex;

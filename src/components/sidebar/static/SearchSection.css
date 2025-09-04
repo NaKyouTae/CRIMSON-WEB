@@ -1,6 +1,6 @@
 /* SearchSection 컴포넌트 스타일 */
 .search-section {
-  padding: 16px 24px 20px;
+  padding: 0 16px;
   border-bottom: none;
   /* 개발용 border - 노란색 */
   border: 2px solid #ffdd00;
@@ -16,10 +16,24 @@
 
 .search-input {
   width: 100%;
-  padding: 10px 40px 10px 12px;
-  border: 1px solid #d5d5d5;
+  padding: 8px 12px;
+  border: 1px solid #e5e5e5;
   border-radius: 6px;
   font-size: 14px;
+  background-color: #ffffff;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #ff6b6b;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 35px 8px 10px;
+  border: 1px solid #d5d5d5;
+  border-radius: 4px;
+  font-size: 13px;
   background-color: #ffffff;
   transition: border-color 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -37,21 +51,27 @@
 
 .search-button {
   position: absolute;
-  right: 10px;
+  right: 8px;
   background: none;
   border: none;
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
   color: #999999;
-  padding: 4px;
+  padding: 3px;
 }
 
 .search-count {
   position: absolute;
-  right: 50px;
-  font-size: 12px;
+  right: 40px;
+  font-size: 11px;
   color: #666666;
   font-weight: 500;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.search-results {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
 }

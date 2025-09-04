@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  SidebarHeader, 
-  TabNavigation, 
-  SearchSection, 
+import {
+  TabNavigation,
+  SearchSection,
   CreateSection,
   PlaceGroupSection,
   SearchResults,
   CreatePlaceGroupForm
 } from './';
+import PlaceGroupDetail from './dynamic/list/PlaceGroupDetail';
 import './Sidebar.css';
 
 const Sidebar = ({ 
@@ -16,10 +16,13 @@ const Sidebar = ({
   activeFilter, 
   setActiveFilter, 
   sortOrder, 
-  setSortOrder
+  setSortOrder,
+  onPlaceClick
 }) => {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [showPlaceGroupDetail, setShowPlaceGroupDetail] = useState(false);
+  const [selectedPlaceGroup, setSelectedPlaceGroup] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -96,16 +99,30 @@ const Sidebar = ({
   const handleCreateClick = () => {
     setShowCreateForm(true);
     setShowSearchResults(false);
+    setShowPlaceGroupDetail(false); // Hide place group detail when creating a form
   };
 
   const handleBackToList = () => {
     setShowCreateForm(false);
   };
 
+  const handlePlaceGroupClick = (placeGroup) => {
+    setSelectedPlaceGroup(placeGroup);
+    setShowPlaceGroupDetail(true);
+    setShowSearchResults(false); // Hide search results when showing place group detail
+    setShowCreateForm(false); // Hide create form when showing place group detail
+  };
+
+  const handleBackFromPlaceGroupDetail = () => {
+    setShowPlaceGroupDetail(false);
+    setSelectedPlaceGroup(null);
+  };
+
   const handleSearch = (query) => {
     setSearchQuery(query);
     setShowSearchResults(true);
     setShowCreateForm(false);
+    setShowPlaceGroupDetail(false); // Hide place group detail when searching
     setCurrentPage(1);
   };
 
@@ -115,11 +132,15 @@ const Sidebar = ({
 
   return (
     <div className="sidebar">
-      <SidebarHeader />
       <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-      
+
       {showCreateForm ? (
         <CreatePlaceGroupForm onBack={handleBackToList} />
+      ) : showPlaceGroupDetail ? (
+        <PlaceGroupDetail 
+          placeGroup={selectedPlaceGroup} 
+          onBack={handleBackFromPlaceGroupDetail} 
+        />
       ) : (
         <>
           <SearchSection onSearch={handleSearch} />
@@ -131,6 +152,7 @@ const Sidebar = ({
               currentPage={currentPage}
               totalPages={10}
               onPageChange={handlePageChange}
+              onItemClick={onPlaceClick}
             />
           ) : (
             <PlaceGroupSection 
@@ -138,6 +160,7 @@ const Sidebar = ({
               setActiveFilter={setActiveFilter}
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
+              onItemClick={handlePlaceGroupClick}
             />
           )}
         </>
