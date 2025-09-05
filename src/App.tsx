@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import LoginPage from './pages/login/LoginPage'
 import MainPage from './pages/main/MainPage'
@@ -68,13 +69,15 @@ function App() {
   }
 
   return (
-    <div className="app">
-      {!isLoggedIn ? (
-        <LoginPage onLogin={handleLogin} />
-      ) : (
-        <MainPage onLogout={handleLogout} />
-      )}
-    </div>
+    <Router>
+      <div className="app">
+        <Routes>
+          <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+          <Route path="/main" element={<MainPage onLogout={handleLogout} />} />
+          <Route path="/" element={<Navigate to="/main" replace />} />
+        </Routes>
+      </div>
+    </Router>
   )
 }
 

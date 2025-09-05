@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './MainPage.css'
 import { Sidebar, MapContainer, PlaceDetail } from '../../components'
 import { loginAPI } from '../../api/auth'
@@ -29,6 +30,7 @@ interface MainPageProps {
 }
 
 const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<string>('list')
   const [activeFilter, setActiveFilter] = useState<string>('captain')
   const [sortOrder, setSortOrder] = useState<string>('latest')
@@ -53,11 +55,15 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
       tokenStorage.clearTokens()
       
       onLogout?.()
+      // 로그인 페이지로 리다이렉트
+      navigate('/login')
     } catch (error) {
       console.error('Logout error:', error)
       // 에러가 발생해도 로컬 토큰은 삭제
       tokenStorage.clearTokens()
       onLogout?.()
+      // 로그인 페이지로 리다이렉트
+      navigate('/login')
     }
   }
 

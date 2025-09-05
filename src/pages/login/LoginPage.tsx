@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 import { loginAPI } from '../../api/auth';
 import { tokenStorage } from '../../api';
@@ -9,6 +10,7 @@ interface LoginPageProps {
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -58,6 +60,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
         tokenStorage.setTokens(tokens);
         console.log('로그인 성공, 토큰이 저장되었습니다.');
         onLogin?.();
+        // 메인 페이지로 리다이렉트
+        navigate('/main');
       } else {
         alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
       }
