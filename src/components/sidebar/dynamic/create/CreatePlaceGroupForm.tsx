@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CreatePlaceGroupForm.css';
+import { placeGroupsAPI, createPlaceGroupRequest } from '../../../../api/placeGroups';
 
 // 타입 정의
 interface Member {
@@ -37,6 +38,7 @@ const CreatePlaceGroupForm: React.FC<CreatePlaceGroupFormProps> = ({ onBack }) =
   });
 
   const [selectedIcon, setSelectedIcon] = useState<string>('🐷');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const icons: string[] = ['🐷', '🎂', '🍺', '🍴', '❤️', '+'];
 
@@ -69,11 +71,39 @@ const CreatePlaceGroupForm: React.FC<CreatePlaceGroupFormProps> = ({ onBack }) =
     handleInputChange('members', formData.members.filter(member => member.id !== memberId));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // 여기에 API 호출 로직 추가
-    onBack();
+    
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      // PlaceGroupCreateRequest 생성
+      const request = createPlaceGroupRequest(
+        formData.name,
+        formData.isPublic,
+        formData.category,
+        formData.memo,
+        formData.relatedUrl
+      );
+      
+      console.log('Creating place group with request:', request);
+      
+      // API 호출
+      const response = await placeGroupsAPI.createPlaceGroup(request);
+      
+      console.log('Place group created successfully:', response);
+      alert('리스트가 성공적으로 생성되었습니다!');
+      
+      // 성공 시 뒤로 가기
+      onBack();
+    } catch (error) {
+      console.error('Failed to create place group:', error);
+      alert('리스트 생성에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -269,8 +299,12 @@ const CreatePlaceGroupForm: React.FC<CreatePlaceGroupFormProps> = ({ onBack }) =
 
         {/* 생성하기 버튼 */}
         <div className="form-actions">
-          <button type="submit" className="create-button">
-            생성하기
+          <button 
+            type="submit" 
+            className="create-button"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? '생성 중...' : '생성하기'}
           </button>
         </div>
       </form>

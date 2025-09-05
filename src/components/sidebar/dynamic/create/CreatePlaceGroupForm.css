@@ -335,6 +335,19 @@
   transform: translateY(0);
 }
 
+.create-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.create-button:disabled:hover {
+  background-color: #cccccc;
+  transform: none;
+  box-shadow: none;
+}
+
 /* 반응형 디자인 */
 @media (max-width: 768px) {
   .form-content {

@@ -3,12 +3,11 @@ import './PlaceGroupItem.css';
 
 // 타입 정의
 interface PlaceGroup {
-  id: number;
+  id: string;
   icon: string;
-  title: string;
+  name: string;
   role: string;
   roleText: string;
-  privacy: string;
   privacyText: string;
   members: number;
   saved: number;
@@ -74,7 +73,7 @@ const PlaceGroupItem: React.FC<PlaceGroupItemProps> = ({
 
   const handleActionClick = (action: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(`${action} clicked for item:`, item.title);
+    console.log(`${action} clicked for item:`, item.name);
     onClose();
   };
 
@@ -84,7 +83,7 @@ const PlaceGroupItem: React.FC<PlaceGroupItemProps> = ({
         <div className="item-content">
           <div className="item-icon">{item.icon}</div>
           <div className="item-info">
-            <h3 className="item-title">{item.title}</h3>
+            <h3 className="item-title">{item.name}</h3>
             <div className="item-meta">
               <span>{item.roleText}</span>
               <span className="separator">|</span>

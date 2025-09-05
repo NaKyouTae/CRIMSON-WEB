@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './PlaceGroupDetail.css';
-import { placeGroupAPI } from '../../../../api/placeGroups';
+import { placeGroupsAPI } from '../../../../api/placeGroups';
 import { placeAPI } from '../../../../api/places';
 import { showSuccessMessage, showErrorMessage } from '../../../../utils/apiClient';
 
@@ -66,64 +66,6 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack 
 
   const handleButtonClick = async (buttonType: string) => {
     setActiveButton(buttonType);
-    
-    try {
-      let result;
-      
-      switch (buttonType) {
-        case 'share':
-          result = await placeGroupAPI.sharePlaceGroup(placeGroup.id, {
-            // 공유 설정 데이터
-            isPublic: true,
-            shareType: 'link'
-          });
-          break;
-          
-        case 'edit':
-          // 수정 모드로 전환하는 로직
-          console.log('Edit mode activated for:', placeGroup.title);
-          showSuccessMessage('수정 모드로 전환되었습니다.');
-          return;
-          
-        case 'duplicate':
-          result = await placeGroupAPI.duplicatePlaceGroup(placeGroup.id);
-          break;
-          
-        case 'delete':
-          if (window.confirm('정말로 이 PlaceGroup을 삭제하시겠습니까?')) {
-            result = await placeGroupAPI.deletePlaceGroup(placeGroup.id);
-          } else {
-            return;
-          }
-          break;
-          
-        case 'leave':
-          if (window.confirm('정말로 이 PlaceGroup에서 탈퇴하시겠습니까?')) {
-            result = await placeGroupAPI.leavePlaceGroup(placeGroup.id);
-          } else {
-            return;
-          }
-          break;
-          
-        default:
-          console.log(`${buttonType} clicked for place group:`, placeGroup.title);
-          return;
-      }
-      
-      if (result && result.success) {
-        showSuccessMessage(`${buttonType} 작업이 성공적으로 완료되었습니다.`);
-        
-        // 삭제나 탈퇴의 경우 뒤로가기
-        if (buttonType === 'delete' || buttonType === 'leave') {
-          onBack();
-        }
-      } else if (result && result.error) {
-        showErrorMessage(result.error);
-      }
-      
-    } catch (error: any) {
-      showErrorMessage(`API 호출 중 오류가 발생했습니다: ${error.message}`);
-    }
   };
 
   // 검색 기능
@@ -169,7 +111,7 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack 
   // 장소를 PlaceGroup에 추가
   const handleAddPlaceToGroup = async (placeId: string) => {
     try {
-      const result = await placeGroupAPI.addPlaceToGroup(placeGroup.id, { placeId });
+      const result = await placeGroupsAPI.addPlaceToGroup(placeGroup.id, { placeId });
       
       if (result.success) {
         showSuccessMessage('장소가 PlaceGroup에 추가되었습니다.');

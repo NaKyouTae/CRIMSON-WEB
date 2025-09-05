@@ -1,119 +1,65 @@
-import { api, ApiResponse } from './index';
+import apiClient from './index';
+import { PlaceGroupCreateRequest, PlaceGroupCreateRequest_Status, PlaceGroupCreateRequest_Category } from '../../generated/place_group/place_group';
 
-// PlaceGroup 관련 타입 정의
-export interface PlaceGroup {
-  id: string;
-  title: string;
-  description?: string;
-  icon?: string;
-  roleText?: string;
-  privacyText?: string;
-  members?: number;
-  saved?: number;
-  category?: string;
-  url?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-export interface PlaceGroupCreateData {
-  title: string;
-  description?: string;
-  icon?: string;
-  isPublic?: boolean;
-}
-
-export interface PlaceGroupUpdateData {
-  title?: string;
-  description?: string;
-  icon?: string;
-  isPublic?: boolean;
-}
-
-export interface PlaceGroupShareData {
-  isPublic: boolean;
-  shareType: 'link' | 'email' | 'social';
-  recipients?: string[];
-}
-
-export interface PlaceGroupQueryParams {
-  page?: number;
-  limit?: number;
-  search?: string;
-  category?: string;
-  sortBy?: string;
-  sortOrder?: 'asc' | 'desc';
-}
-
-export interface PlaceInGroup {
-  id: string;
-  name: string;
-  address: string;
-  category: string;
-  image?: string;
-  isOpen?: boolean;
-  savedCount?: number;
-  reviewCount?: number;
-}
-
-export interface PlaceGroupAddPlaceData {
-  placeId: string;
-}
-
-// PlaceGroup 관련 API 함수들
-export const placeGroupAPI = {
-  // PlaceGroup 목록 조회
-  getPlaceGroups: async (params: PlaceGroupQueryParams = {}): Promise<ApiResponse<PlaceGroup[]>> => {
-    return await api.get('/place-groups', { params });
+export const placeGroupsAPI = {
+  createPlaceGroup: async (request: PlaceGroupCreateRequest): Promise<any> => {
+    const response = await apiClient.post('/place-groups', request);
+    return response.data;
   },
-
-  // PlaceGroup 상세 조회
-  getPlaceGroup: async (id: string): Promise<ApiResponse<PlaceGroup>> => {
-    return await api.get(`/place-groups/${id}`);
+  
+  getPlaceGroups: async (): Promise<any> => {
+    const response = await apiClient.get('/place-groups');
+    return response.data;
   },
-
-  // PlaceGroup 생성
-  createPlaceGroup: async (data: PlaceGroupCreateData): Promise<ApiResponse<PlaceGroup>> => {
-    return await api.post('/place-groups', data);
+  
+  getPlaceGroup: async (id: string): Promise<any> => {
+    const response = await apiClient.get(`/place-groups/${id}`);
+    return response.data;
   },
-
-  // PlaceGroup 수정
-  updatePlaceGroup: async (id: string, data: PlaceGroupUpdateData): Promise<ApiResponse<PlaceGroup>> => {
-    return await api.put(`/place-groups/${id}`, data);
+  
+  updatePlaceGroup: async (id: string, request: PlaceGroupCreateRequest): Promise<any> => {
+    const response = await apiClient.put(`/place-groups/${id}`, request);
+    return response.data;
   },
+  
+  deletePlaceGroup: async (id: string): Promise<any> => {
+    const response = await apiClient.delete(`/place-groups/${id}`);
+    return response.data;
+  }
+};
 
-  // PlaceGroup 삭제
-  deletePlaceGroup: async (id: string): Promise<ApiResponse> => {
-    return await api.delete(`/place-groups/${id}`);
-  },
+// 유틸리티 함수들
+export const createPlaceGroupRequest = (
+  name: string,
+  isPublic: boolean,
+  category: string,
+  memo: string,
+  link: string
+): PlaceGroupCreateRequest => {
+  // Status 매핑
+  const status = isPublic 
+    ? PlaceGroupCreateRequest_Status.PUBLIC 
+    : PlaceGroupCreateRequest_Status.PRIVATE;
 
-  // PlaceGroup 복제
-  duplicatePlaceGroup: async (id: string): Promise<ApiResponse<PlaceGroup>> => {
-    return await api.post(`/place-groups/${id}/duplicate`);
-  },
+  // Category 매핑
+  let categoryEnum: PlaceGroupCreateRequest_Category;
+  switch (category) {
+    case '데이트':
+      categoryEnum = PlaceGroupCreateRequest_Category.DATE;
+      break;
+    case '가족':
+      categoryEnum = PlaceGroupCreateRequest_Category.FAMILY;
+      break;
+    default:
+      categoryEnum = PlaceGroupCreateRequest_Category.CATEGORY_UNKOWN;
+      break;
+  }
 
-  // PlaceGroup 공유
-  sharePlaceGroup: async (id: string, shareData: PlaceGroupShareData): Promise<ApiResponse> => {
-    return await api.post(`/place-groups/${id}/share`, shareData);
-  },
-
-  // PlaceGroup 탈퇴
-  leavePlaceGroup: async (id: string): Promise<ApiResponse> => {
-    return await api.post(`/place-groups/${id}/leave`);
-  },
-
-  // PlaceGroup 내 장소 목록 조회
-  getPlacesInGroup: async (groupId: string, params: PlaceGroupQueryParams = {}): Promise<ApiResponse<PlaceInGroup[]>> => {
-    return await api.get(`/place-groups/${groupId}/places`, { params });
-  },
-
-  // PlaceGroup에 장소 추가
-  addPlaceToGroup: async (groupId: string, placeData: PlaceGroupAddPlaceData): Promise<ApiResponse> => {
-    return await api.post(`/place-groups/${groupId}/places`, placeData);
-  },
-
-  // PlaceGroup에서 장소 제거
-  removePlaceFromGroup: async (groupId: string, placeId: string): Promise<ApiResponse> => {
-    return await api.delete(`/place-groups/${groupId}/places/${placeId}`);
-  },
+  return {
+    name,
+    status,
+    category: categoryEnum,
+    memo,
+    link
+  };
 };
