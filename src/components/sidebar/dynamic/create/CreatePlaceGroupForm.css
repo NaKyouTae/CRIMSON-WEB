@@ -46,13 +46,13 @@
 .form-content {
   flex: 1;
   background-color: white;
-  padding: 24px 20px;
+  padding: 16px 20px;
   overflow-y: auto;
 }
 
 /* 폼 섹션 */
 .form-section {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .form-label {
@@ -60,7 +60,7 @@
   font-size: 14px;
   font-weight: 600;
   color: #2c2c2c;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 /* 아이콘 선택 */
@@ -106,7 +106,7 @@
 
 .form-input {
   width: 100%;
-  padding: 12px 40px 12px 12px;
+  padding: 10px 40px 10px 12px;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   font-size: 14px;
@@ -150,7 +150,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 16px;
+  padding: 10px 16px;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   cursor: pointer;
@@ -175,7 +175,7 @@
 /* 셀렉트 박스 */
 .form-select {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   font-size: 14px;
@@ -200,7 +200,7 @@
 .member-input-container {
   display: flex;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .member-input-container .form-input {
@@ -239,7 +239,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 6px 10px;
   background-color: #f8f9fa;
   border-radius: 6px;
   border: 1px solid #e5e5e5;
@@ -287,13 +287,13 @@
 /* 텍스트 영역 */
 .form-textarea {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   font-size: 14px;
   background-color: white;
   resize: vertical;
-  min-height: 80px;
+  min-height: 70px;
   font-family: inherit;
   transition: border-color 0.2s ease;
   box-sizing: border-box;
@@ -307,8 +307,8 @@
 
 /* 생성하기 버튼 */
 .form-actions {
-  margin-top: 32px;
-  padding-top: 24px;
+  margin-top: 20px;
+  padding-top: 16px;
   border-top: 1px solid #e5e5e5;
 }
 
