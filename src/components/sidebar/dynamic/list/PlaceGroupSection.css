@@ -1,44 +1,42 @@
-/* PlaceGroupSection 컴포넌트 스타일 */
+/* PlaceGroupSection 컴포넌트 스타일 - 이미지 디자인에 맞게 수정 */
 .place-group-section {
   flex: 1;
-  padding: 0 24px 20px;
+  padding: 0 20px 20px;
   display: flex;
   flex-direction: column;
-  /* 개발용 border - 보라색 */
-  border: 2px solid #8800ff;
-  border-radius: 4px;
-  margin: 2px;
 }
 
-.place-group-header h3 {
-  font-size: 16px;
+.section-title {
+  margin: 8px 0px;
+}
+
+.section-title h3 {
+  font-size: 18px;
   font-weight: 600;
   color: #2c2c2c;
-  margin: 0 0 12px 0;
+  margin: 0;
 }
 
-/* 필터 및 정렬 영역 */
-.filter-sort-container {
+.section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   gap: 12px;
 }
 
-/* 필터 탭 */
-.filter-tabs {
+.filter-buttons {
   display: flex;
-  gap: 3px;
-  flex-wrap: nowrap;
+  gap: 4px;
+  flex-wrap: wrap;
 }
 
-.filter-tab {
-  padding: 6px 10px;
+.filter-button {
+  padding: 6px 12px;
   background-color: #f8f8f8;
   border: 1px solid #e5e5e5;
   border-radius: 16px;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 500;
   color: #666666;
   cursor: pointer;
@@ -46,83 +44,105 @@
   white-space: nowrap;
 }
 
-.filter-tab.active {
+.filter-button:hover {
+  background-color: #f0f0f0;
+  border-color: #d0d0d0;
+}
+
+.filter-button.active {
   background-color: #ff6b6b;
   border-color: #ff6b6b;
   color: #ffffff;
 }
 
-.filter-tab:hover:not(.active) {
-  background-color: #f0f0f0;
-}
-
-/* 정렬 섹션 */
-.sort-section {
+.sort-dropdown {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
 }
 
 .sort-select {
-  padding: 4px 8px;
-  border: none;
-  border-radius: 4px;
-  font-size: 11px;
-  background-color: transparent;
-  cursor: pointer;
+  padding: 6px 12px;
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 12px;
   color: #666666;
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 4px center;
-  background-size: 12px;
-  padding-right: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .sort-select:hover {
-  color: #ff6b6b;
-  background-color: #fff5f5;
+  border-color: #d0d0d0;
 }
 
-/* 리스트 아이템들 */
-.place-group-items {
-  flex: 1;
+.sort-select:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.1);
+}
+
+.place-group-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 2px;
 }
+
 
 /* 페이지네이션 */
 .pagination {
   display: flex;
   justify-content: center;
-  gap: 2px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid #f0f0f0;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 16px 0;
 }
 
-.page-button {
-  width: 28px;
-  height: 28px;
-  border: 1px solid #e5e5e5;
+.pagination-button {
+  padding: 6px 12px;
   background-color: #ffffff;
-  border-radius: 4px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
   font-size: 12px;
+  color: #666666;
   cursor: pointer;
   transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.page-button:hover {
+.pagination-button:hover:not(:disabled) {
   background-color: #f8f8f8;
+  border-color: #d0d0d0;
 }
 
-.page-button.active {
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 4px;
+}
+
+.pagination-number {
+  padding: 6px 10px;
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #666666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  text-align: center;
+}
+
+.pagination-number:hover {
+  background-color: #f8f8f8;
+  border-color: #d0d0d0;
+}
+
+.pagination-number.active {
   background-color: #ff6b6b;
   border-color: #ff6b6b;
   color: #ffffff;

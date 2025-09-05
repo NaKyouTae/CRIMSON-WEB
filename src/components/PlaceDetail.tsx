@@ -1,10 +1,45 @@
 import React, { useState } from 'react';
 import './PlaceDetail.css';
 
-const PlaceDetail = ({ place, onClose }) => {
-  const [activeTab, setActiveTab] = useState('menu');
+// 타입 정의
+interface Place {
+  id: string;
+  name: string;
+  address: string;
+  category: string;
+  image?: string;
+  isOpen?: boolean;
+  isSaved?: boolean;
+  status?: string;
+  savedCount?: number;
+  reviewCount?: number;
+  rating?: number;
+  description?: string;
+  phone?: string;
+  website?: string;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
+}
 
-  const getStatusColor = (status) => {
+interface PlaceDetailProps {
+  place: Place;
+  onClose: () => void;
+}
+
+interface MenuItem {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  image: string;
+}
+
+const PlaceDetail: React.FC<PlaceDetailProps> = ({ place, onClose }) => {
+  const [activeTab, setActiveTab] = useState<string>('menu');
+
+  const getStatusColor = (status?: string): string => {
     switch (status) {
       case '영업중':
         return '#ff6b6b';
@@ -15,12 +50,12 @@ const PlaceDetail = ({ place, onClose }) => {
     }
   };
 
-  const getPinColor = (isSaved) => {
+  const getPinColor = (isSaved?: boolean): string => {
     return isSaved ? '#ff6b6b' : '#cccccc';
   };
 
   // 샘플 메뉴 데이터
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     {
       id: 1,
       name: '스카치밀크커피',

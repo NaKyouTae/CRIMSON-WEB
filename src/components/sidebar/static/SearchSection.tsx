@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import './SearchSection.css';
 
-const SearchSection = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('서교동');
+interface SearchSectionProps {
+  onSearch: (query: string) => void;
+}
+
+const SearchSection: React.FC<SearchSectionProps> = ({ onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState<string>('서교동');
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -10,7 +14,7 @@ const SearchSection = ({ onSearch }) => {
     }
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSearch();
     }

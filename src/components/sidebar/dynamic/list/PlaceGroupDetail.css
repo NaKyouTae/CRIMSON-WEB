@@ -109,38 +109,6 @@
   font-size: 10px;
 }
 
-.role-badge.captain {
-  background-color: #e3f2fd;
-  color: #1976d2;
-  padding: 1px 4px;
-  border-radius: 6px;
-  font-weight: 500;
-}
-
-.category-badge {
-  background-color: #fff3e0;
-  color: #f57c00;
-  padding: 1px 4px;
-  border-radius: 6px;
-  font-weight: 500;
-}
-
-.privacy-badge {
-  background-color: #f5f5f5;
-  color: #616161;
-  padding: 1px 4px;
-  border-radius: 6px;
-  font-weight: 500;
-}
-
-.members-badge, .saved-badge {
-  background-color: #f8f9fa;
-  color: #666666;
-  padding: 1px 4px;
-  border-radius: 6px;
-  font-weight: 500;
-}
-
 .separator {
   font-size: 10px;
   color: #cccccc;
@@ -356,4 +324,55 @@
 
 .saved, .reviews {
   color: #666666;
+}
+
+/* 검색 로딩 상태 */
+.search-loading {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: #999999;
+}
+
+/* 장소 액션 버튼 */
+.place-actions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-to-group-btn {
+  padding: 4px 8px;
+  background-color: #ff6b6b;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-to-group-btn:hover {
+  background-color: #e55a5a;
+  transform: translateY(-1px);
+}
+
+.add-to-group-btn:active {
+  transform: translateY(0);
+}
+
+/* 검색 결과 상태 */
+.no-results,
+.default-results {
+  text-align: center;
+  padding: 20px;
+  color: #999999;
+  font-size: 12px;
+}
+
+.no-results p,
+.default-results p {
+  margin: 0;
 }

@@ -2,13 +2,33 @@ import { useState } from 'react'
 import './App.css'
 import { Sidebar, MapContainer, PlaceDetail } from './components'
 
-function App() {
-  const [activeTab, setActiveTab] = useState('list')
-  const [activeFilter, setActiveFilter] = useState('captain')
-  const [sortOrder, setSortOrder] = useState('latest')
-  const [selectedPlace, setSelectedPlace] = useState(null)
+// 타입 정의
+interface Place {
+  id: string;
+  name: string;
+  address: string;
+  category: string;
+  image?: string;
+  isOpen?: boolean;
+  savedCount?: number;
+  reviewCount?: number;
+  rating?: number;
+  description?: string;
+  phone?: string;
+  website?: string;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
+}
 
-  const handlePlaceClick = (place) => {
+function App() {
+  const [activeTab, setActiveTab] = useState<string>('list')
+  const [activeFilter, setActiveFilter] = useState<string>('captain')
+  const [sortOrder, setSortOrder] = useState<string>('latest')
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null)
+
+  const handlePlaceClick = (place: Place) => {
     setSelectedPlace(place)
   }
 

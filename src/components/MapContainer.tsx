@@ -1,7 +1,7 @@
 import React from 'react';
 import './MapContainer.css';
 
-const MapContainer = () => {
+const MapContainer: React.FC = () => {
   return (
     <div className="map-container">
       <div className="map-placeholder">

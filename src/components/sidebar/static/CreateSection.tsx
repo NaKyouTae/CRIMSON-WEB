@@ -1,7 +1,11 @@
 import React from 'react';
 import './CreateSection.css';
 
-const CreateSection = ({ onCreateClick }) => {
+interface CreateSectionProps {
+  onCreateClick: () => void;
+}
+
+const CreateSection: React.FC<CreateSectionProps> = ({ onCreateClick }) => {
   return (
     <div className="create-section">
       <div className="create-card" onClick={onCreateClick}>

@@ -1,7 +1,12 @@
 import React from 'react';
 import './TabNavigation.css';
 
-const TabNavigation = ({ activeTab, setActiveTab }) => {
+interface TabNavigationProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
+
+const TabNavigation: React.FC<TabNavigationProps> = ({ activeTab, setActiveTab }) => {
   return (
     <div className="tab-navigation">
       <button 
