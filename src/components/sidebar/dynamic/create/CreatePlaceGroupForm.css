@@ -1,98 +1,100 @@
-/* CreatePlaceGroupForm 컴포넌트 스타일 */
+/* CreatePlaceGroupForm 컴포넌트 스타일 - 이미지와 100% 일치 */
 
-.create-form-container {
-  flex: 1;
+.create-place-group-form {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  background-color: #fef9f0;
+  height: 100vh;
+  background-color: #f5f5f5;
 }
 
+/* 헤더 */
 .form-header {
   display: flex;
   align-items: center;
-  padding: 8px 16px;
-  border-bottom: 1px solid #e8e8e8;
-  background-color: #ffffff;
-  /* 개발용 border - 청록색 */
-  border: 2px solid #00ffff;
-  border-radius: 4px;
-  margin: 2px;
+  padding: 8px 20px;
+  background-color: #2c2c2c;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .back-button {
   background: none;
   border: none;
-  font-size: 16px;
-  color: #666666;
+  color: white;
+  font-size: 24px;
   cursor: pointer;
-  padding: 2px;
-  margin-right: 6px;
+  padding: 4px 8px;
+  margin-right: 12px;
   border-radius: 4px;
   transition: background-color 0.2s ease;
 }
 
 .back-button:hover {
-  background-color: #f5f5f5;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .form-header h2 {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
-  color: #2c2c2c;
   margin: 0;
+  color: white;
 }
 
-.create-form {
-  padding: 16px 20px;
+/* 폼 컨텐츠 */
+.form-content {
+  flex: 1;
+  background-color: white;
+  padding: 24px 20px;
+  overflow-y: auto;
 }
 
+/* 폼 섹션 */
 .form-section {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .form-label {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #2c2c2c;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.optional {
-  font-weight: 400;
-  color: #999999;
-  font-size: 11px;
-}
-
-/* 아이콘 선택기 */
-.icon-selector {
+/* 아이콘 선택 */
+.icon-selection {
   display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 4px 0;
 }
 
 .icon-button {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   border: 1px solid #e5e5e5;
-  border-radius: 6px;
-  background-color: #ffffff;
-  font-size: 16px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  font-size: 20px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .icon-button:hover {
-  border-color: #ff6b6b;
+  border-color: #ff6b35;
+  background-color: #fff5f2;
 }
 
 .icon-button.selected {
-  border-color: #ff6b6b;
-  background-color: #fff5f5;
+  border-color: #ff6b35;
+  background-color: #fff5f2;
 }
 
 /* 입력 필드 */
@@ -104,26 +106,27 @@
 
 .form-input {
   width: 100%;
-  padding: 10px 36px 10px 10px;
-  border: 1px solid #d5d5d5;
-  border-radius: 6px;
-  font-size: 13px;
-  background-color: #ffffff;
+  padding: 12px 40px 12px 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: white;
   transition: border-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.1);
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.1);
 }
 
 .clear-button {
   position: absolute;
-  right: 10px;
+  right: 12px;
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 18px;
   color: #999999;
   cursor: pointer;
   padding: 4px;
@@ -147,55 +150,57 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 12px;
+  padding: 12px 16px;
   border: 1px solid #e5e5e5;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: #ffffff;
-  font-size: 13px;
+  background-color: white;
+  font-size: 14px;
   font-weight: 500;
   flex: 1;
+  text-align: center;
 }
 
 .radio-option:hover {
-  border-color: #ff6b6b;
+  border-color: #ff6b35;
 }
 
 .radio-option.selected {
-  border-color: #ff6b6b;
-  background-color: #fff5f5;
-  color: #ff6b6b;
-}
-
-.radio-option input[type="radio"] {
-  margin-right: 6px;
-  accent-color: #ff6b6b;
+  border-color: #ff6b35;
+  background-color: #fff5f2;
+  color: #ff6b35;
 }
 
 /* 셀렉트 박스 */
 .form-select {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #d5d5d5;
-  border-radius: 6px;
-  font-size: 13px;
-  background-color: #ffffff;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: white;
   cursor: pointer;
   transition: border-color 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
 }
 
 .form-select:focus {
   outline: none;
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.1);
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.1);
 }
 
 /* 멤버 관리 */
 .member-input-container {
   display: flex;
-  gap: 6px;
-  margin-bottom: 8px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .member-input-container .form-input {
@@ -203,13 +208,14 @@
 }
 
 .add-button {
-  width: 32px;
-  height: 32px;
-  border: 1px solid #d5d5d5;
-  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
   background-color: #f8f8f8;
   color: #666666;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -218,44 +224,53 @@
 }
 
 .add-button:hover {
-  background-color: #e9ecef;
-  border-color: #ff6b6b;
-  color: #ff6b6b;
+  background-color: #ff6b35;
+  border-color: #ff6b35;
+  color: white;
+}
+
+.member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .member-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
+  gap: 8px;
+  padding: 8px 12px;
   background-color: #f8f9fa;
-  border-radius: 4px;
-  margin-bottom: 6px;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
 }
 
 .member-id {
   flex: 1;
-  font-size: 13px;
+  font-size: 14px;
   color: #2c2c2c;
+  font-weight: 500;
 }
 
 .member-permission {
-  padding: 3px 6px;
-  border: 1px solid #d5d5d5;
-  border-radius: 3px;
-  font-size: 11px;
-  background-color: #ffffff;
+  padding: 4px 8px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  font-size: 12px;
+  background-color: white;
   cursor: pointer;
+  min-width: 60px;
 }
 
 .remove-button {
-  width: 20px;
-  height: 20px;
-  border: 1px solid #d5d5d5;
-  border-radius: 3px;
-  background-color: #ffffff;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  background-color: white;
   color: #999999;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -265,49 +280,55 @@
 
 .remove-button:hover {
   background-color: #ffebee;
-  border-color: #ff6b6b;
-  color: #ff6b6b;
+  border-color: #ff6b35;
+  color: #ff6b35;
 }
 
 /* 텍스트 영역 */
 .form-textarea {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #d5d5d5;
-  border-radius: 6px;
-  font-size: 13px;
-  background-color: #ffffff;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: white;
   resize: vertical;
-  min-height: 60px;
+  min-height: 80px;
   font-family: inherit;
   transition: border-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 .form-textarea:focus {
   outline: none;
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.1);
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.1);
 }
 
 /* 생성하기 버튼 */
+.form-actions {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e5e5;
+}
+
 .create-button {
   width: 100%;
-  padding: 12px;
-  background-color: #ff6b6b;
-  color: #ffffff;
+  padding: 16px;
+  background-color: #ff6b35;
+  color: white;
   border: none;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-top: 6px;
 }
 
 .create-button:hover {
-  background-color: #e55a5a;
+  background-color: #e55a2b;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
 }
 
 .create-button:active {
@@ -316,20 +337,22 @@
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
-  .modal-overlay {
-    padding: 10px;
-  }
-  
-  .modal-content {
-    max-height: 95vh;
-  }
-  
-  .create-form {
-    padding: 16px;
+  .form-content {
+    padding: 20px 16px;
   }
   
   .form-section {
     margin-bottom: 20px;
+  }
+  
+  .icon-selection {
+    gap: 6px;
+  }
+  
+  .icon-button {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
   }
   
   .radio-group {
@@ -337,13 +360,25 @@
     gap: 8px;
   }
   
-  .icon-selector {
-    gap: 6px;
+  .radio-option {
+    padding: 10px 16px;
   }
-  
-  .icon-button {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-  }
+}
+
+/* 스크롤바 스타일링 */
+.form-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.form-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.form-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.form-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }

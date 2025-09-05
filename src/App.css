@@ -64,3 +64,34 @@
   height: calc(100vh - 70px); /* 헤더 높이(패딩 12px*2 + 보더 2px*2 + 내용 높이)를 제외한 나머지 높이 */
   overflow: hidden;
 }
+
+/* 로딩 화면 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f8f8f8;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e5e5;
+  border-top: 4px solid #ff6b35;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-container p {
+  color: #666666;
+  font-size: 14px;
+  margin: 0;
+}

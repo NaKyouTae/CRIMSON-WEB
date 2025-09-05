@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "dto.proto";
+
+package com.spectrum.crimson.proto.place_group;
+
+option java_multiple_files = true;
+option java_package = "com.spectrum.crimson.proto.place_group";
+option java_outer_classname = "PlaceGroupProto";
+
+message PlaceGroupCreateRequest {
+  enum Status {
+    STATUS_UNKNOWN = 0;
+    PUBLIC = 1;
+    PRIVATE = 2;
+  }
+  enum Category {
+    CATEGORY_UNKOWN = 0;
+    DATE = 1;
+    FAMILY = 2;
+  }
+
+  string name = 1;
+  Status status = 2;
+  Category category = 3;
+  string memo = 4;
+  string link = 5;
+}
+
+message PlaceGroupCreateResponse {
+  string id = 1;
+}
+
+message PlaceGroupResult {
+  PlaceGroup group = 1;
+}
+
+message PlaceGroupListResult {
+  repeated PlaceGroup groups = 1;
+}

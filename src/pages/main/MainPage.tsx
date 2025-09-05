@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './MainPage.css'
 import { Sidebar, MapContainer, PlaceDetail } from '../../components'
+import { loginAPI } from '../../api/auth'
+import { tokenStorage } from '../../api'
 
 // 타입 정의
 interface Place {
@@ -40,9 +42,23 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
     setSelectedPlace(null)
   }
 
-  const handleLogout = () => {
-    console.log('Logout clicked')
-    onLogout?.()
+  const handleLogout = async () => {
+    try {
+      console.log('Logout clicked')
+      
+      // 서버에 로그아웃 요청
+      await loginAPI.logout()
+      
+      // 클라이언트에서 토큰 삭제
+      tokenStorage.clearTokens()
+      
+      onLogout?.()
+    } catch (error) {
+      console.error('Logout error:', error)
+      // 에러가 발생해도 로컬 토큰은 삭제
+      tokenStorage.clearTokens()
+      onLogout?.()
+    }
   }
 
   return (

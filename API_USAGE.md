@@ -105,7 +105,7 @@ const MyComponent = () => {
 `.env` 파일을 생성하고 API URL을 설정하세요:
 
 ```env
-REACT_APP_API_URL=http://localhost:3001/api
+REACT_APP_API_URL=http://localhost:8080/api
 ```
 
 ### 토큰 관리

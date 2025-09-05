@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package com.spectrum.crimson.proto;
+
+option java_multiple_files = true;
+option java_package = "com.spectrum.crimson.proto";
+option java_outer_classname = "DtoProto";
+
+message Token {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message PlaceGroup {
+  enum PlaceGroupStatus {
+    PUBLIC = 0;
+    PRIVATE = 1;
+  }
+
+  string id = 1;
+  PlaceGroupStatus status = 2;
+  string description = 3;
+
+  uint64 created_at = 98;
+  uint64 updated_at = 99;
+}

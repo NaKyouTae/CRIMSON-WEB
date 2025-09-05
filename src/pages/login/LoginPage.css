@@ -116,6 +116,20 @@
   box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
 }
 
+.login-button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.login-button:disabled:hover {
+  background-color: #cccccc;
+  transform: none;
+  box-shadow: none;
+}
+
 /* 반응형 디자인 */
 @media (max-width: 768px) {
   .login-container {

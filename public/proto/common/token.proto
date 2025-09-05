@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "dto.proto";
+
+package com.spectrum.crimson.proto.common;
+
+option java_multiple_files = true;
+option java_package = "com.spectrum.crimson.proto.common";
+option java_outer_classname = "TokenProto";
+
+message TokenResult {
+  Token token = 1;
+}
+
+message TokenHealthResult {
+  bool is_ok = 1;
+}

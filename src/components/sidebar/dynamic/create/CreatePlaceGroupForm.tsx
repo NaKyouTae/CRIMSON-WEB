@@ -28,7 +28,7 @@ const CreatePlaceGroupForm: React.FC<CreatePlaceGroupFormProps> = ({ onBack }) =
     icon: '🐷',
     name: '특별한 날 가기 좋은 가성비 데이트 장소',
     isPublic: true,
-    category: '데이트',
+    category: '',
     defaultPermission: 'editor',
     members: [{ id: 'qhdud4957', permission: 'editor' }],
     newMemberId: '',
@@ -80,12 +80,13 @@ const CreatePlaceGroupForm: React.FC<CreatePlaceGroupFormProps> = ({ onBack }) =
     <div className="create-place-group-form">
       <div className="form-header">
         <button className="back-button" onClick={onBack}>‹</button>
-        <h2>새로운 플레이스 그룹 생성</h2>
+        <h2>리스트 생성하기</h2>
       </div>
 
       <form onSubmit={handleSubmit} className="form-content">
+        {/* 대표 아이콘 */}
         <div className="form-section">
-          <label className="form-label">아이콘 선택</label>
+          <label className="form-label">대표 아이콘</label>
           <div className="icon-selection">
             {icons.map((icon, index) => (
               <button
@@ -100,48 +101,65 @@ const CreatePlaceGroupForm: React.FC<CreatePlaceGroupFormProps> = ({ onBack }) =
           </div>
         </div>
 
+        {/* 이름 */}
         <div className="form-section">
-          <label className="form-label">그룹 이름</label>
-          <input
-            type="text"
-            className="form-input"
-            value={formData.name}
-            onChange={(e) => handleInputChange('name', e.target.value)}
-            placeholder="그룹 이름을 입력하세요"
-          />
+          <label className="form-label">이름</label>
+          <div className="input-container">
+            <input
+              type="text"
+              className="form-input"
+              value={formData.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              placeholder="특별한 날 가기 좋은 가성비 데이트 장소"
+            />
+            {formData.name && (
+              <button
+                type="button"
+                className="clear-button"
+                onClick={() => handleInputChange('name', '')}
+              >
+                ×
+              </button>
+            )}
+          </div>
         </div>
 
+        {/* 공개 여부 */}
         <div className="form-section">
-          <label className="form-label">공개 설정</label>
+          <label className="form-label">공개 여부</label>
           <div className="radio-group">
-            <label className="radio-label">
+            <label className={`radio-option ${formData.isPublic ? 'selected' : ''}`}>
               <input
                 type="radio"
                 name="privacy"
                 checked={formData.isPublic}
                 onChange={() => handleInputChange('isPublic', true)}
+                style={{ display: 'none' }}
               />
-              공개
+              공개 리스트
             </label>
-            <label className="radio-label">
+            <label className={`radio-option ${!formData.isPublic ? 'selected' : ''}`}>
               <input
                 type="radio"
                 name="privacy"
                 checked={!formData.isPublic}
                 onChange={() => handleInputChange('isPublic', false)}
+                style={{ display: 'none' }}
               />
-              비공개
+              비공개 리스트
             </label>
           </div>
         </div>
 
+        {/* 분류 */}
         <div className="form-section">
-          <label className="form-label">카테고리</label>
+          <label className="form-label">분류</label>
           <select
             className="form-select"
             value={formData.category}
             onChange={(e) => handleInputChange('category', e.target.value)}
           >
+            <option value="">선택</option>
             <option value="데이트">데이트</option>
             <option value="가족">가족</option>
             <option value="친구">친구</option>
@@ -150,35 +168,50 @@ const CreatePlaceGroupForm: React.FC<CreatePlaceGroupFormProps> = ({ onBack }) =
           </select>
         </div>
 
+        {/* 멤버 기본 권한 */}
         <div className="form-section">
-          <label className="form-label">기본 권한</label>
-          <select
-            className="form-select"
-            value={formData.defaultPermission}
-            onChange={(e) => handleInputChange('defaultPermission', e.target.value)}
-          >
-            <option value="captain">캡틴</option>
-            <option value="editor">에디터</option>
-            <option value="member">멤버</option>
-          </select>
+          <label className="form-label">멤버 기본 권한</label>
+          <div className="radio-group">
+            <label className={`radio-option ${formData.defaultPermission === 'editor' ? 'selected' : ''}`}>
+              <input
+                type="radio"
+                name="permission"
+                checked={formData.defaultPermission === 'editor'}
+                onChange={() => handleInputChange('defaultPermission', 'editor')}
+                style={{ display: 'none' }}
+              />
+              에디터
+            </label>
+            <label className={`radio-option ${formData.defaultPermission === 'viewer' ? 'selected' : ''}`}>
+              <input
+                type="radio"
+                name="permission"
+                checked={formData.defaultPermission === 'viewer'}
+                onChange={() => handleInputChange('defaultPermission', 'viewer')}
+                style={{ display: 'none' }}
+              />
+              뷰어
+            </label>
+          </div>
         </div>
 
+        {/* 멤버 관리 */}
         <div className="form-section">
-          <label className="form-label">멤버 추가</label>
-          <div className="member-input-group">
+          <label className="form-label">멤버 관리</label>
+          <div className="member-input-container">
             <input
               type="text"
               className="form-input"
               value={formData.newMemberId}
               onChange={(e) => handleInputChange('newMemberId', e.target.value)}
-              placeholder="멤버 ID를 입력하세요"
+              placeholder="멤버 아이디 입력"
             />
             <button
               type="button"
-              className="add-member-button"
+              className="add-button"
               onClick={handleAddMember}
             >
-              추가
+              +
             </button>
           </div>
           
@@ -186,30 +219,43 @@ const CreatePlaceGroupForm: React.FC<CreatePlaceGroupFormProps> = ({ onBack }) =
             {formData.members.map((member, index) => (
               <div key={index} className="member-item">
                 <span className="member-id">{member.id}</span>
-                <span className="member-permission">{member.permission}</span>
+                <select
+                  className="member-permission"
+                  value={member.permission}
+                  onChange={(e) => {
+                    const updatedMembers = [...formData.members];
+                    updatedMembers[index].permission = e.target.value;
+                    handleInputChange('members', updatedMembers);
+                  }}
+                >
+                  <option value="editor">에디터</option>
+                  <option value="viewer">뷰어</option>
+                </select>
                 <button
                   type="button"
-                  className="remove-member-button"
+                  className="remove-button"
                   onClick={() => handleRemoveMember(member.id)}
                 >
-                  ✕
+                  -
                 </button>
               </div>
             ))}
           </div>
         </div>
 
+        {/* 메모 */}
         <div className="form-section">
           <label className="form-label">메모</label>
           <textarea
             className="form-textarea"
             value={formData.memo}
             onChange={(e) => handleInputChange('memo', e.target.value)}
-            placeholder="그룹에 대한 메모를 입력하세요"
+            placeholder="메모 입력"
             rows={3}
           />
         </div>
 
+        {/* 관련 URL */}
         <div className="form-section">
           <label className="form-label">관련 URL</label>
           <input
@@ -217,16 +263,14 @@ const CreatePlaceGroupForm: React.FC<CreatePlaceGroupFormProps> = ({ onBack }) =
             className="form-input"
             value={formData.relatedUrl}
             onChange={(e) => handleInputChange('relatedUrl', e.target.value)}
-            placeholder="관련 URL을 입력하세요"
+            placeholder="관련 URL 입력"
           />
         </div>
 
+        {/* 생성하기 버튼 */}
         <div className="form-actions">
-          <button type="button" className="cancel-button" onClick={onBack}>
-            취소
-          </button>
-          <button type="submit" className="submit-button">
-            생성
+          <button type="submit" className="create-button">
+            생성하기
           </button>
         </div>
       </form>
