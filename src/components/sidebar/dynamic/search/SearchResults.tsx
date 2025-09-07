@@ -40,47 +40,40 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   onItemClick 
 }) => {
   return (
-    <div className="search-results">
-      <div className="search-results-header">
-        <h3>검색 결과</h3>
-        <span className="results-count">{results.length}건</span>
+    <div className='cont-box'>
+      <div className='title'>
+        <h2>검색 결과</h2>
+        <span>{results.length}건</span>
       </div>
       
-      <div className="place-list">
+      <ul className='place-list'>
         {results.map((place, index) => (
           <PlaceItem key={place.id || index} place={place} onItemClick={onItemClick} />
         ))}
-      </div>
+      </ul>
       
       {totalPages > 1 && (
-        <div className="pagination">
-          <button 
-            className="pagination-button"
+
+        <div className='pagination'>
+          <button disabled><i className='ic-pagination first'></i></button>
+          <button
             disabled={currentPage === 1}
             onClick={() => onPageChange(currentPage - 1)}
-          >
-            이전
-          </button>
-          
-          <div className="pagination-numbers">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-              <button
-                key={page}
-                className={`pagination-number ${currentPage === page ? 'active' : ''}`}
-                onClick={() => onPageChange(page)}
-              >
-                {page}
-              </button>
-            ))}
-          </div>
-          
+          ><i className='ic-pagination prev'></i></button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+            <button
+              key={page}
+              className={`${currentPage === page ? 'active' : ''}`}
+              onClick={() => onPageChange(page)}
+            >
+              {page}
+            </button>
+          ))}
           <button 
-            className="pagination-button"
             disabled={currentPage === totalPages}
             onClick={() => onPageChange(currentPage + 1)}
-          >
-            다음
-          </button>
+          ><i className='ic-pagination next'></i></button>
+          <button disabled><i className='ic-pagination last'></i></button>
         </div>
       )}
     </div>

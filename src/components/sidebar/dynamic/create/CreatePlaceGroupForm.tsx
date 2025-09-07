@@ -107,9 +107,9 @@ const CreatePlaceGroupForm: React.FC<CreatePlaceGroupFormProps> = ({ onBack }) =
   };
 
   return (
-    <div className="create-place-group-form">
-      <div className="form-header">
-        <button className="back-button" onClick={onBack}>‹</button>
+    <div className='list-create-wrap'>
+      <div className='inside-nav'>
+        <button className='trans' onClick={onBack}><i className='ic-arrow-left-16' /></button>
         <h2>리스트 생성하기</h2>
       </div>
 

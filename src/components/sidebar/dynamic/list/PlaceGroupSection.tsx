@@ -99,62 +99,60 @@ const PlaceGroupSection: React.FC<PlaceGroupSectionProps> = ({
   }, []);
 
   return (
-    <div className="place-group-section">
-      <div className="section-title">
-        <h3>내 리스트 목록</h3>
+    <div className='cont-box'>
+      <div className='title'>
+        <h2>내 리스트 목록</h2>
       </div>
-      
-      <div className="section-header">
-        <div className="filter-buttons">
-          <button 
-            className={`filter-button ${activeFilter === 'captain' ? 'active' : ''}`}
-            onClick={() => setActiveFilter('captain')}
-          >
-            캡틴
-          </button>
-          <button 
-            className={`filter-button ${activeFilter === 'editor' ? 'active' : ''}`}
-            onClick={() => setActiveFilter('editor')}
-          >
-            에디터
-          </button>
-          <button 
-            className={`filter-button ${activeFilter === 'member' ? 'active' : ''}`}
-            onClick={() => setActiveFilter('member')}
-          >
-            멤버
-          </button>
-        </div>
-        
-        <div className="sort-dropdown">
-          <select 
-            value={sortOrder} 
-            onChange={(e) => setSortOrder(e.target.value)}
-            className="sort-select"
-          >
-            <option value="latest">최신 순</option>
-            <option value="name">이름 순</option>
-            <option value="members">멤버 수 순</option>
-            <option value="saved">저장 수 순</option>
-          </select>
-        </div>
+      <div className='list-option'>
+        <ul className='tab-style-label'>
+          <li><input type='checkbox' id='chk1' checked /><label htmlFor='chk1'><span>캡틴</span></label></li>
+          <li><input type='checkbox' id='chk2' /><label htmlFor='chk2'><span>에디터</span></label></li>
+          {/* <li>
+            <button 
+              className={`${activeFilter === 'captain' ? 'active' : ''}`}
+              onClick={() => setActiveFilter('captain')}
+            >
+              캡틴
+            </button>
+          </li>
+          <li>
+            <button 
+              className={`${activeFilter === 'editor' ? 'active' : ''}`}
+              onClick={() => setActiveFilter('editor')}
+            >
+              에디터
+            </button>
+          </li> */}
+          <li>
+            <button 
+              className={`${activeFilter === 'member' ? 'active' : ''}`}
+              onClick={() => setActiveFilter('member')}
+            >
+              멤버
+            </button>
+          </li>
+        </ul>
+        <select 
+          value={sortOrder} 
+          onChange={(e) => setSortOrder(e.target.value)}
+          className='sm'
+        >
+          <option value="latest">최신 생성 순</option>
+          <option value="name">이름 순</option>
+          <option value="members">멤버 많은 순</option>
+          <option value="saved">저장 많은 순</option>
+        </select>
       </div>
-
-      <div className="place-group-list">
+      <div className='list-wrap'>
         {isLoading ? (
           <div className="loading-container">
             <div className="loading-spinner"></div>
             <p>리스트를 불러오는 중...</p>
           </div>
         ) : error ? (
-          <div className="error-container">
-            <p className="error-message">{error}</p>
-            <button 
-              className="retry-button"
-              onClick={fetchPlaceGroups}
-            >
-              다시 시도
-            </button>
+          <div className='error'>
+            <p>{error}</p>
+            <button className='sm' onClick={fetchPlaceGroups}>다시시도</button>
           </div>
         ) : placeGroups.length === 0 ? (
           <div className="empty-container">
@@ -174,12 +172,12 @@ const PlaceGroupSection: React.FC<PlaceGroupSectionProps> = ({
         )}
       </div>
 
-      <div className="pagination">
-        <button className="pagination-button" disabled>«</button>
-        <button className="pagination-button" disabled>‹</button>
-        <button className="pagination-number active">1</button>
-        <button className="pagination-button" disabled>›</button>
-        <button className="pagination-button" disabled>»</button>
+      <div className='pagination'>
+        <button disabled><i className='ic-pagination first'></i></button>
+        <button disabled><i className='ic-pagination prev'></i></button>
+        <button className='active'>1</button>
+        <button disabled><i className='ic-pagination next'></i></button>
+        <button disabled><i className='ic-pagination last'></i></button>
       </div>
     </div>
   );

@@ -1,21 +1,4 @@
 /* PlaceDetail 컴포넌트 스타일 */
-.place-detail {
-  position: absolute;
-  top: 0;
-  left: 25%;
-  width: 25%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: #ffffff;
-  border-left: 1px solid #e8e8e8;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  /* 개발용 border - 초록색 */
-  border: 2px solid #00ff00;
-  border-radius: 4px;
-  margin: 2px;
-}
 
 .close-button {
   position: absolute;
@@ -310,14 +293,6 @@
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
-  .place-detail {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
-  }
   
   .detail-content {
     padding: 16px;

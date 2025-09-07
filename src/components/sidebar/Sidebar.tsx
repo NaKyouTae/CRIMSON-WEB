@@ -140,7 +140,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <div className="sidebar">
+    <aside>
       <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {showCreateForm ? (
@@ -151,7 +151,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           onBack={handleBackFromPlaceGroupDetail} 
         />
       ) : (
-        <>
+        <div className='side-wrap'>
           <SearchSection onSearch={handleSearch} />
           <CreateSection onCreateClick={() => setShowCreateForm(true)} />
           {showSearchResults ? (
@@ -172,9 +172,9 @@ const Sidebar: React.FC<SidebarProps> = ({
               onItemClick={handlePlaceGroupClick}
             />
           )}
-        </>
+        </div>
       )}
-    </div>
+    </aside>
   );
 };
 

@@ -1,0 +1,224 @@
+/* to embed a font */
+@import url('./font.css');
+
+/* document --------------------------- */
+/* Box sizing rules */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent font size inflation */
+html {
+    text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust : none;
+    -moz-text-size-adjust: none;
+    /* smoothing font */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: auto;
+}  
+
+html, body {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    /* web font + system font */
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 62.5%; /* 1rem = 1rem */
+    font-weight: 400;
+    color: var(--black);
+}
+
+/* typography --------------------------- */
+h1, h2, h3, h4, h5, h6 {
+    clear: both;
+    margin: 0;
+    padding: 0;
+}
+
+b, strong {
+    /* add the correct font weight in Chrome, Edge, and Safari */
+    font-weight: 600;
+}
+
+/* list style --------------------------- */
+ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* embedded content --------------------------- */
+img {
+    /* remove the border on images inside links in IE 10 */
+    border-style: none;
+}
+
+/* form --------------------------- */
+button, input, textarea, select, option {
+    /* web font + system font */
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    /* Remove the inheritance of text transform in Edge, Firefox and IE. */
+    text-transform: none;
+    color: var(--black);
+    background-color: transparent;
+    /* Show the overflow in Edge and IE. */
+    overflow: visible;
+    cursor: pointer;
+}
+
+button:disabled, input:disabled {
+    cursor: not-allowed;
+}
+
+button, [type='button'], [type='reset'], [type='submit'] {
+    /* correct the inability to style clickable types in iOS and Safari */
+    appearance: button;
+    -moz-appearance: button;
+    -webkit-appearance: button;
+}
+
+[type='checkbox'], [type='radio'] {
+    /* remove the padding in IE 10 */
+    padding: 0;
+    margin: 0;
+}
+
+textarea {
+    width: 100%;
+    /* remove the default vertical scrollbar in IE 10+ */
+    overflow: auto;
+    resize: none;
+}
+
+/* link --------------------------- */
+a {
+    color: var(--black);
+    text-decoration: none;
+    text-decoration-skip-ink: auto;
+    /* remove the gray background on active links in IE 10 */
+    background-color: transparent;
+    cursor: pointer;
+}
+
+a:visited, a:hover, a:active, a:focus {
+    color: var(--black);
+    text-decoration: none;
+}
+
+/* misc --------------------------- */
+[hidden] {
+    /* add the correct display in IE 10 */
+    display: none;
+}
+
+:focus {
+    outline: none;
+}
+
+:root {
+    --black: #121212;
+    --white: #FDFDFE;
+
+    --gray100: #F7F8F9;
+    --gray200: #EEF0F1; /* 일반 박스 라인, 라인 */
+    --gray300: #DFE0E1; /* 버튼 라인 */
+    --gray400: #BBC0C5;
+    --gray500: #808991; /* disabled 텍스트 */
+    --gray600: #515C66; /* 연한 텍스트 */
+
+    --orange: #FF6002;
+    --orange-sub: #FFDDC8;
+
+    --red: #EE4452;
+    --red-sub: #FCD1D6;
+
+    --yellow: #FFC74A;
+    --orange-sub: #FEF1D3;
+
+    --green: #4FC578;
+    --green-sub: #F3F7F4;
+
+    --blue: #226AF4;
+    --blue-sub: #CADBFD;
+
+    --violet: #786CE6;
+    --violet-sub: #DEDBFA;
+
+    --gray: #B1B9C2;
+    --gray-sub: #E6E9EC;
+}
+
+/* scroll */
+::-webkit-scrollbar {width: 0; height: 0; background-color: transparent; display: none;}
+::-webkit-scrollbar-thumb {background-color: transparent;}
+::-webkit-scrollbar-track {background-color: transparent;}
+
+/* align */
+.position-center {position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -moz-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); -o-transform: translate(-50%, -50%); transform: translate(-50%, -50%);}
+.position-center-top {position: absolute; top: 50%; -webkit-transform: translateY(-50%); -moz-transform: translateY(-50%); -ms-transform: translateY(-50%); -o-transform: translateY(-50%); transform: translateY(-50%);}
+.position-center-left {position: absolute; left: 50%; -webkit-transform: translateX(-50%); -moz-transform: translateX(-50%); -ms-transform: translateX(-50%); -o-transform: translateX(-50%); transform: translateX(-50%);}
+
+/* text overflow */
+.ellipsis {overflow: hidden; text-overflow: ellipsis; white-space: nowrap;} /* 한 줄 말줄임, width 지정 필요 */
+.ellipsis.double {overflow: hidden; text-overflow: ellipsis; display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical;} /* 두 줄 말줄임 */
+
+/* input */
+input {width: 100%; height: 4.8rem; padding: 0 1.6rem; border-radius: .8rem; border: 1px solid var(--gray200); font-size: 14px; cursor: text;}
+input::placeholder {color: var(--gray500);}
+
+input[type='checkbox'] {display: none;}
+input[type='checkbox'] + label {display: flex; align-items: center; cursor: pointer;}
+
+/* button */
+button {width: 100%; height: 5.2rem; padding: 0 1.6rem; display: flex; align-items: center; justify-content: center; column-gap: 1rem; background-color: var(--orange); border: 1px solid transparent; border-radius: .8rem; font-size: 1.6rem; font-weight: 600; color: var(--white);}
+button.md {height: 3.2rem; padding: 0 1.2rem; column-gap: .6rem; background-color: var(--white); border-color: var(--gray300); border-radius: .4rem; font-size: 1.2rem; font-weight: 500; color: var(--black);}
+button.sm {width: fit-content; height: 2.8rem; padding: 0 1rem; border-radius: .4rem; background-color: var(--white); border-color: var(--gray300); font-size: 14px; color: var(--black); font-weight: 400;}
+
+button.trans {width: fit-content; height: fit-content; padding: 0; background-color: transparent;}
+
+/* select */
+select {-webkit-appearance: none; appearance: none;}
+select::-ms-expand {display: none;/*for IE10,11*/}
+
+select.sm {width: fit-content; height: fit-content; border: 0; padding: 0; padding-right: 1.4rem; background-image: url(../../../public/img/ico/ic-select-10.svg); background-repeat: no-repeat; background-size: 1rem; background-position: center right; font-size: 1.4rem;}
+
+/* nav */
+.inside-nav {display: flex; align-items: center; column-gap: .8rem;}
+.inside-nav > h2 {font-size: 1.6rem; font-weight: 500;}
+
+/* title */
+.title {margin-bottom: 1.6rem; display: flex; align-items: center; justify-content: space-between;}
+.title > h2 {font-size: 1.6rem; font-weight: 500;}
+.title > span {font-size: 1.2rem; color: var(--gray600);}
+
+/* tab */
+.tab-style1 {display: flex; align-items: center; border: 1px solid transparent; border-bottom-color: var(--gray200);}
+.tab-style1 > button {flex: 1; width: 100%; height: 4rem; background-color: transparent; border-radius: 0; font-size: 1.4rem; color: var(--gray500); font-weight: 400; position: relative;}
+.tab-style1 > button.active {color: var(--black); font-weight: 500;}
+.tab-style1 > button.active::after {content: ''; width: 100%; height: 2px; background-color: var(--orange); position: absolute; left: 0; bottom: -2px;}
+
+.tab-style2 {margin-bottom: 2rem; display: flex; align-items: center; background-color: var(--gray100); border-radius: .8rem; padding: .4rem;}
+.tab-style2 > button {flex: 1; width: 100%; height: 3.2rem; background-color: transparent; border-radius: .8rem; font-size: 1.4rem; color: var(--gray500); font-weight: 400; position: relative;}
+.tab-style2 > button.active {color: var(--black); font-weight: 500; background-color: var(--white);}
+
+.tab-style-label {display: flex; align-items: center; column-gap: .6rem;}
+.tab-style-label > li > input + label::before {content: none;}
+.tab-style-label > li > input + label {height: 2.8rem; padding: 0 1.2rem; justify-content: center; border-radius: 20px; background-color: var(--gray200); font-size: 1.4rem;}
+.tab-style-label > li > input:checked + label {background-color: rgba(244,221,200,.4); color: var(--orange); font-weight: 600;}
+.tab-style-label > li > button {height: 2.8rem; padding: 0 1.2rem; justify-content: center; border-radius: 20px; background-color: var(--gray200); font-size: 1.4rem; color: var(--black); font-weight: 400;}
+.tab-style-label > li > button.active {background-color: rgba(244,221,200,.4); color: var(--orange); font-weight: 600;}
+
+/* pagination */
+.pagination {display: flex; align-items: center; justify-content: center; column-gap: .2rem;}
+.pagination > button {width: 2rem; height: 2rem; padding: 0; background-color: transparent; font-size: 1.2rem; font-weight: 500; color: var(--gray500);}
+.pagination > button.active {color: var(--orange);}
+
+/* empty */
+.empty {width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-flow: column; row-gap: 1rem;}
+.empty > p {text-align: center; font-size: 1.4rem; line-height: 1.6; color: var(--gray500);}

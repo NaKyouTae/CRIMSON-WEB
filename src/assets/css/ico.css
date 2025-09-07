@@ -1,0 +1,24 @@
+i {display: flex; align-items: center; justify-content: center; background-repeat: no-repeat; background-position: center; background-size: contain;}
+
+/* icon : a b c d e f g h i j k l m n o p q r s t u v w x y z */
+.ic-arrow-left-16 {width: 1.6rem; height: 1.6rem; background-image: url(../../../public/img/ico/ic-arrow-left-16.svg);}
+
+.ic-link {width: 1.4rem; height: 1.4rem; background-image: url(../../../public/img/ico/ic-link.svg);}
+
+.ic-close-20 {width: 2rem; height: 2rem; background-image: url(../../../public/img/ico/ic-close-20.svg);}
+
+.ic-search {width: 2.4rem; height: 2.4rem; background-image: url(../../../public/img/ico/ic-search.svg);}
+
+.ic-ghost {width: 4rem; height: 4rem; background-image: url(../../../public/img/ico/ic-ghost.svg);}
+
+.ic-map-naver {width: 1.4rem; height: 1.4rem; background-image: url(../../../public/img/ico/ic-map-naver.svg);}
+.ic-map-kakao {width: 1.4rem; height: 1.4rem; background-image: url(../../../public/img/ico/ic-map-kakao.svg);}
+
+.ic-spot {width: 1.6rem; height: 1.6rem; background-image: url(../../../public/img/ico/ic-spot.svg);}
+.ic-spot.red {background-image: url(../../../public/img/ico/ic-spot-red.svg);}
+
+.ic-pagination {width: 2rem; height: 2rem;}
+.ic-pagination.first {background-image: url(../../../public/img/ico/ic-pagination-first.svg);}
+.ic-pagination.prev {background-image: url(../../../public/img/ico/ic-pagination-prev.svg);}
+.ic-pagination.next {background-image: url(../../../public/img/ico/ic-pagination-next.svg);}
+.ic-pagination.last {background-image: url(../../../public/img/ico/ic-pagination-last.svg);}
