@@ -24,8 +24,8 @@
   height: 500px;
 }
 
-/* 카카오 지도 컨테이너 */
-.kakao-map {
+/* 네이버 지도 컨테이너 */
+.naver-map {
   width: 100% !important;
   height: 100% !important;
   min-height: 500px !important;
@@ -149,7 +149,7 @@
     padding: 12px;
   }
   
-  .kakao-map {
+  .naver-map {
     min-height: 300px;
   }
   

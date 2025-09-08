@@ -5,21 +5,11 @@ import { KakaoPlace } from '../../../../../generated/dto';
 interface PlaceItemProps {
   place: KakaoPlace;
   onItemClick: (place: KakaoPlace) => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
-const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick }) => {
-  const getStatusColor = (status?: string): string => {
-    switch (status) {
-      case '영업중':
-        return '#FF6002';
-      case '오늘휴무':
-        return '#808991';
-      default:
-        return '#515C66';
-    }
-  };
-
-
+const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, onMouseEnter, onMouseLeave }) => {
   const getPinColor = (isSaved?: boolean): string => {
     return isSaved ? '#FF6002' : '#808991';
   };
@@ -29,7 +19,12 @@ const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick }) => {
   };
 
   return (
-    <div className="place-item" onClick={handleItemClick}>
+    <div 
+      className="place-item" 
+      onClick={handleItemClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <div className="place-image">
         <img 
           src={"https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=60&h=60&fit=crop"} 

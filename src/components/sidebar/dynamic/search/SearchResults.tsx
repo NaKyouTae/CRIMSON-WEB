@@ -10,26 +10,46 @@ interface SearchResultsProps {
   totalPages: number;
   onPageChange: (page: number) => void;
   onItemClick: (place: KakaoPlace) => void;
+  onPlaceFocus?: (index: number) => void;
+  onResetMap?: () => void;
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ 
-  searchQuery, 
   results, 
   currentPage, 
   totalPages, 
   onPageChange, 
-  onItemClick 
+  onItemClick,
+  onPlaceFocus,
+  onResetMap
 }) => {
   return (
     <div className='cont-box'>
       <div className='title'>
         <h2>검색 결과</h2>
-        <span>{results.length}건</span>
+        <div className='title-actions'>
+          <span>{results.length}건</span>
+          {onResetMap && (
+            <button 
+              className='reset-map-btn'
+              onClick={onResetMap}
+              title="지도를 원래 상태로 복원"
+            >
+              🗺️ 지도 원복
+            </button>
+          )}
+        </div>
       </div>
       
       <ul className='place-list'>
         {results.map((place, index) => (
-          <PlaceItem key={place.id || index} place={place} onItemClick={onItemClick} />
+          <PlaceItem 
+            key={place.id || index} 
+            place={place} 
+            onItemClick={onItemClick}
+            onMouseEnter={() => onPlaceFocus?.(index)}
+            onMouseLeave={() => onPlaceFocus?.(-1)}
+          />
         ))}
       </ul>
       

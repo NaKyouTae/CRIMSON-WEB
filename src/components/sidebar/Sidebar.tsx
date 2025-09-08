@@ -21,6 +21,9 @@ interface SidebarProps {
   sortOrder: string;
   setSortOrder: (order: string) => void;
   onPlaceClick: (place: KakaoPlace) => void;
+  onSearchResults?: (results: KakaoPlace[]) => void;
+  onPlaceFocus?: (index: number) => void;
+  onResetMap?: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
@@ -30,15 +33,16 @@ const Sidebar: React.FC<SidebarProps> = ({
   setActiveFilter, 
   sortOrder, 
   setSortOrder,
-  onPlaceClick
+  onPlaceClick,
+  onSearchResults,
+  onPlaceFocus,
+  onResetMap
 }) => {
   const [showCreateForm, setShowCreateForm] = useState<boolean>(false);
   const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
   const [showPlaceGroupDetail, setShowPlaceGroupDetail] = useState<boolean>(false);
   const [selectedPlaceGroup, setSelectedPlaceGroup] = useState<PlaceGroup>();
-  const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
   const [pageSize] = useState<number>(15);
   const [searchResults, setSearchResults] = useState<KakaoPlace[]>([]);
   
@@ -46,7 +50,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     if (!query.trim()) {
       setSearchResults([]);
       setCurrentPage(1);
-      setTotalPages(1);
       return;
     }
 
@@ -63,18 +66,28 @@ const Sidebar: React.FC<SidebarProps> = ({
         const places = result.data?.places || [];
         setSearchResults(places);
         setCurrentPage(page);
-        // API 응답에서 총 페이지 수를 가져오거나 계산
-        // 실제 API 응답 구조에 따라 조정 필요
-        setTotalPages(Math.ceil(places.length / pageSize));
+        
+        // 검색 결과를 부모 컴포넌트로 전달
+        if (onSearchResults) {
+          onSearchResults(places);
+        }
       } else {      
         setSearchResults([]);
         setCurrentPage(1);
-        setTotalPages(1);
+        
+        // 빈 결과를 부모 컴포넌트로 전달
+        if (onSearchResults) {
+          onSearchResults([]);
+        }
       }
     } catch (error: any) {
       setSearchResults([]);
       setCurrentPage(1);
-      setTotalPages(1);
+      
+      // 에러 시 빈 결과를 부모 컴포넌트로 전달
+      if (onSearchResults) {
+        onSearchResults([]);
+      }
     }
   };
 
@@ -116,12 +129,14 @@ const Sidebar: React.FC<SidebarProps> = ({
           <CreateSection onCreateClick={() => setShowCreateForm(true)} />
           {showSearchResults ? (
             <SearchResults 
-              searchQuery={searchQuery}
+              searchQuery=""
               results={searchResults}
               currentPage={currentPage}
-              totalPages={10}
+              totalPages={1}
               onPageChange={handlePageChange}
               onItemClick={onPlaceClick}
+              onPlaceFocus={onPlaceFocus}
+              onResetMap={onResetMap}
             />
           ) : (
             <PlaceGroupSection 
