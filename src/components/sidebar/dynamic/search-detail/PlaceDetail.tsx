@@ -54,30 +54,17 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ place, onClose }) => {
 
 
   // 카카오 플레이스 URL 생성
-  const getKakaoPlaceUrl = (placeId?: string): string => {
-    if (placeId) {
-      return `https://place.map.kakao.com/${placeId}`;
-    }
-    // 기본값으로 제공된 URL 사용
-    return 'https://place.map.kakao.com/16875542';
+  const getKakaoPlaceUrl = (): string => {
+    return `https://place.map.kakao.com/${place.id}`;
   };
 
   // 카카오 플레이스 iframe 컴포넌트
   const KakaoPlaceIframe = () => (
     <div className="kakao-place-container">
-      <div className="kakao-place-header">
-        <button 
-          className="external-link"
-          onClick={() => window.open(getKakaoPlaceUrl(place.kakaoPlaceId), '_blank')}
-        >
-          새 창에서 열기 ↗
-        </button>
-      </div>
       <iframe
-        src={getKakaoPlaceUrl(place.kakaoPlaceId)}
+        src={getKakaoPlaceUrl()}
         width="100%"
         height="100%"
-        frameBorder="0"
         title={`${place.name} - 카카오 플레이스`}
         sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
         style={{

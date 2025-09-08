@@ -37,6 +37,9 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null)
 
   const handlePlaceClick = (place: Place) => {
+    console.log("=======selectedPlace==========");
+    console.log(place);
+    console.log("=======selectedPlace==========");
     setSelectedPlace(place)
   }
 
