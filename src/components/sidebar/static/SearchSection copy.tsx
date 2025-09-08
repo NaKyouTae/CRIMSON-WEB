@@ -6,7 +6,7 @@ interface SearchSectionProps {
 }
 
 const SearchSection: React.FC<SearchSectionProps> = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState<string>('서교동');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const handleSearch = () => {
     if (searchQuery.trim()) {

@@ -1,4 +1,5 @@
 import { api, ApiResponse } from './index';
+import { KakaoPlaceListResult } from '../../generated/place/kako_place';
 
 // Place 관련 타입 정의
 export interface Place {
@@ -56,6 +57,12 @@ export interface PlaceSearchParams {
   limit?: number;
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
+}
+
+export interface PlaceKeywordSearchParams {
+  query: string;
+  page?: number;
+  size?: number;
 }
 
 export interface PlaceReview {
@@ -153,5 +160,10 @@ export const placeAPI = {
   // 인기 장소 조회
   getPopularPlaces: async (params: PlaceQueryParams = {}): Promise<ApiResponse<Place[]>> => {
     return await api.get('/places/popular', { params });
+  },
+
+  // 키워드로 장소 검색
+  searchPlacesByKeyword: async (params: PlaceKeywordSearchParams): Promise<ApiResponse<KakaoPlaceListResult>> => {
+    return await api.get('/places/keyword', { params });
   },
 };

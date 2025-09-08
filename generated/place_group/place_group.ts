@@ -16,6 +16,7 @@ export interface PlaceGroupCreateRequest {
   category: PlaceGroupCreateRequest_Category;
   memo: string;
   link: string;
+  icon: string;
 }
 
 export enum PlaceGroupCreateRequest_Status {
@@ -109,7 +110,7 @@ export interface PlaceGroupListResult {
 }
 
 function createBasePlaceGroupCreateRequest(): PlaceGroupCreateRequest {
-  return { name: "", status: 0, category: 0, memo: "", link: "" };
+  return { name: "", status: 0, category: 0, memo: "", link: "", icon: "" };
 }
 
 export const PlaceGroupCreateRequest: MessageFns<PlaceGroupCreateRequest> = {
@@ -128,6 +129,9 @@ export const PlaceGroupCreateRequest: MessageFns<PlaceGroupCreateRequest> = {
     }
     if (message.link !== "") {
       writer.uint32(42).string(message.link);
+    }
+    if (message.icon !== "") {
+      writer.uint32(50).string(message.icon);
     }
     return writer;
   },
@@ -179,6 +183,14 @@ export const PlaceGroupCreateRequest: MessageFns<PlaceGroupCreateRequest> = {
           message.link = reader.string();
           continue;
         }
+        case 6: {
+          if (tag !== 50) {
+            break;
+          }
+
+          message.icon = reader.string();
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -195,6 +207,7 @@ export const PlaceGroupCreateRequest: MessageFns<PlaceGroupCreateRequest> = {
       category: isSet(object.category) ? placeGroupCreateRequest_CategoryFromJSON(object.category) : 0,
       memo: isSet(object.memo) ? globalThis.String(object.memo) : "",
       link: isSet(object.link) ? globalThis.String(object.link) : "",
+      icon: isSet(object.icon) ? globalThis.String(object.icon) : "",
     };
   },
 
@@ -215,6 +228,9 @@ export const PlaceGroupCreateRequest: MessageFns<PlaceGroupCreateRequest> = {
     if (message.link !== "") {
       obj.link = message.link;
     }
+    if (message.icon !== "") {
+      obj.icon = message.icon;
+    }
     return obj;
   },
 
@@ -228,6 +244,7 @@ export const PlaceGroupCreateRequest: MessageFns<PlaceGroupCreateRequest> = {
     message.category = object.category ?? 0;
     message.memo = object.memo ?? "";
     message.link = object.link ?? "";
+    message.icon = object.icon ?? "";
     return message;
   },
 };

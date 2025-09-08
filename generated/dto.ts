@@ -16,8 +16,12 @@ export interface Token {
 
 export interface PlaceGroup {
   id: string;
+  name: string;
   status: PlaceGroup_PlaceGroupStatus;
-  description: string;
+  category: PlaceGroup_PlaceGroupCategory;
+  memo: string;
+  link: string;
+  icon: string;
   createdAt: number;
   updatedAt: number;
 }
@@ -53,6 +57,53 @@ export function placeGroup_PlaceGroupStatusToJSON(object: PlaceGroup_PlaceGroupS
     default:
       return "UNRECOGNIZED";
   }
+}
+
+export enum PlaceGroup_PlaceGroupCategory {
+  DATE = 0,
+  FAMILY = 1,
+  UNRECOGNIZED = -1,
+}
+
+export function placeGroup_PlaceGroupCategoryFromJSON(object: any): PlaceGroup_PlaceGroupCategory {
+  switch (object) {
+    case 0:
+    case "DATE":
+      return PlaceGroup_PlaceGroupCategory.DATE;
+    case 1:
+    case "FAMILY":
+      return PlaceGroup_PlaceGroupCategory.FAMILY;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return PlaceGroup_PlaceGroupCategory.UNRECOGNIZED;
+  }
+}
+
+export function placeGroup_PlaceGroupCategoryToJSON(object: PlaceGroup_PlaceGroupCategory): string {
+  switch (object) {
+    case PlaceGroup_PlaceGroupCategory.DATE:
+      return "DATE";
+    case PlaceGroup_PlaceGroupCategory.FAMILY:
+      return "FAMILY";
+    case PlaceGroup_PlaceGroupCategory.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
+export interface KakaoPlace {
+  id: string;
+  name: string;
+  categoryName: string;
+  categoryGroupCode: string;
+  categoryGroupName: string;
+  phone: string;
+  addressName: string;
+  roadAddressName: string;
+  x: string;
+  y: string;
+  url: string;
 }
 
 function createBaseToken(): Token {
@@ -132,7 +183,7 @@ export const Token: MessageFns<Token> = {
 };
 
 function createBasePlaceGroup(): PlaceGroup {
-  return { id: "", status: 0, description: "", createdAt: 0, updatedAt: 0 };
+  return { id: "", name: "", status: 0, category: 0, memo: "", link: "", icon: "", createdAt: 0, updatedAt: 0 };
 }
 
 export const PlaceGroup: MessageFns<PlaceGroup> = {
@@ -140,11 +191,23 @@ export const PlaceGroup: MessageFns<PlaceGroup> = {
     if (message.id !== "") {
       writer.uint32(10).string(message.id);
     }
-    if (message.status !== 0) {
-      writer.uint32(16).int32(message.status);
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
     }
-    if (message.description !== "") {
-      writer.uint32(26).string(message.description);
+    if (message.status !== 0) {
+      writer.uint32(24).int32(message.status);
+    }
+    if (message.category !== 0) {
+      writer.uint32(32).int32(message.category);
+    }
+    if (message.memo !== "") {
+      writer.uint32(42).string(message.memo);
+    }
+    if (message.link !== "") {
+      writer.uint32(50).string(message.link);
+    }
+    if (message.icon !== "") {
+      writer.uint32(778).string(message.icon);
     }
     if (message.createdAt !== 0) {
       writer.uint32(784).uint64(message.createdAt);
@@ -171,19 +234,51 @@ export const PlaceGroup: MessageFns<PlaceGroup> = {
           continue;
         }
         case 2: {
-          if (tag !== 16) {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 24) {
             break;
           }
 
           message.status = reader.int32() as any;
           continue;
         }
-        case 3: {
-          if (tag !== 26) {
+        case 4: {
+          if (tag !== 32) {
             break;
           }
 
-          message.description = reader.string();
+          message.category = reader.int32() as any;
+          continue;
+        }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.memo = reader.string();
+          continue;
+        }
+        case 6: {
+          if (tag !== 50) {
+            break;
+          }
+
+          message.link = reader.string();
+          continue;
+        }
+        case 97: {
+          if (tag !== 778) {
+            break;
+          }
+
+          message.icon = reader.string();
           continue;
         }
         case 98: {
@@ -214,8 +309,12 @@ export const PlaceGroup: MessageFns<PlaceGroup> = {
   fromJSON(object: any): PlaceGroup {
     return {
       id: isSet(object.id) ? globalThis.String(object.id) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
       status: isSet(object.status) ? placeGroup_PlaceGroupStatusFromJSON(object.status) : 0,
-      description: isSet(object.description) ? globalThis.String(object.description) : "",
+      category: isSet(object.category) ? placeGroup_PlaceGroupCategoryFromJSON(object.category) : 0,
+      memo: isSet(object.memo) ? globalThis.String(object.memo) : "",
+      link: isSet(object.link) ? globalThis.String(object.link) : "",
+      icon: isSet(object.icon) ? globalThis.String(object.icon) : "",
       createdAt: isSet(object.createdAt) ? globalThis.Number(object.createdAt) : 0,
       updatedAt: isSet(object.updatedAt) ? globalThis.Number(object.updatedAt) : 0,
     };
@@ -226,11 +325,23 @@ export const PlaceGroup: MessageFns<PlaceGroup> = {
     if (message.id !== "") {
       obj.id = message.id;
     }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
     if (message.status !== 0) {
       obj.status = placeGroup_PlaceGroupStatusToJSON(message.status);
     }
-    if (message.description !== "") {
-      obj.description = message.description;
+    if (message.category !== 0) {
+      obj.category = placeGroup_PlaceGroupCategoryToJSON(message.category);
+    }
+    if (message.memo !== "") {
+      obj.memo = message.memo;
+    }
+    if (message.link !== "") {
+      obj.link = message.link;
+    }
+    if (message.icon !== "") {
+      obj.icon = message.icon;
     }
     if (message.createdAt !== 0) {
       obj.createdAt = Math.round(message.createdAt);
@@ -247,10 +358,246 @@ export const PlaceGroup: MessageFns<PlaceGroup> = {
   fromPartial<I extends Exact<DeepPartial<PlaceGroup>, I>>(object: I): PlaceGroup {
     const message = createBasePlaceGroup();
     message.id = object.id ?? "";
+    message.name = object.name ?? "";
     message.status = object.status ?? 0;
-    message.description = object.description ?? "";
+    message.category = object.category ?? 0;
+    message.memo = object.memo ?? "";
+    message.link = object.link ?? "";
+    message.icon = object.icon ?? "";
     message.createdAt = object.createdAt ?? 0;
     message.updatedAt = object.updatedAt ?? 0;
+    return message;
+  },
+};
+
+function createBaseKakaoPlace(): KakaoPlace {
+  return {
+    id: "",
+    name: "",
+    categoryName: "",
+    categoryGroupCode: "",
+    categoryGroupName: "",
+    phone: "",
+    addressName: "",
+    roadAddressName: "",
+    x: "",
+    y: "",
+    url: "",
+  };
+}
+
+export const KakaoPlace: MessageFns<KakaoPlace> = {
+  encode(message: KakaoPlace, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    if (message.categoryName !== "") {
+      writer.uint32(26).string(message.categoryName);
+    }
+    if (message.categoryGroupCode !== "") {
+      writer.uint32(34).string(message.categoryGroupCode);
+    }
+    if (message.categoryGroupName !== "") {
+      writer.uint32(42).string(message.categoryGroupName);
+    }
+    if (message.phone !== "") {
+      writer.uint32(50).string(message.phone);
+    }
+    if (message.addressName !== "") {
+      writer.uint32(58).string(message.addressName);
+    }
+    if (message.roadAddressName !== "") {
+      writer.uint32(66).string(message.roadAddressName);
+    }
+    if (message.x !== "") {
+      writer.uint32(74).string(message.x);
+    }
+    if (message.y !== "") {
+      writer.uint32(82).string(message.y);
+    }
+    if (message.url !== "") {
+      writer.uint32(90).string(message.url);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): KakaoPlace {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseKakaoPlace();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.categoryName = reader.string();
+          continue;
+        }
+        case 4: {
+          if (tag !== 34) {
+            break;
+          }
+
+          message.categoryGroupCode = reader.string();
+          continue;
+        }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.categoryGroupName = reader.string();
+          continue;
+        }
+        case 6: {
+          if (tag !== 50) {
+            break;
+          }
+
+          message.phone = reader.string();
+          continue;
+        }
+        case 7: {
+          if (tag !== 58) {
+            break;
+          }
+
+          message.addressName = reader.string();
+          continue;
+        }
+        case 8: {
+          if (tag !== 66) {
+            break;
+          }
+
+          message.roadAddressName = reader.string();
+          continue;
+        }
+        case 9: {
+          if (tag !== 74) {
+            break;
+          }
+
+          message.x = reader.string();
+          continue;
+        }
+        case 10: {
+          if (tag !== 82) {
+            break;
+          }
+
+          message.y = reader.string();
+          continue;
+        }
+        case 11: {
+          if (tag !== 90) {
+            break;
+          }
+
+          message.url = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): KakaoPlace {
+    return {
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      categoryName: isSet(object.categoryName) ? globalThis.String(object.categoryName) : "",
+      categoryGroupCode: isSet(object.categoryGroupCode) ? globalThis.String(object.categoryGroupCode) : "",
+      categoryGroupName: isSet(object.categoryGroupName) ? globalThis.String(object.categoryGroupName) : "",
+      phone: isSet(object.phone) ? globalThis.String(object.phone) : "",
+      addressName: isSet(object.addressName) ? globalThis.String(object.addressName) : "",
+      roadAddressName: isSet(object.roadAddressName) ? globalThis.String(object.roadAddressName) : "",
+      x: isSet(object.x) ? globalThis.String(object.x) : "",
+      y: isSet(object.y) ? globalThis.String(object.y) : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
+    };
+  },
+
+  toJSON(message: KakaoPlace): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.categoryName !== "") {
+      obj.categoryName = message.categoryName;
+    }
+    if (message.categoryGroupCode !== "") {
+      obj.categoryGroupCode = message.categoryGroupCode;
+    }
+    if (message.categoryGroupName !== "") {
+      obj.categoryGroupName = message.categoryGroupName;
+    }
+    if (message.phone !== "") {
+      obj.phone = message.phone;
+    }
+    if (message.addressName !== "") {
+      obj.addressName = message.addressName;
+    }
+    if (message.roadAddressName !== "") {
+      obj.roadAddressName = message.roadAddressName;
+    }
+    if (message.x !== "") {
+      obj.x = message.x;
+    }
+    if (message.y !== "") {
+      obj.y = message.y;
+    }
+    if (message.url !== "") {
+      obj.url = message.url;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<KakaoPlace>, I>>(base?: I): KakaoPlace {
+    return KakaoPlace.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<KakaoPlace>, I>>(object: I): KakaoPlace {
+    const message = createBaseKakaoPlace();
+    message.id = object.id ?? "";
+    message.name = object.name ?? "";
+    message.categoryName = object.categoryName ?? "";
+    message.categoryGroupCode = object.categoryGroupCode ?? "";
+    message.categoryGroupName = object.categoryGroupName ?? "";
+    message.phone = object.phone ?? "";
+    message.addressName = object.addressName ?? "";
+    message.roadAddressName = object.roadAddressName ?? "";
+    message.x = object.x ?? "";
+    message.y = object.y ?? "";
+    message.url = object.url ?? "";
     return message;
   },
 };

@@ -2,25 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PlaceGroupItem from './PlaceGroupItem';
 import './PlaceGroupSection.css';
 import { placeGroupsAPI } from '../../../../api/placeGroups';
-
-// 타입 정의
-interface PlaceGroup {
-  id: string;
-  name: string;
-  status: number; // 1: PUBLIC, 2: PRIVATE
-  category: number; // 1: DATE, 2: FAMILY, etc.
-  memo: string;
-  link: string;
-  createdAt: number;
-  updatedAt: number;
-  // UI용 추가 필드들
-  icon: string;
-  role: string;
-  roleText: string;
-  privacyText: string;
-  members: number;
-  saved: number;
-}
+import { PlaceGroup } from '../../../../../generated/dto';
 
 interface PlaceGroupSectionProps {
   activeFilter: string;

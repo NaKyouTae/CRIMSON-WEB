@@ -1,31 +1,10 @@
 import React from 'react';
 import './PlaceItem.css';
-
-// 타입 정의
-interface Place {
-  id: string;
-  name: string;
-  address: string;
-  category: string;
-  image?: string;
-  isOpen?: boolean;
-  isSaved?: boolean;
-  status?: string;
-  savedCount?: number;
-  reviewCount?: number;
-  rating?: number;
-  description?: string;
-  phone?: string;
-  website?: string;
-  coordinates?: {
-    lat: number;
-    lng: number;
-  };
-}
+import { KakaoPlace } from '../../../../../generated/dto';
 
 interface PlaceItemProps {
-  place: Place;
-  onItemClick: (place: Place) => void;
+  place: KakaoPlace;
+  onItemClick: (place: KakaoPlace) => void;
 }
 
 const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick }) => {
@@ -40,6 +19,7 @@ const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick }) => {
     }
   };
 
+
   const getPinColor = (isSaved?: boolean): string => {
     return isSaved ? '#FF6002' : '#808991';
   };
@@ -49,40 +29,39 @@ const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick }) => {
   };
 
   return (
-    <li onClick={handleItemClick}>
-      <div className='img'>
+    <div className="place-item" onClick={handleItemClick}>
+      <div className="place-image">
         <img 
-          src={place.image || "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=60&h=60&fit=crop"} 
+          src={"https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=60&h=60&fit=crop"} 
           alt={place.name} 
         />
       </div>
-      <div className='txt'>
-        <div>
-          <div>
-            <p>{place.name}</p>
-            <ul>
-              <li>{place.category}</li>
-              <li style={{ color: getStatusColor(place.status) }}>{place.status || (place.isOpen ? '영업중' : '오늘휴무')}</li>
-            </ul>
+      <div className="place-content">
+        <div className="place-header">
+          <div className="place-name-section">
+            <h4 className="place-name">{place.name}</h4>
+            <span className="place-category">{place.categoryGroupName}</span>
           </div>
-          {/* case01 : 저장 안 된 장소 */}
-          <button className='trans'><i className='ic-spot' /></button>
-          {/* case02 : 저장 된 장소 */}
-          {/* <button className='trans'><i className='ic-spot' /></button> */}
+          <div 
+            className="place-pin" 
+            style={{ color: getPinColor(place.phone.length > 0) }}
+          >
+            📍
+          </div>
         </div>
-        <p>{place.address}</p>
-        <ul className='meta'>
-          <li><p>저장</p> <span>{place.savedCount || 0}</span></li>
-          {place.reviewCount && place.reviewCount > 0 && (
-            <li><p>리뷰</p> <span>{place.reviewCount}</span></li>
-          )}
-        </ul>
-        <ul className='link'>
-          <li><a href='#'>네이버지도</a></li>
-          <li><a href='#'>카카오맵</a></li>
-        </ul>
+        <div>
+          <span className="place-category">{place.categoryName}</span>
+        </div>
+        <div className="place-status">
+          <span className="location">{place.phone}</span>
+          <span className="separator"> | </span>
+          <span className="location">{place.addressName}</span>
+        </div>
+        <div className="place-maps">
+          <a href={place.url} target="_blank" rel="noopener noreferrer" className="map-link">카카오맵</a>
+        </div>
       </div>
-    </li>
+    </div>
   );
 };
 

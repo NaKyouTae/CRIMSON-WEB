@@ -1,17 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './PlaceGroupItem.css';
-
-// 타입 정의
-interface PlaceGroup {
-  id: string;
-  icon: string;
-  name: string;
-  role: string;
-  roleText: string;
-  privacyText: string;
-  members: number;
-  saved: number;
-}
+import { PlaceGroup } from '../../../../../generated/dto';
 
 interface PlaceGroupItemProps {
   item: PlaceGroup;
@@ -85,13 +74,13 @@ const PlaceGroupItem: React.FC<PlaceGroupItemProps> = ({
           <div className="item-info">
             <h3 className="item-title">{item.name}</h3>
             <div className="item-meta">
-              <span>{item.roleText}</span>
+              <span>{item.status}</span>
               <span className="separator">|</span>
-              <span>{item.privacyText}</span>
+              <span>{item.category}</span>
               <span className="separator">|</span>
-              <span>멤버 {item.members.toLocaleString()}</span>
+              <span>멤버 {0}</span>
               <span className="separator">|</span>
-              <span>저장 {item.saved.toLocaleString()}</span>
+              <span>저장 {0}</span>
             </div>
           </div>
           <div className="item-actions">

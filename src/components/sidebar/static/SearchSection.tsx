@@ -6,7 +6,7 @@ interface SearchSectionProps {
 }
 
 const SearchSection: React.FC<SearchSectionProps> = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState<string>('서교동');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -25,7 +25,7 @@ const SearchSection: React.FC<SearchSectionProps> = ({ onSearch }) => {
       <input type='text' placeholder='장소를 검색해 보세요.'
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyPress}
       />
       <button className='trans' onClick={handleSearch}><i className='ic-search' /></button>
     </div>

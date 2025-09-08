@@ -21,6 +21,7 @@ interface Place {
     lat: number;
     lng: number;
   };
+  kakaoPlaceId?: string; // 카카오 플레이스 ID 추가
 }
 
 interface PlaceDetailProps {
@@ -38,6 +39,7 @@ interface MenuItem {
 
 const PlaceDetail: React.FC<PlaceDetailProps> = ({ place, onClose }) => {
   const [activeTab, setActiveTab] = useState<string>('menu');
+  const [viewMode, setViewMode] = useState<'detail' | 'kakao'>('kakao'); // 상세보기 또는 카카오 플레이스 모드
 
   const getStatusColor = (status?: string): string => {
     switch (status) {
@@ -50,9 +52,42 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ place, onClose }) => {
     }
   };
 
-  const getPinColor = (isSaved?: boolean): string => {
-    return isSaved ? '#FF6002' : '#808991';
+
+  // 카카오 플레이스 URL 생성
+  const getKakaoPlaceUrl = (placeId?: string): string => {
+    if (placeId) {
+      return `https://place.map.kakao.com/${placeId}`;
+    }
+    // 기본값으로 제공된 URL 사용
+    return 'https://place.map.kakao.com/16875542';
   };
+
+  // 카카오 플레이스 iframe 컴포넌트
+  const KakaoPlaceIframe = () => (
+    <div className="kakao-place-container">
+      <div className="kakao-place-header">
+        <button 
+          className="external-link"
+          onClick={() => window.open(getKakaoPlaceUrl(place.kakaoPlaceId), '_blank')}
+        >
+          새 창에서 열기 ↗
+        </button>
+      </div>
+      <iframe
+        src={getKakaoPlaceUrl(place.kakaoPlaceId)}
+        width="100%"
+        height="100%"
+        frameBorder="0"
+        title={`${place.name} - 카카오 플레이스`}
+        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+        style={{
+          border: 'none',
+          borderRadius: '8px',
+          minHeight: '600px'
+        }}
+      />
+    </div>
+  );
 
   // 샘플 메뉴 데이터
   const menuItems: MenuItem[] = [
@@ -86,6 +121,19 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ place, onClose }) => {
     }
   ];
 
+  // 카카오 플레이스 모드일 때 iframe 표시
+  if (viewMode === 'kakao') {
+    return (
+      <div className='place-detail kakao-place-mode'>
+        <div className='place-detail-close'>
+          <button onClick={onClose}><i className='ic-close-20' /></button>
+        </div>
+        <KakaoPlaceIframe />
+      </div>
+    );
+  }
+
+  // 기본 상세보기 모드
   return (
     <div className='place-detail'>
       <div className='place-detail-close'>
@@ -123,6 +171,12 @@ const PlaceDetail: React.FC<PlaceDetailProps> = ({ place, onClose }) => {
             <button className='md'>공유</button>
             <button className='md'><i className='ic-map-naver' />네이버지도</button>
             <button className='md'><i className='ic-map-kakao' />카카오맵</button>
+            <button 
+              className='md kakao-place-btn'
+              onClick={() => setViewMode('kakao')}
+            >
+              <i className='ic-map-kakao' />카카오 플레이스 보기
+            </button>
           </div>
         </div>
       </div>

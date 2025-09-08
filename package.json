@@ -12,14 +12,14 @@
     "web"
   ],
   "scripts": {
-    "dev": "npm run proto:generate && vite",
-    "build": "npm run proto:generate && vite build",
+    "dev": "npm run proto && vite",
+    "build": "npm run proto && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "start": "vite",
-    "proto:generate": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./generated --ts_proto_opt=esModuleInterop=true,forceLong=number,useOptionals=messages --proto_path=./public/proto ./public/proto/**/*.proto",
-    "prebuild": "npm run proto:generate"
+    "proto": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./generated --ts_proto_opt=esModuleInterop=true,forceLong=number,useOptionals=messages --proto_path=./public/proto ./public/proto/**/*.proto",
+    "prebuild": "npm run proto"
   },
   "dependencies": {
     "axios": "^1.11.0",

@@ -1,34 +1,15 @@
 import React from 'react';
 import PlaceItem from './PlaceItem';
 import './SearchResults.css';
-
-// 타입 정의
-interface Place {
-  id: string;
-  name: string;
-  address: string;
-  category: string;
-  image?: string;
-  isOpen?: boolean;
-  savedCount?: number;
-  reviewCount?: number;
-  rating?: number;
-  description?: string;
-  phone?: string;
-  website?: string;
-  coordinates?: {
-    lat: number;
-    lng: number;
-  };
-}
+import { KakaoPlace } from '../../../../../generated/dto';
 
 interface SearchResultsProps {
   searchQuery: string;
-  results: Place[];
+  results: KakaoPlace[];
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-  onItemClick: (place: Place) => void;
+  onItemClick: (place: KakaoPlace) => void;
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ 
@@ -53,7 +34,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({
       </ul>
       
       {totalPages > 1 && (
-
         <div className='pagination'>
           <button disabled><i className='ic-pagination first'></i></button>
           <button

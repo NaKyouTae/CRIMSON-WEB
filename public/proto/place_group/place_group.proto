@@ -25,6 +25,7 @@ message PlaceGroupCreateRequest {
   Category category = 3;
   string memo = 4;
   string link = 5;
+  string icon = 6;
 }
 
 message PlaceGroupCreateResponse {
