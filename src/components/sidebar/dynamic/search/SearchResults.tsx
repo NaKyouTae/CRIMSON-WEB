@@ -12,6 +12,7 @@ interface SearchResultsProps {
   onItemClick: (place: KakaoPlace) => void;
   onPlaceFocus?: (index: number) => void;
   onResetMap?: () => void;
+  onAddClick?: (place: KakaoPlace) => void;
   focusedPlaceIndex?: number;
 }
 
@@ -23,6 +24,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   onItemClick,
   onPlaceFocus,
   onResetMap,
+  onAddClick,
   focusedPlaceIndex
 }) => {
   return (
@@ -43,6 +45,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({
               onItemClick(place);
               onPlaceFocus?.(index);
             }}
+            onAddClick={onAddClick}
             isFocused={focusedPlaceIndex === index}
           />
         ))}

@@ -24,6 +24,7 @@ interface SidebarProps {
   onSearchResults?: (results: KakaoPlace[]) => void;
   onPlaceFocus?: (index: number) => void;
   onResetMap?: () => void;
+  onAddClick?: (place: KakaoPlace) => void;
   focusedPlaceIndex?: number;
 }
 
@@ -38,6 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   onSearchResults,
   onPlaceFocus,
   onResetMap,
+  onAddClick,
   focusedPlaceIndex
 }) => {
   const [showCreateForm, setShowCreateForm] = useState<boolean>(false);
@@ -139,6 +141,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               onItemClick={onPlaceClick}
               onPlaceFocus={onPlaceFocus}
               onResetMap={onResetMap}
+              onAddClick={onAddClick}
               focusedPlaceIndex={focusedPlaceIndex}
             />
           ) : (

@@ -120,10 +120,11 @@
   color: #666666;
 }
 
-.place-maps {
+.place-actions {
   display: flex;
-  gap: 6px;
-  margin-top: 0;
+  gap: 8px;
+  margin-top: 4px;
+  align-items: center;
 }
 
 .map-link {
@@ -137,6 +138,33 @@
 
 .map-link:hover {
   color: #ff6b6b;
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 4px;
+  height: 20px;
+  width: 40px;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  line-height: 1.1;
+}
+
+.add-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+}
+
+.add-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 /* 포커싱 관련 스타일 */

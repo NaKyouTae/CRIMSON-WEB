@@ -5,10 +5,11 @@ import { KakaoPlace } from '../../../../../generated/dto';
 interface PlaceItemProps {
   place: KakaoPlace;
   onItemClick: (place: KakaoPlace) => void;
+  onAddClick?: (place: KakaoPlace) => void;
   isFocused?: boolean;
 }
 
-const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, isFocused }) => {
+const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, onAddClick, isFocused }) => {
   const getPinColor = (isSaved?: boolean): string => {
     return isSaved ? '#FF6002' : '#808991';
   };
@@ -16,6 +17,11 @@ const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, isFocused }) 
   const handleItemClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onItemClick(place);
+  };
+
+  const handleAddClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onAddClick?.(place);
   };
 
   return (
@@ -50,8 +56,15 @@ const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, isFocused }) 
           <span className="separator"> | </span>
           <span className="location">{place.addressName}</span>
         </div>
-        <div className="place-maps">
-          <a href={place.url} target="_blank" rel="noopener noreferrer" className="map-link">카카오맵</a>
+        <div className="place-actions">
+          {onAddClick && (
+            <button className="add-btn" type="button"
+              onClick={handleAddClick}
+              title="장소 그룹에 추가"
+            >
+              ➕ 추가
+            </button>
+          )}
         </div>
       </div>
     </div>

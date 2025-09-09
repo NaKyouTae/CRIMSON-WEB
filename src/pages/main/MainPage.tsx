@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './MainPage.css'
 import { Sidebar, MapContainer, PlaceDetail } from '../../components'
+import PlaceGroupMapping from '../../components/PlaceGroupMapping'
 import { loginAPI } from '../../api/auth'
 import { tokenStorage } from '../../api'
 import { KakaoPlace } from '../../../generated/dto';
@@ -19,6 +20,8 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
   const [searchResults, setSearchResults] = useState<KakaoPlace[]>([])
   const [focusedPlaceIndex, setFocusedPlaceIndex] = useState<number>(-1)
   const [resetMapTrigger, setResetMapTrigger] = useState<number>(0)
+  const [showPlaceGroupMapping, setShowPlaceGroupMapping] = useState<boolean>(false)
+  const [selectedPlaceForMapping, setSelectedPlaceForMapping] = useState<KakaoPlace | null>(null)
 
   const handlePlaceClick = (place: KakaoPlace) => {
     setSelectedPlace(place)
@@ -35,6 +38,21 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
 
   const handleResetMap = () => {
     setResetMapTrigger(prev => prev + 1)
+  }
+
+  const handleAddClick = (place: KakaoPlace) => {
+    setSelectedPlaceForMapping(place)
+    setShowPlaceGroupMapping(true)
+  }
+
+  const handleClosePlaceGroupMapping = () => {
+    setShowPlaceGroupMapping(false)
+    setSelectedPlaceForMapping(null)
+  }
+
+  const handleMappingSuccess = () => {
+    console.log('장소가 그룹에 성공적으로 추가되었습니다!')
+    // 필요시 추가 로직 (예: 그룹 목록 새로고침)
   }
 
   const handleCloseDetail = () => {
@@ -73,6 +91,7 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
           onSearchResults={handleSearchResults}
           onPlaceFocus={handlePlaceFocus}
           onResetMap={handleResetMap}
+          onAddClick={handleAddClick}
           focusedPlaceIndex={focusedPlaceIndex}
         />
         <MapContainer 
@@ -82,6 +101,13 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
         />
         {selectedPlace && (
           <PlaceDetail place={selectedPlace} onClose={handleCloseDetail} />
+        )}
+        {showPlaceGroupMapping && selectedPlaceForMapping && (
+          <PlaceGroupMapping 
+            place={selectedPlaceForMapping} 
+            onClose={handleClosePlaceGroupMapping}
+            onSuccess={handleMappingSuccess}
+          />
         )}
       </main>
     </>
