@@ -29,20 +29,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({
     <div className='cont-box'>
       <div className='title'>
         <h2>검색 결과</h2>
+        {onResetMap && (<a onClick={onResetMap} title="지도를 원래 상태로 복원">원위치</a>)}
         <div className='title-actions'>
           <span>{results.length}건</span>
-          {onResetMap && (
-            <button 
-              className='reset-map-btn'
-              onClick={onResetMap}
-              title="지도를 원래 상태로 복원"
-            >
-              🗺️ 지도 원복
-            </button>
-          )}
         </div>
       </div>
-      
       <ul className='place-list'>
         {results.map((place, index) => (
           <PlaceItem 
