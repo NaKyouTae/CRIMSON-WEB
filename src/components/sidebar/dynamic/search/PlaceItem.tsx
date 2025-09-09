@@ -5,25 +5,23 @@ import { KakaoPlace } from '../../../../../generated/dto';
 interface PlaceItemProps {
   place: KakaoPlace;
   onItemClick: (place: KakaoPlace) => void;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
+  isFocused?: boolean;
 }
 
-const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, onMouseEnter, onMouseLeave }) => {
+const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, isFocused }) => {
   const getPinColor = (isSaved?: boolean): string => {
     return isSaved ? '#FF6002' : '#808991';
   };
 
-  const handleItemClick = () => {
+  const handleItemClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     onItemClick(place);
   };
 
   return (
     <div 
-      className="place-item" 
+      className={`place-item ${isFocused ? 'focused' : ''}`}
       onClick={handleItemClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
     >
       <div className="place-image">
         <img 

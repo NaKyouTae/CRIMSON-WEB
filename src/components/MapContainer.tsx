@@ -104,8 +104,8 @@ const MapContainer: React.FC<MapContainerProps> = ({ onSearch, searchResults = [
         return;
       }
 
-      const initialCenter = new window.naver.maps.LatLng(33.450701, 126.570667); // 제주도 좌표
-      const initialZoom = 10;
+      const initialCenter = new window.naver.maps.LatLng(36.5, 127.5); // 대한민국 중심 좌표
+      const initialZoom = 7;
       
       const options = {
         center: initialCenter,
@@ -141,24 +141,7 @@ const MapContainer: React.FC<MapContainerProps> = ({ onSearch, searchResults = [
       // 지도 로드 완료 이벤트
       window.naver.maps.Event.addListener(mapInstance, 'init', () => {
         console.log('🎉 네이버 지도 로드 완료!');
-        
-        // 테스트용 마커 추가
-        const testMarker = new window.naver.maps.Marker({
-          position: options.center,
-          map: mapInstance
-        });
-        
-        // 테스트용 인포윈도우
-        const testInfoWindow = new window.naver.maps.InfoWindow({
-          content: '<div style="padding: 10px; text-align: center;"><strong>🎉 네이버 지도 로드 성공!</strong><br>제주도 위치입니다.</div>'
-        });
-        
-        testInfoWindow.open(mapInstance, testMarker);
-        
-        // 3초 후 테스트 인포윈도우 닫기
-        setTimeout(() => {
-          testInfoWindow.close();
-        }, 3000);
+        setIsLoaded(true);
       });
 
       console.log('✅ 네이버 지도 초기화 완료');
@@ -311,7 +294,7 @@ const MapContainer: React.FC<MapContainerProps> = ({ onSearch, searchResults = [
               border: 2px solid white;
               box-shadow: 0 2px 6px rgba(0,0,0,0.3);
               cursor: pointer;
-              transition: all 0.3s ease;
+              transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             ">
               ${index}
             </div>
@@ -383,23 +366,29 @@ const MapContainer: React.FC<MapContainerProps> = ({ onSearch, searchResults = [
         markerElement.style.zIndex = '100';
         markerElement.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
         markerElement.style.backgroundColor = '#ff6b6b';
+        markerElement.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       }
     });
 
-    // 포커싱할 마커 강조
+    // 포커싱할 마커 강조 (애니메이션과 함께)
     const targetMarker = markers[index];
     const markerElement = document.getElementById(`marker-${index}`);
     if (markerElement) {
+      markerElement.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       markerElement.style.transform = 'scale(1.3)';
       markerElement.style.zIndex = '1000';
       markerElement.style.boxShadow = '0 6px 16px rgba(0,0,0,0.5)';
       markerElement.style.backgroundColor = '#e55a5a';
     }
 
-    // 지도 중심을 해당 마커로 이동
+    // 지도 중심을 해당 마커로 부드럽게 이동 (줌 레벨은 유지)
     const position = targetMarker.getPosition();
-    map.setCenter(position);
-    map.setZoom(Math.max(map.getZoom(), 15));
+    
+    // 네이버 지도 API의 panTo 메서드와 TransitionOptions 사용
+    map.panTo(position, {
+      duration: 500, // 2초 동안 부드럽게 이동
+      easing: 'easeOutCubic' // 자연스러운 감속 효과
+    });
   };
 
   // 지도를 원래 상태로 복원하는 함수
@@ -417,9 +406,15 @@ const MapContainer: React.FC<MapContainerProps> = ({ onSearch, searchResults = [
       }
     });
 
-    // 지도를 초기 상태로 복원
-    map.setCenter(initialMapState.center);
-    map.setZoom(initialMapState.zoom);
+    // 지도를 초기 상태로 부드럽게 복원
+    map.panTo(initialMapState.center, {
+      duration: 2000, // 2초 동안 부드럽게 이동
+      easing: 'ease-out'
+    });
+    map.setZoom(initialMapState.zoom, {
+      duration: 2000, // 2초 동안 부드럽게 줌 변경
+      easing: 'ease-out'
+    });
     
     // 인포윈도우 닫기
     if (infowindow) {

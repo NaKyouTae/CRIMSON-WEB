@@ -73,6 +73,7 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
           onSearchResults={handleSearchResults}
           onPlaceFocus={handlePlaceFocus}
           onResetMap={handleResetMap}
+          focusedPlaceIndex={focusedPlaceIndex}
         />
         <MapContainer 
           searchResults={searchResults} 

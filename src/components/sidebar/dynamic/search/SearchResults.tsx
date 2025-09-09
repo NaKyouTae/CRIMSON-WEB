@@ -12,6 +12,7 @@ interface SearchResultsProps {
   onItemClick: (place: KakaoPlace) => void;
   onPlaceFocus?: (index: number) => void;
   onResetMap?: () => void;
+  focusedPlaceIndex?: number;
 }
 
 const SearchResults: React.FC<SearchResultsProps> = ({ 
@@ -21,7 +22,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   onPageChange, 
   onItemClick,
   onPlaceFocus,
-  onResetMap
+  onResetMap,
+  focusedPlaceIndex
 }) => {
   return (
     <div className='cont-box'>
@@ -46,9 +48,11 @@ const SearchResults: React.FC<SearchResultsProps> = ({
           <PlaceItem 
             key={place.id || index} 
             place={place} 
-            onItemClick={onItemClick}
-            onMouseEnter={() => onPlaceFocus?.(index)}
-            onMouseLeave={() => onPlaceFocus?.(-1)}
+            onItemClick={(place) => {
+              onItemClick(place);
+              onPlaceFocus?.(index);
+            }}
+            isFocused={focusedPlaceIndex === index}
           />
         ))}
       </ul>

@@ -138,3 +138,11 @@
 .map-link:hover {
   color: #ff6b6b;
 }
+
+/* 포커싱 관련 스타일 */
+.place-item.focused {
+  border-color: #ff6b6b;
+  background-color: #fff5f5;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+}
+
