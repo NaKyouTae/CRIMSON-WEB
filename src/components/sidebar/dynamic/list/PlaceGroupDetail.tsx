@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './PlaceGroupDetail.css';
-import { placeAPI } from '../../../../api/places';
-import { showSuccessMessage, showErrorMessage } from '../../../../utils/apiClient';
-import { KakaoPlace, PlaceGroup } from '../../../../../generated/dto';
+import { Place, placeAPI } from '../../../../api/places';
+import { showErrorMessage } from '../../../../utils/apiClient';
+import PlaceItem from '../search/PlaceItem';
+import { PlaceGroup } from '../../../../../generated/dto';
 
 
 interface PlaceGroupDetailProps {
@@ -13,20 +14,57 @@ interface PlaceGroupDetailProps {
 const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack }) => {
   const [activeButton, setActiveButton] = useState<string>('share');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<KakaoPlace[]>([]);
+  const [searchResults, setSearchResults] = useState<Place[]>([]);
+  const [groupPlaces, setGroupPlaces] = useState<Place[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [isLoadingPlaces, setIsLoadingPlaces] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [pageSize] = useState<number>(20);
 
-  // 네이버지도 링크 생성 함수 (매장명 + 위경도 조합)
-  const generateNaverMapUrl = (place: KakaoPlace): string => {
-    const placeName = encodeURIComponent(place.name);
-    const coordinates = `${place.y},${place.x}`;
-    
-    // 매장명과 좌표를 함께 사용하여 더 정확한 검색
-    return `https://map.naver.com/v5/search/${placeName}@${coordinates}`;
+  // 그룹의 장소들을 로드하는 useEffect
+  useEffect(() => {
+    loadGroupPlaces();
+  }, [placeGroup.id]);
+
+  // 그룹의 장소들을 로드하는 함수
+  const loadGroupPlaces = async () => {
+    try {
+      setIsLoadingPlaces(true);
+      // GET /api/places/{placeGroupId} API 호출
+      const result = await placeAPI.getPlacesByGroupId(placeGroup.id);
+      
+      console.log('그룹 장소 로드 결과:', result);
+      
+      if (result.success && result.data) {
+        // API에서 받은 데이터를 Place 타입에 맞게 변환
+        const resultPlaces: Place[] = result.data.places.map(place => ({
+          id: place.id,
+          name: place.name,
+          addressName: place.address, // Place 타입의 addressName
+          address: place.address, // Place 타입의 address
+          categoryName: place.category, // Place 타입의 categoryName
+          category: place.category, // Place 타입의 category
+          phone: place.phone || '',
+          x: place.coordinates?.lng?.toString() || '0',
+          y: place.coordinates?.lat?.toString() || '0',
+          url: place.website || '',
+        }));
+        
+        setGroupPlaces(resultPlaces);
+      } else {
+        setGroupPlaces([]);
+        showErrorMessage(result.error || '그룹의 장소를 불러오는데 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('그룹 장소 로드 실패:', error);
+      showErrorMessage('그룹의 장소를 불러오는데 실패했습니다.');
+      setGroupPlaces([]);
+    } finally {
+      setIsLoadingPlaces(false);
+    }
   };
+
 
   const handleButtonClick = async (buttonType: string) => {
     setActiveButton(buttonType);
@@ -50,7 +88,7 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack 
       });
       
       if (result.success) {
-        // KakaoPlaceListResult에서 places 배열 추출
+        // PlaceListResult에서 places 배열 추출
         const places = result.data?.places || [];
         setSearchResults(places);
         setCurrentPage(page);
@@ -99,28 +137,6 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack 
     }
   };
 
-  // 장소를 PlaceGroup에 추가
-  const handleAddPlaceToGroup = async (placeId: string) => {
-    try {
-      // TODO: placeGroupsAPI.addPlaceToGroup 함수가 구현되면 사용
-      // const result = await placeGroupsAPI.addPlaceToGroup(placeGroup.id, { placeId });
-      
-      // 임시로 성공 메시지만 표시
-      showSuccessMessage('장소가 PlaceGroup에 추가되었습니다.');
-      // 검색 결과에서 제거
-      setSearchResults(prev => prev.filter(place => place.id !== placeId));
-      
-      // 실제 API 호출 시 아래 코드 사용
-      // if (result.success) {
-      //   showSuccessMessage('장소가 PlaceGroup에 추가되었습니다.');
-      //   setSearchResults(prev => prev.filter(place => place.id !== placeId));
-      // } else {
-      //   showErrorMessage(result.error || '장소 추가 중 오류가 발생했습니다.');
-      // }
-    } catch (error: any) {
-      showErrorMessage(`장소 추가 중 오류가 발생했습니다: ${error.message}`);
-    }
-  };
 
   return (
     <div className="place-group-detail">
@@ -222,69 +238,31 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack 
       </div>
 
       <div className="search-results">
-        {searchResults.length > 0 ? (
-          searchResults.map((place) => (
-            <div key={place.id} className="place-item">
-              <div className="place-image">
-                <img 
-                  src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=60&h=60&fit=crop" 
-                  alt={place.name} 
-                />
-              </div>
-              <div className="place-content">
-                <div className="place-header">
-                  <div className="place-name-section">
-                    <h4 className="place-name">{place.name}</h4>
-                    <span className="place-category">{place.categoryName}</span>
-                  </div>
-                  <div className="place-pin" style={{ color: '#ff6b6b' }}>📍</div>
-                </div>
-                <div className="place-status">
-                  <span className="status-text" style={{ color: '#ff6b6b' }}>
-                    영업중
-                  </span>
-                  <span className="separator"> | </span>
-                  <span className="location">{place.addressName}</span>
-                </div>
-                <div className="place-meta">
-                  <span className="category-group">{place.categoryGroupName}</span>
-                  {place.phone && (
-                    <>
-                      <span className="separator"> | </span>
-                      <span className="phone">{place.phone}</span>
-                    </>
-                  )}
-                </div>
-                <div className="place-maps">
-                  <a href={place.url} className="map-link" target="_blank" rel="noopener noreferrer">카카오맵</a>
-                  <span className="separator"> | </span>
-                  <a 
-                    href={generateNaverMapUrl(place)} 
-                    className="map-link" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    네이버지도
-                  </a>
-                </div>
-                <div className="place-actions">
-                  <button 
-                    className="add-to-group-btn"
-                    onClick={() => handleAddPlaceToGroup(place.id)}
-                  >
-                    그룹에 추가
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))
-        ) : searchQuery ? (
-          <div className="no-results">
-            <p>검색 결과가 없습니다.</p>
+        {isLoadingPlaces ? (
+          <div className="loading-results">
+            <p>장소를 불러오는 중...</p>
           </div>
+        ) : groupPlaces.length > 0 ? (
+          <ul className="place-list">
+            {groupPlaces.map((place, index) => (
+              <PlaceItem
+                key={place.id || index}
+                place={place}
+                onItemClick={(place) => {
+                  // 장소 클릭 시 상세보기 (필요시 구현)
+                  console.log('장소 클릭:', place);
+                }}
+                onAddClick={(place) => {
+                  // 장소를 그룹에서 제거 (필요시 구현)
+                  console.log('장소 제거:', place);
+                }}
+                isFocused={false}
+              />
+            ))}
+          </ul>
         ) : (
           <div className="default-results">
-            <p>장소를 검색해보세요.</p>
+            <p>이 그룹에 저장된 장소가 없습니다.</p>
           </div>
         )}
       </div>

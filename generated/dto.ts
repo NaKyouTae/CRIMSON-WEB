@@ -106,6 +106,20 @@ export interface KakaoPlace {
   url: string;
 }
 
+export interface Place {
+  id: string;
+  locationId: string;
+  name: string;
+  categoryName: string;
+  addressName: string;
+  phone: string;
+  lat: string;
+  lng: string;
+  url: string;
+  createdAt: number;
+  updatedAt: number;
+}
+
 function createBaseToken(): Token {
   return { accessToken: "", refreshToken: "" };
 }
@@ -598,6 +612,238 @@ export const KakaoPlace: MessageFns<KakaoPlace> = {
     message.x = object.x ?? "";
     message.y = object.y ?? "";
     message.url = object.url ?? "";
+    return message;
+  },
+};
+
+function createBasePlace(): Place {
+  return {
+    id: "",
+    locationId: "",
+    name: "",
+    categoryName: "",
+    addressName: "",
+    phone: "",
+    lat: "",
+    lng: "",
+    url: "",
+    createdAt: 0,
+    updatedAt: 0,
+  };
+}
+
+export const Place: MessageFns<Place> = {
+  encode(message: Place, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.locationId !== "") {
+      writer.uint32(18).string(message.locationId);
+    }
+    if (message.name !== "") {
+      writer.uint32(26).string(message.name);
+    }
+    if (message.categoryName !== "") {
+      writer.uint32(34).string(message.categoryName);
+    }
+    if (message.addressName !== "") {
+      writer.uint32(42).string(message.addressName);
+    }
+    if (message.phone !== "") {
+      writer.uint32(50).string(message.phone);
+    }
+    if (message.lat !== "") {
+      writer.uint32(58).string(message.lat);
+    }
+    if (message.lng !== "") {
+      writer.uint32(66).string(message.lng);
+    }
+    if (message.url !== "") {
+      writer.uint32(74).string(message.url);
+    }
+    if (message.createdAt !== 0) {
+      writer.uint32(784).uint64(message.createdAt);
+    }
+    if (message.updatedAt !== 0) {
+      writer.uint32(792).uint64(message.updatedAt);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): Place {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePlace();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.locationId = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        }
+        case 4: {
+          if (tag !== 34) {
+            break;
+          }
+
+          message.categoryName = reader.string();
+          continue;
+        }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.addressName = reader.string();
+          continue;
+        }
+        case 6: {
+          if (tag !== 50) {
+            break;
+          }
+
+          message.phone = reader.string();
+          continue;
+        }
+        case 7: {
+          if (tag !== 58) {
+            break;
+          }
+
+          message.lat = reader.string();
+          continue;
+        }
+        case 8: {
+          if (tag !== 66) {
+            break;
+          }
+
+          message.lng = reader.string();
+          continue;
+        }
+        case 9: {
+          if (tag !== 74) {
+            break;
+          }
+
+          message.url = reader.string();
+          continue;
+        }
+        case 98: {
+          if (tag !== 784) {
+            break;
+          }
+
+          message.createdAt = longToNumber(reader.uint64());
+          continue;
+        }
+        case 99: {
+          if (tag !== 792) {
+            break;
+          }
+
+          message.updatedAt = longToNumber(reader.uint64());
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Place {
+    return {
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      locationId: isSet(object.locationId) ? globalThis.String(object.locationId) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      categoryName: isSet(object.categoryName) ? globalThis.String(object.categoryName) : "",
+      addressName: isSet(object.addressName) ? globalThis.String(object.addressName) : "",
+      phone: isSet(object.phone) ? globalThis.String(object.phone) : "",
+      lat: isSet(object.lat) ? globalThis.String(object.lat) : "",
+      lng: isSet(object.lng) ? globalThis.String(object.lng) : "",
+      url: isSet(object.url) ? globalThis.String(object.url) : "",
+      createdAt: isSet(object.createdAt) ? globalThis.Number(object.createdAt) : 0,
+      updatedAt: isSet(object.updatedAt) ? globalThis.Number(object.updatedAt) : 0,
+    };
+  },
+
+  toJSON(message: Place): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.locationId !== "") {
+      obj.locationId = message.locationId;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.categoryName !== "") {
+      obj.categoryName = message.categoryName;
+    }
+    if (message.addressName !== "") {
+      obj.addressName = message.addressName;
+    }
+    if (message.phone !== "") {
+      obj.phone = message.phone;
+    }
+    if (message.lat !== "") {
+      obj.lat = message.lat;
+    }
+    if (message.lng !== "") {
+      obj.lng = message.lng;
+    }
+    if (message.url !== "") {
+      obj.url = message.url;
+    }
+    if (message.createdAt !== 0) {
+      obj.createdAt = Math.round(message.createdAt);
+    }
+    if (message.updatedAt !== 0) {
+      obj.updatedAt = Math.round(message.updatedAt);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Place>, I>>(base?: I): Place {
+    return Place.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Place>, I>>(object: I): Place {
+    const message = createBasePlace();
+    message.id = object.id ?? "";
+    message.locationId = object.locationId ?? "";
+    message.name = object.name ?? "";
+    message.categoryName = object.categoryName ?? "";
+    message.addressName = object.addressName ?? "";
+    message.phone = object.phone ?? "";
+    message.lat = object.lat ?? "";
+    message.lng = object.lng ?? "";
+    message.url = object.url ?? "";
+    message.createdAt = object.createdAt ?? 0;
+    message.updatedAt = object.updatedAt ?? 0;
     return message;
   },
 };

@@ -1,11 +1,11 @@
 import React from 'react';
 import './PlaceItem.css';
-import { KakaoPlace } from '../../../../../generated/dto';
+import { Place } from '../../../../../generated/dto';
 
 interface PlaceItemProps {
-  place: KakaoPlace;
-  onItemClick: (place: KakaoPlace) => void;
-  onAddClick?: (place: KakaoPlace) => void;
+  place: Place;
+  onItemClick: (place: Place) => void;
+  onAddClick?: (place: Place) => void;
   isFocused?: boolean;
 }
 
@@ -39,7 +39,7 @@ const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, onAddClick, i
         <div className="place-header">
           <div className="place-name-section">
             <h4 className="place-name">{place.name}</h4>
-            <span className="place-category">{place.categoryGroupName}</span>
+            <span className="place-category">{place.categoryName}</span>
           </div>
           <div 
             className="place-pin" 

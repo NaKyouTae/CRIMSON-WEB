@@ -1,5 +1,6 @@
 import { api, ApiResponse } from './index';
 import { KakaoPlaceListResult } from '../../generated/place/kako_place';
+import { PlaceCreateRequest } from '../../generated/place/place';
 
 // Place 관련 타입 정의
 export interface Place {
@@ -108,7 +109,7 @@ export const placeAPI = {
   },
 
   // 장소 생성
-  createPlace: async (data: PlaceCreateData): Promise<ApiResponse<Place>> => {
+  createPlace: async (data: PlaceCreateRequest): Promise<ApiResponse<Place>> => {
     return await api.post('/places', data);
   },
 
@@ -165,5 +166,10 @@ export const placeAPI = {
   // 키워드로 장소 검색
   searchPlacesByKeyword: async (params: PlaceKeywordSearchParams): Promise<ApiResponse<KakaoPlaceListResult>> => {
     return await api.get('/places/keyword', { params });
+  },
+
+  // 그룹 ID로 장소 목록 조회
+  getPlacesByGroupId: async (placeGroupId: string): Promise<ApiResponse<Place[]>> => {
+    return await api.get(`/places/${placeGroupId}`);
   },
 };

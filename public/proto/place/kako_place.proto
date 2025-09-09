@@ -6,7 +6,7 @@ package com.spectrum.crimson.proto.place;
 
 option java_multiple_files = true;
 option java_package = "com.spectrum.crimson.proto.place";
-option java_outer_classname = "PlaceProto";
+option java_outer_classname = "KakaoPlaceProto";
 
 message KakaoPlaceListResult {
   repeated KakaoPlace places = 1;

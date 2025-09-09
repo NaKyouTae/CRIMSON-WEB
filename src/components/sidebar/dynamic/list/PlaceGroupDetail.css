@@ -479,3 +479,21 @@
   color: #666666;
   font-weight: 500;
 }
+
+/* PlaceItem 리스트 스타일 */
+.place-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.loading-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666666;
+}
+
+.loading-results p {
+  margin: 0;
+  font-size: 14px;
+}

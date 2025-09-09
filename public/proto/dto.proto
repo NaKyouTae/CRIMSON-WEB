@@ -47,3 +47,18 @@ message KakaoPlace {
   string y = 10;
   string url = 11;
 }
+
+message Place {
+  string id = 1;
+  string location_id = 2;
+  string name = 3;
+  string category_name = 4;
+  string address_name = 5;
+  string phone = 6;
+  string lat = 7;
+  string lng = 8;
+  string url = 9;
+
+  uint64 created_at = 98;
+  uint64 updated_at = 99;
+}

@@ -1,5 +1,5 @@
 import apiClient from './index';
-import { PlaceGroupCreateRequest, PlaceGroupCreateRequest_Status, PlaceGroupCreateRequest_Category } from '../../generated/place_group/place_group';
+import { PlaceGroupCreateRequest, PlaceGroupCreateRequest_Status, PlaceGroupCreateRequest_Category, PlaceGroupListResult } from '../../generated/place_group/place_group';
 
 export const placeGroupsAPI = {
   createPlaceGroup: async (request: PlaceGroupCreateRequest): Promise<any> => {
@@ -7,7 +7,7 @@ export const placeGroupsAPI = {
     return response.data;
   },
   
-  getPlaceGroups: async (): Promise<any> => {
+  getPlaceGroups: async (): Promise<PlaceGroupListResult> => {
     const response = await apiClient.get('/place-groups');
     return response.data;
   },

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './MainPage.css'
 import { Sidebar, MapContainer, PlaceDetail } from '../../components'
-import PlaceGroupMapping from '../../components/PlaceGroupMapping'
+import PlaceGroupMapping from '../../components/sidebar/dynamic/mapping/PlaceGroupMapping'
 import { loginAPI } from '../../api/auth'
 import { tokenStorage } from '../../api'
 import { KakaoPlace } from '../../../generated/dto';

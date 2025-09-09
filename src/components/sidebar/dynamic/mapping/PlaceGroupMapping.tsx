@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './PlaceGroupMapping.css';
-import { KakaoPlace, PlaceGroup } from '../../generated/dto';
-import { placeGroupAPI } from '../api/placeGroups';
+import { KakaoPlace, PlaceGroup } from '../../../../../generated/dto';
+import { PlaceCreateRequest } from '../../../../../generated/place/place';
+import { placeGroupsAPI } from '../../../../api/placeGroups';
+import { placeAPI } from '../../../../api/places';
 
 interface PlaceGroupMappingProps {
   place: KakaoPlace;
@@ -26,8 +28,8 @@ const PlaceGroupMapping: React.FC<PlaceGroupMappingProps> = ({
   const loadPlaceGroups = async () => {
     try {
       setIsLoading(true);
-      const groups = await placeGroupAPI.getPlaceGroups();
-      setPlaceGroups(groups);
+      const groups = await placeGroupsAPI.getPlaceGroups();
+      setPlaceGroups(groups.groups);
     } catch (err) {
       console.error('장소 그룹 로드 실패:', err);
       setError('장소 그룹을 불러오는데 실패했습니다.');
@@ -48,20 +50,24 @@ const PlaceGroupMapping: React.FC<PlaceGroupMappingProps> = ({
       setIsLoading(true);
       setError('');
       
-      // 장소를 선택된 그룹에 추가
-      await placeGroupAPI.addPlaceToGroup(selectedGroupId, place.id);
+      // PlaceCreateRequest 객체 생성
+      const placeCreateRequest: PlaceCreateRequest = {
+        placeGroupId: selectedGroupId,
+        place: place
+      };
       
-      console.log('장소가 그룹에 추가되었습니다:', {
-        groupId: selectedGroupId,
-        placeId: place.id,
-        placeName: place.name
-      });
+      console.log('장소 생성 요청:', placeCreateRequest);
+      
+      // POST /api/places API 호출
+      const createdPlace = await placeAPI.createPlace(placeCreateRequest);
+      
+      console.log('장소가 성공적으로 생성되었습니다:', createdPlace);
       
       onSuccess?.();
       onClose();
     } catch (err) {
-      console.error('장소 추가 실패:', err);
-      setError('장소를 그룹에 추가하는데 실패했습니다.');
+      console.error('장소 생성 실패:', err);
+      setError('장소를 생성하는데 실패했습니다.');
     } finally {
       setIsLoading(false);
     }

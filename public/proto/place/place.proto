@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "dto.proto";
+
+package com.spectrum.crimson.proto.place;
+
+option java_multiple_files = true;
+option java_package = "com.spectrum.crimson.proto.place";
+option java_outer_classname = "PlaceProto";
+
+message PlaceCreateRequest {
+  string place_group_id = 1;
+  KakaoPlace place = 2;
+}
+
+message PlaceCreateResult {
+  string id = 1;
+}
+
+message PlaceListResult {
+  repeated Place places = 1;
+}
