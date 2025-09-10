@@ -4,6 +4,8 @@
   padding: 0 20px 20px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  max-height: calc(100vh - 200px); /* 화면 높이에서 다른 요소들 제외 */
 }
 
 .section-title {
@@ -85,6 +87,10 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0; /* flexbox에서 overflow가 작동하도록 함 */
 }
 
 

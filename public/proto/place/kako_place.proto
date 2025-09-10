@@ -10,4 +10,5 @@ option java_outer_classname = "KakaoPlaceProto";
 
 message KakaoPlaceListResult {
   repeated KakaoPlace places = 1;
+  KakaoPlaceMeta meta = 2;
 }

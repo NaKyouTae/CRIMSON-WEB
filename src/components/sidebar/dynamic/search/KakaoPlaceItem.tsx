@@ -1,15 +1,15 @@
 import React from 'react';
-import './PlaceItem.css';
-import { Place } from '../../../../../generated/dto';
+import './KakaoPlaceItem.css';
+import { KakaoPlace } from '../../../../../generated/dto';
 
 interface PlaceItemProps {
-  place: Place;
-  onItemClick: (place: Place) => void;
-  onAddClick?: (place: Place) => void;
+  place: KakaoPlace;
+  onItemClick: (place: KakaoPlace) => void;
+  onAddClick?: (place: KakaoPlace) => void;
   isFocused?: boolean;
 }
 
-const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, onAddClick, isFocused }) => {
+const KakaoPlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, onAddClick, isFocused }) => {
   const getPinColor = (isSaved?: boolean): string => {
     return isSaved ? '#FF6002' : '#808991';
   };
@@ -71,4 +71,4 @@ const PlaceItem: React.FC<PlaceItemProps> = ({ place, onItemClick, onAddClick, i
   );
 };
 
-export default PlaceItem;
+export default KakaoPlaceItem;

@@ -1,13 +1,31 @@
 /* Sidebar 메인 컴포넌트 스타일 */
 .sidebar {
   width: 25%;
+  height: 100vh; /* 전체 화면 높이 */
   background-color: #fef9f0;
   border-right: 1px solid #e8e8e8;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow: hidden; /* 전체 overflow 제어 */
   /* 개발용 border - 핫핑크 */
   border: 3px solid #ff1493;
   border-radius: 6px;
   margin: 2px;
+}
+
+/* aside 스타일 */
+aside {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* side-wrap 스타일 */
+.side-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0; /* flexbox에서 overflow가 작동하도록 함 */
 }

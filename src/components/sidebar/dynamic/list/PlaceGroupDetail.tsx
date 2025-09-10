@@ -10,9 +10,11 @@ interface PlaceGroupDetailProps {
   onBack: () => void;
   onGroupPlacesChange?: (places: Place[]) => void;
   onPlaceFocus?: (index: number) => void;
+  onResetMap?: () => void;
+  onFocusAllMarkers?: () => void;
 }
 
-const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack, onGroupPlacesChange, onPlaceFocus }) => {
+const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack, onGroupPlacesChange, onPlaceFocus, onResetMap, onFocusAllMarkers }) => {
   const [activeButton, setActiveButton] = useState<string>('share');
   const [groupPlaces, setGroupPlaces] = useState<Place[]>([]);
   const [isLoadingPlaces, setIsLoadingPlaces] = useState<boolean>(false);
@@ -49,6 +51,27 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack,
     onPlaceFocus?.(index);
   };
 
+  // 뒤로가기 핸들러 (마커 초기화 및 지도 위치 초기화 포함)
+  const handleBack = () => {
+    console.log('PlaceGroupDetail 뒤로가기 - 마커 초기화 및 지도 위치 초기화');
+    // 포커스 상태 초기화
+    setFocusedPlaceIndex(-1);
+    // 그룹 장소 데이터 초기화 (마커 제거)
+    onGroupPlacesChange?.([]);
+    // 지도 위치를 대한민국 중심으로 초기화
+    onResetMap?.();
+    // 부모 컴포넌트의 뒤로가기 실행
+    onBack();
+  };
+
+
+  // PlaceGroupDetail 진입 시 포커스 상태 초기화
+  useEffect(() => {
+    console.log('PlaceGroupDetail 진입: 포커스 상태 초기화');
+    setFocusedPlaceIndex(-1);
+    // 이전 포커스 상태 초기화
+    onPlaceFocus?.(-1);
+  }, [placeGroup.id, onPlaceFocus]);
 
   // 그룹의 장소들을 로드하는 useEffect
   useEffect(() => {
@@ -58,7 +81,13 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack,
   // groupPlaces가 변경될 때마다 부모에게 전달
   useEffect(() => {
     onGroupPlacesChange?.(groupPlaces);
-  }, [groupPlaces, onGroupPlacesChange]);
+    
+    // groupPlaces가 로드되면 모든 마커의 중심에 지도 이동
+    if (groupPlaces.length > 0) {
+      console.log('PlaceGroupDetail: groupPlaces 로드됨, 모든 마커 중심으로 지도 이동');
+      onFocusAllMarkers?.();
+    }
+  }, [groupPlaces, onGroupPlacesChange, onFocusAllMarkers]);
 
   // 그룹의 장소들을 로드하는 함수
   const loadGroupPlaces = async () => {
@@ -93,127 +122,127 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack,
   };
 
   return (
-    <div className="place-group-detail">
-      <div className="detail-header">
-        <button className="back-button" onClick={onBack}>‹</button>
+    <div className='list-create-wrap'>
+      <div className='inside-nav'>
+         <button className='trans' onClick={handleBack}><i className='ic-arrow-left-16' /></button>
         <h2>리스트 상세보기</h2>
       </div>
-
-      <div className="place-group-info">
-        <div className="place-group-icon-large">{placeGroup.icon}</div>
-        <div className="place-group-content-large">
-          <h3 className="place-group-title">{placeGroup.name}</h3>
-          <p className="place-group-description">{placeGroup.memo}</p>
-          <div className="place-group-link">
-            <span className="link-icon">🔗</span>
-            <a href="#" className="link-url">{placeGroup.link}</a>
-          </div>
-          <div className="place-group-meta-large">
-            <span className="role-badge captain">{placeGroup.status}</span>
-            <span className="separator">|</span>
-            <span className="category-badge">{placeGroup.category}</span>
-            <span className="separator">|</span>
-            <span className="privacy-badge">{placeGroup.status}</span>
-            <span className="separator">|</span>
-            <span className="members-badge">멤버 {placeGroup.status}</span>
-            <span className="separator">|</span>
-            <span className="saved-badge">저장 {placeGroup.status}</span>
+      <div>
+        <div className="place-group-info">
+          <div className="place-group-icon-large">{placeGroup.icon}</div>
+          <div className="place-group-content-large">
+            <h3 className="place-group-title">{placeGroup.name}</h3>
+            <p className="place-group-description">{placeGroup.memo}</p>
+            <div className="place-group-link">
+              <span className="link-icon">🔗</span>
+              <a href="#" className="link-url">{placeGroup.link}</a>
+            </div>
+            <div className="place-group-meta-large">
+              <span className="role-badge captain">{placeGroup.status}</span>
+              <span className="separator">|</span>
+              <span className="category-badge">{placeGroup.category}</span>
+              <span className="separator">|</span>
+              <span className="privacy-badge">{placeGroup.status}</span>
+              <span className="separator">|</span>
+              <span className="members-badge">멤버 {placeGroup.status}</span>
+              <span className="separator">|</span>
+              <span className="saved-badge">저장 {placeGroup.status}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="action-buttons">
-        <button 
-          className={`action-button ${activeButton === 'share' ? 'active' : ''}`}
-          onClick={() => handleButtonClick('share')}
-        >
-          공유
-        </button>
-        <button 
-          className={`action-button ${activeButton === 'edit' ? 'active' : ''}`}
-          onClick={() => handleButtonClick('edit')}
-        >
-          수정
-        </button>
-        <button 
-          className={`action-button ${activeButton === 'duplicate' ? 'active' : ''}`}
-          onClick={() => handleButtonClick('duplicate')}
-        >
-          복제
-        </button>
-        <button 
-          className={`action-button ${activeButton === 'delete' ? 'active' : ''}`}
-          onClick={() => handleButtonClick('delete')}
-        >
-          삭제
-        </button>
-        <button 
-          className={`action-button ${activeButton === 'leave' ? 'active' : ''}`}
-          onClick={() => handleButtonClick('leave')}
-        >
-          탈퇴
-        </button>
-      </div>
-
-      <div className="search-section">
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="원하는 장소를 검색해 보세요."
-            className="search-input"
-            disabled
-          />
+        <div className="action-buttons">
           <button 
-            className="search-button"
-            disabled
+            className={`action-button ${activeButton === 'share' ? 'active' : ''}`}
+            onClick={() => handleButtonClick('share')}
           >
-            <img src="/img/ico/ic-search.svg" alt="검색" />
+            공유
+          </button>
+          <button 
+            className={`action-button ${activeButton === 'edit' ? 'active' : ''}`}
+            onClick={() => handleButtonClick('edit')}
+          >
+            수정
+          </button>
+          <button 
+            className={`action-button ${activeButton === 'duplicate' ? 'active' : ''}`}
+            onClick={() => handleButtonClick('duplicate')}
+          >
+            복제
+          </button>
+          <button 
+            className={`action-button ${activeButton === 'delete' ? 'active' : ''}`}
+            onClick={() => handleButtonClick('delete')}
+          >
+            삭제
+          </button>
+          <button 
+            className={`action-button ${activeButton === 'leave' ? 'active' : ''}`}
+            onClick={() => handleButtonClick('leave')}
+          >
+            탈퇴
           </button>
         </div>
-        <div className="filter-sort-container">
-          <div className="category-filters">
-            {getCategories().map((category) => (
-              <button
-                key={category}
-                className={`filter-tag ${selectedCategory === category ? 'active' : ''}`}
-                onClick={() => handleCategoryFilter(category)}
-              >
-                {category}
-              </button>
-            ))}
+        <div className="search-section">
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="원하는 장소를 검색해 보세요."
+              className="search-input"
+              disabled
+            />
+            <button 
+              className="search-button"
+              disabled
+            >
+              <img src="/img/ico/ic-search.svg" alt="검색" />
+            </button>
           </div>
-          <div className="sort-section">
-            <select className="sort-select">
-              <option>최신 저장 순</option>
-              <option>이름 순</option>
-              <option>평점 순</option>
-            </select>
+          <div className="filter-sort-container">
+            <div className="category-filters">
+              {getCategories().map((category) => (
+                <button
+                  key={category}
+                  className={`filter-tag ${selectedCategory === category ? 'active' : ''}`}
+                  onClick={() => handleCategoryFilter(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+            <div className="sort-section">
+              <select className="sort-select">
+                <option>최신 저장 순</option>
+                <option>이름 순</option>
+                <option>평점 순</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="place-group-results">
-        {isLoadingPlaces ? (
-          <div className="loading-results">
-            <p>장소를 불러오는 중...</p>
-          </div>
-        ) : getFilteredPlaces().length > 0 ? (
-          <ul className="place-list">
-            {getFilteredPlaces().map((place, index) => (
-              <PlaceGroupPlaceItem
-                key={place.id || index}
-                place={place}
-                index={index}
-                onItemClick={handlePlaceItemClick}
-                isFocused={focusedPlaceIndex === index}
-              />
-            ))}
-          </ul>
-        ) : (
-          <div className="default-results">
-            <p>이 그룹에 저장된 장소가 없습니다.</p>
-          </div>
-        )}
+        <div className="place-group-results">
+          {isLoadingPlaces ? (
+            <div className="loading-results">
+              <p>장소를 불러오는 중...</p>
+            </div>
+          ) : getFilteredPlaces().length > 0 ? (
+            <ul className="place-list">
+              {getFilteredPlaces().map((place, index) => (
+                <PlaceGroupPlaceItem
+                  key={place.id || index}
+                  place={place}
+                  index={index}
+                  onItemClick={handlePlaceItemClick}
+                  isFocused={focusedPlaceIndex === index}
+                />
+              ))}
+            </ul>
+          ) : (  
+            <div className="default-results">
+              <p>이 그룹에 저장된 장소가 없습니다.</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

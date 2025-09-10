@@ -70,7 +70,7 @@ main {height: calc(100dvh - 64px); display: flex;}
 aside {width: 42rem; height: 100%; background-color: var(--white); border-right: 1px solid var(--gray200); display: flex; flex-flow: column;}
 
 .side-wrap {flex: 1; padding: 2.4rem 2rem; display: flex; flex-flow: column; row-gap: 2.4rem;}
-.side-wrap .cont-box {flex: 1; display: flex; flex-flow: column;}
+.side-wrap .cont-box {flex: 1; display: flex; flex-flow: column; height: 83%;}
 
 /* aside > 검색 영역 */
 .search-wrap {position: relative; display: flex; align-items: center;}
@@ -89,13 +89,13 @@ aside {width: 42rem; height: 100%; background-color: var(--white); border-right:
 .list-option {margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;}
 
 /* aside > list wrap */
-.list-wrap {flex: 1;}
+.list-wrap {flex: 1; overflow: auto;}
 .list-wrap > div {flex: 1;}
 .list-wrap .error {height: 100%; display: flex; flex-flow: column; align-items: center; justify-content: center; row-gap: 1.6rem;}
 .list-wrap .error > p {text-align: center; font-size: 1.4rem; color: var(--gray500);}
 
 /* aside > 검색 결과 */
-.place-list {flex: 1; display: flex; flex-flow: column; row-gap: 1.6rem;}
+.place-list {flex: 1; display: flex; flex-flow: column; row-gap: 1.6rem; overflow: auto;}
 .place-list > li {padding: 1.2rem; border: 1px solid var(--gray200); border-radius: .8rem; display: flex; align-items: center; column-gap: 1.2rem; cursor: pointer;}
 .place-list > li .img {width: 9.6rem; height: 9.6rem; border-radius: .4rem; display: flex; align-items: center; justify-content: center; overflow: hidden;}
 .place-list > li .img img {width: 100%; height: 100%; object-fit: cover;}

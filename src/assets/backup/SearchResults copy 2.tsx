@@ -1,5 +1,5 @@
 import React from 'react';
-import PlaceItem from '../../components/sidebar/dynamic/search/PlaceItem';
+import PlaceItem from '../../components/sidebar/dynamic/search/KakaoPlaceItem';
 import './SearchResults.css';
 
 // 타입 정의

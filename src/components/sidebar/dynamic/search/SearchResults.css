@@ -4,7 +4,9 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 0 24px 20px;
+  max-height: calc(100vh - 200px); /* 화면 높이에서 다른 요소들 제외 */
   /* 개발용 border - 보라색 */
   border: 2px solid #8800ff;
   border-radius: 4px;

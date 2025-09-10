@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './SearchSection.css';
 
 interface SearchSectionProps {
+  searchQuery?: string;
   onSearch: (query: string) => void;
+  hasSearchResults?: boolean;
+  onClearSearch?: () => void;
+  onSearchQueryChange?: (query: string) => void;
 }
 
-const SearchSection: React.FC<SearchSectionProps> = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
+const SearchSection: React.FC<SearchSectionProps> = ({ searchQuery = '', onSearch, hasSearchResults = false, onClearSearch, onSearchQueryChange }) => {
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -20,14 +23,28 @@ const SearchSection: React.FC<SearchSectionProps> = ({ onSearch }) => {
     }
   };
 
+  const handleClearSearch = () => {
+    onClearSearch?.();
+  };
+
+  const handleButtonClick = () => {
+    if (hasSearchResults) {
+      handleClearSearch();
+    } else {
+      handleSearch();
+    }
+  };
+
   return (
     <div className='search-wrap'>
       <input type='text' placeholder='장소를 검색해 보세요.'
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => onSearchQueryChange?.(e.target.value)}
         onKeyDown={handleKeyPress}
       />
-      <button className='trans' onClick={handleSearch}><i className='ic-search' /></button>
+      <button className='trans' onClick={handleButtonClick}>
+        <i className={hasSearchResults ? 'ic-close-20' : 'ic-search'} />
+      </button>
     </div>
   );
 };

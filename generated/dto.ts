@@ -101,6 +101,12 @@ export function placeGroup_PlaceGroupCategoryToJSON(object: PlaceGroup_PlaceGrou
   }
 }
 
+export interface KakaoPlaceMeta {
+  totalCount: number;
+  pageableCount: number;
+  isEnd: boolean;
+}
+
 export interface KakaoPlace {
   id: string;
   name: string;
@@ -530,6 +536,98 @@ export const PlaceGroup: MessageFns<PlaceGroup> = {
     message.icon = object.icon ?? "";
     message.createdAt = object.createdAt ?? 0;
     message.updatedAt = object.updatedAt ?? 0;
+    return message;
+  },
+};
+
+function createBaseKakaoPlaceMeta(): KakaoPlaceMeta {
+  return { totalCount: 0, pageableCount: 0, isEnd: false };
+}
+
+export const KakaoPlaceMeta: MessageFns<KakaoPlaceMeta> = {
+  encode(message: KakaoPlaceMeta, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.totalCount !== 0) {
+      writer.uint32(8).uint32(message.totalCount);
+    }
+    if (message.pageableCount !== 0) {
+      writer.uint32(16).uint32(message.pageableCount);
+    }
+    if (message.isEnd !== false) {
+      writer.uint32(24).bool(message.isEnd);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): KakaoPlaceMeta {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseKakaoPlaceMeta();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 8) {
+            break;
+          }
+
+          message.totalCount = reader.uint32();
+          continue;
+        }
+        case 2: {
+          if (tag !== 16) {
+            break;
+          }
+
+          message.pageableCount = reader.uint32();
+          continue;
+        }
+        case 3: {
+          if (tag !== 24) {
+            break;
+          }
+
+          message.isEnd = reader.bool();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): KakaoPlaceMeta {
+    return {
+      totalCount: isSet(object.totalCount) ? globalThis.Number(object.totalCount) : 0,
+      pageableCount: isSet(object.pageableCount) ? globalThis.Number(object.pageableCount) : 0,
+      isEnd: isSet(object.isEnd) ? globalThis.Boolean(object.isEnd) : false,
+    };
+  },
+
+  toJSON(message: KakaoPlaceMeta): unknown {
+    const obj: any = {};
+    if (message.totalCount !== 0) {
+      obj.totalCount = Math.round(message.totalCount);
+    }
+    if (message.pageableCount !== 0) {
+      obj.pageableCount = Math.round(message.pageableCount);
+    }
+    if (message.isEnd !== false) {
+      obj.isEnd = message.isEnd;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<KakaoPlaceMeta>, I>>(base?: I): KakaoPlaceMeta {
+    return KakaoPlaceMeta.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<KakaoPlaceMeta>, I>>(object: I): KakaoPlaceMeta {
+    const message = createBaseKakaoPlaceMeta();
+    message.totalCount = object.totalCount ?? 0;
+    message.pageableCount = object.pageableCount ?? 0;
+    message.isEnd = object.isEnd ?? false;
     return message;
   },
 };

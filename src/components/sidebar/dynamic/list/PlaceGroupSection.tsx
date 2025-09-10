@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PlaceGroupItem from './PlaceGroupItem';
+import { Pagination } from '../../../common';
 import './PlaceGroupSection.css';
 import { placeGroupsAPI } from '../../../../api/placeGroups';
 import { PlaceGroup } from '../../../../../generated/dto';
@@ -23,6 +24,9 @@ const PlaceGroupSection: React.FC<PlaceGroupSectionProps> = ({
   const [placeGroups, setPlaceGroups] = useState<PlaceGroup[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [pageSize] = useState<number>(10);
 
   const handleDropdownToggle = (itemId: string) => {
     setOpenDropdownId(openDropdownId === itemId ? null : itemId);
@@ -54,7 +58,7 @@ const PlaceGroupSection: React.FC<PlaceGroupSectionProps> = ({
   };
 
   // API 호출
-  const fetchPlaceGroups = async () => {
+  const fetchPlaceGroups = async (page: number = 1) => {
     try {
       setIsLoading(true);
       setError(null);
@@ -63,21 +67,39 @@ const PlaceGroupSection: React.FC<PlaceGroupSectionProps> = ({
       console.log('Place groups response:', response);
       
       // 응답 데이터 변환
-      const transformedData = transformPlaceGroupData(response.groups || response || []);
-      setPlaceGroups(transformedData);
+      const allData = transformPlaceGroupData(response.groups || response || []);
+      
+      // 페이지네이션 계산
+      const totalItems = allData.length;
+      const totalPages = Math.ceil(totalItems / pageSize);
+      setTotalPages(totalPages);
+      
+      // 현재 페이지에 해당하는 데이터만 추출
+      const startIndex = (page - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const paginatedData = allData.slice(startIndex, endIndex);
+      
+      setPlaceGroups(paginatedData);
     } catch (err) {
       console.error('Failed to fetch place groups:', err);
       setError('리스트를 불러오는데 실패했습니다.');
       // 에러 시 빈 배열로 설정
       setPlaceGroups([]);
+      setTotalPages(1);
     } finally {
       setIsLoading(false);
     }
   };
 
+  // 페이지 변경 핸들러
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    fetchPlaceGroups(page);
+  };
+
   // 컴포넌트 마운트 시 데이터 로드
   useEffect(() => {
-    fetchPlaceGroups();
+    fetchPlaceGroups(currentPage);
   }, []);
 
   return (
@@ -134,7 +156,7 @@ const PlaceGroupSection: React.FC<PlaceGroupSectionProps> = ({
         ) : error ? (
           <div className='error'>
             <p>{error}</p>
-            <button className='sm' onClick={fetchPlaceGroups}>다시시도</button>
+            <button className='sm' onClick={() => fetchPlaceGroups(currentPage)}>다시시도</button>
           </div>
         ) : placeGroups.length === 0 ? (
           <div className="empty-container">
@@ -153,14 +175,11 @@ const PlaceGroupSection: React.FC<PlaceGroupSectionProps> = ({
           ))
         )}
       </div>
-
-      <div className='pagination'>
-        <button disabled><i className='ic-pagination first'></i></button>
-        <button disabled><i className='ic-pagination prev'></i></button>
-        <button className='active'>1</button>
-        <button disabled><i className='ic-pagination next'></i></button>
-        <button disabled><i className='ic-pagination last'></i></button>
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

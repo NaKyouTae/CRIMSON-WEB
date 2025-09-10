@@ -102,6 +102,34 @@ const MapContainer: React.FC<MapContainerProps> = ({ searchResults = [], groupPl
     }
   }, [focusedPlaceIndex, map, searchResults, groupPlaces]);
 
+  // groupPlaces가 변경될 때 모든 마커의 중심으로 지도 이동
+  useEffect(() => {
+    if (groupPlaces.length > 0 && map && window.naver) {
+      console.log('🗺️ groupPlaces 변경: 모든 마커 중심으로 지도 이동');
+      
+      const bounds = new window.naver.maps.LatLngBounds();
+      
+      // groupPlaces의 모든 좌표를 bounds에 추가
+      groupPlaces.forEach(place => {
+        const lat = parseFloat(place.lat);
+        const lng = parseFloat(place.lng);
+        if (!isNaN(lat) && !isNaN(lng)) {
+          const position = new window.naver.maps.LatLng(lat, lng);
+          bounds.extend(position);
+        }
+      });
+      
+      // bounds가 유효하면 지도 범위 조정 (isEmpty() 대신 좌표 개수로 확인)
+      if (groupPlaces.length > 0) {
+        map.fitBounds(bounds, {
+          duration: 1000, // 1초 동안 부드럽게 이동
+          easing: 'easeOutCubic'
+        });
+        console.log('🗺️ 지도가 모든 그룹 마커 중심으로 이동했습니다.');
+      }
+    }
+  }, [groupPlaces, map]);
+
   // 외부에서 지도 복원 요청 시 실행
   useEffect(() => {
     if (resetMapTrigger !== undefined && resetMapTrigger > 0) {
@@ -181,13 +209,13 @@ const MapContainer: React.FC<MapContainerProps> = ({ searchResults = [], groupPl
     if (!map || !initialMapState) return;
 
 
-    // 지도를 초기 상태로 부드럽게 복원
+    // 지도를 초기 상태로 빠르게 복원
     map.panTo(initialMapState.center, {
-      duration: 2000, // 2초 동안 부드럽게 이동
+      duration: 500, // 0.5초 동안 빠르게 이동
       easing: 'easeOutCubic'
     });
     map.setZoom(initialMapState.zoom, {
-      duration: 2000, // 2초 동안 부드럽게 줌 변경
+      duration: 500, // 0.5초 동안 빠르게 줌 변경
       easing: 'easeOutCubic'
     });
     

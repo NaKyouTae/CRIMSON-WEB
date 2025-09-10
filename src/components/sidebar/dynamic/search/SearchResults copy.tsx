@@ -1,5 +1,5 @@
 import React from 'react';
-import PlaceItem from './PlaceItem';
+import PlaceItem from './KakaoPlaceItem';
 import './SearchResults.css';
 
 // 타입 정의

@@ -55,6 +55,15 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
     setGroupPlaces(places)
   }
 
+  const handleFocusAllMarkers = () => {
+    console.log('MainPage: 모든 마커 중심으로 지도 이동');
+    // groupPlaces가 있을 때 모든 마커의 중심으로 지도 이동
+    if (groupPlaces.length > 0) {
+      // MapContainer에서 groupPlaces를 기반으로 지도 범위 조정
+      // 이는 MapContainer의 useEffect에서 자동으로 처리됨
+    }
+  }
+
   const handleMappingSuccess = () => {
     console.log('장소가 그룹에 성공적으로 추가되었습니다!')
     // 필요시 추가 로직 (예: 그룹 목록 새로고침)
@@ -99,6 +108,7 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
           onAddClick={handleAddClick}
           focusedPlaceIndex={focusedPlaceIndex}
           onGroupPlacesChange={handleGroupPlacesChange}
+          onFocusAllMarkers={handleFocusAllMarkers}
         />
         <MapContainer 
           searchResults={searchResults} 

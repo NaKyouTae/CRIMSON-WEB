@@ -6,22 +6,26 @@
 
 /* eslint-disable */
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
-import { KakaoPlace } from "../dto";
+import { KakaoPlace, KakaoPlaceMeta } from "../dto";
 
 export const protobufPackage = "com.spectrum.crimson.proto.place";
 
 export interface KakaoPlaceListResult {
   places: KakaoPlace[];
+  meta?: KakaoPlaceMeta | undefined;
 }
 
 function createBaseKakaoPlaceListResult(): KakaoPlaceListResult {
-  return { places: [] };
+  return { places: [], meta: undefined };
 }
 
 export const KakaoPlaceListResult: MessageFns<KakaoPlaceListResult> = {
   encode(message: KakaoPlaceListResult, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.places) {
       KakaoPlace.encode(v!, writer.uint32(10).fork()).join();
+    }
+    if (message.meta !== undefined) {
+      KakaoPlaceMeta.encode(message.meta, writer.uint32(18).fork()).join();
     }
     return writer;
   },
@@ -41,6 +45,14 @@ export const KakaoPlaceListResult: MessageFns<KakaoPlaceListResult> = {
           message.places.push(KakaoPlace.decode(reader, reader.uint32()));
           continue;
         }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.meta = KakaoPlaceMeta.decode(reader, reader.uint32());
+          continue;
+        }
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -53,6 +65,7 @@ export const KakaoPlaceListResult: MessageFns<KakaoPlaceListResult> = {
   fromJSON(object: any): KakaoPlaceListResult {
     return {
       places: globalThis.Array.isArray(object?.places) ? object.places.map((e: any) => KakaoPlace.fromJSON(e)) : [],
+      meta: isSet(object.meta) ? KakaoPlaceMeta.fromJSON(object.meta) : undefined,
     };
   },
 
@@ -60,6 +73,9 @@ export const KakaoPlaceListResult: MessageFns<KakaoPlaceListResult> = {
     const obj: any = {};
     if (message.places?.length) {
       obj.places = message.places.map((e) => KakaoPlace.toJSON(e));
+    }
+    if (message.meta !== undefined) {
+      obj.meta = KakaoPlaceMeta.toJSON(message.meta);
     }
     return obj;
   },
@@ -70,6 +86,9 @@ export const KakaoPlaceListResult: MessageFns<KakaoPlaceListResult> = {
   fromPartial<I extends Exact<DeepPartial<KakaoPlaceListResult>, I>>(object: I): KakaoPlaceListResult {
     const message = createBaseKakaoPlaceListResult();
     message.places = object.places?.map((e) => KakaoPlace.fromPartial(e)) || [];
+    message.meta = (object.meta !== undefined && object.meta !== null)
+      ? KakaoPlaceMeta.fromPartial(object.meta)
+      : undefined;
     return message;
   },
 };
@@ -85,6 +104,10 @@ export type DeepPartial<T> = T extends Builtin ? T
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
+}
 
 export interface MessageFns<T> {
   encode(message: T, writer?: BinaryWriter): BinaryWriter;

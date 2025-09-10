@@ -10,7 +10,7 @@ import {
 import PlaceGroupDetail from './dynamic/list/PlaceGroupDetail';
 import './Sidebar.css';
 import { placeAPI } from '../../api/places';
-import { KakaoPlace, PlaceGroup, Place } from '../../../generated/dto';
+import { KakaoPlace, PlaceGroup, Place, KakaoPlaceMeta } from '../../../generated/dto';
 
 
 interface SidebarProps {
@@ -27,6 +27,7 @@ interface SidebarProps {
   onAddClick?: (place: KakaoPlace) => void;
   focusedPlaceIndex?: number;
   onGroupPlacesChange?: (places: Place[]) => void;
+  onFocusAllMarkers?: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
@@ -42,7 +43,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   onResetMap,
   onAddClick,
   focusedPlaceIndex,
-  onGroupPlacesChange
+  onGroupPlacesChange,
+  onFocusAllMarkers
 }) => {
   const [showCreateForm, setShowCreateForm] = useState<boolean>(false);
   const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
@@ -51,8 +53,13 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize] = useState<number>(15);
   const [searchResults, setSearchResults] = useState<KakaoPlace[]>([]);
+  const [searchResultsMeta, setSearchResultsMeta] = useState<KakaoPlaceMeta | undefined>();
+  const [searchQuery, setSearchQuery] = useState<string>('');
   
   const handleSearch = async (query: string, page: number = 1) => {
+    // searchQuery 상태 업데이트
+    setSearchQuery(query);
+    
     if (!query.trim()) {
       setSearchResults([]);
       setCurrentPage(1);
@@ -71,6 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         // KakaoPlaceListResult에서 places 배열 추출
         const places = result.data?.places || [];
         setSearchResults(places);
+        setSearchResultsMeta(result.data?.meta);
         setCurrentPage(page);
         
         // 검색 결과를 부모 컴포넌트로 전달
@@ -113,6 +121,23 @@ const Sidebar: React.FC<SidebarProps> = ({
     setSelectedPlaceGroup(undefined);
   };
 
+  const handleClearSearch = () => {
+    console.log('검색 초기화');
+    setSearchQuery(''); // searchQuery 초기화
+    setSearchResults([]);
+    setShowSearchResults(false);
+    setCurrentPage(1);
+    
+    // 부모 컴포넌트에 빈 결과 전달
+    if (onSearchResults) {
+      onSearchResults([]);
+    }
+  };
+
+  const handleSearchQueryChange = (query: string) => {
+    setSearchQuery(query);
+  };
+
   // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -130,17 +155,25 @@ const Sidebar: React.FC<SidebarProps> = ({
           onBack={handleBackFromPlaceGroupDetail}
           onGroupPlacesChange={onGroupPlacesChange}
           onPlaceFocus={onPlaceFocus}
+          onResetMap={onResetMap}
+          onFocusAllMarkers={onFocusAllMarkers}
         />
       ) : (
         <div className='side-wrap'>
-          <SearchSection onSearch={handleSearch} />
+          <SearchSection 
+            searchQuery={searchQuery}
+            onSearch={handleSearch} 
+            hasSearchResults={showSearchResults && searchResults.length > 0}
+            onClearSearch={handleClearSearch}
+            onSearchQueryChange={handleSearchQueryChange}
+          />
           <CreateSection onCreateClick={() => setShowCreateForm(true)} />
           {showSearchResults ? (
             <SearchResults 
               searchQuery=""
               results={searchResults}
               currentPage={currentPage}
-              totalPages={1}
+              totalPages={searchResultsMeta?.pageableCount || 1}
               onPageChange={handlePageChange}
               onItemClick={onPlaceClick}
               onPlaceFocus={onPlaceFocus}
