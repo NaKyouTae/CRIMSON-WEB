@@ -8,7 +8,7 @@ import './assets/css/common.css'
 import './assets/css/style.css'
 import LoginPage from './pages/login/LoginPage'
 import MainPage from './pages/main/MainPage'
-import { tokenStorage, setTokenRefreshFailedCallback } from './api'
+import { tokenStorage } from './utils/tokenManager'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
@@ -50,12 +50,6 @@ function App() {
         setIsLoading(false)
       }
     }
-
-    // 토큰 갱신 실패 콜백 설정
-    setTokenRefreshFailedCallback(() => {
-      console.log('❌ 토큰 갱신 실패, 로그인 페이지로 이동')
-      setIsLoggedIn(false)
-    })
 
     checkAuthStatus()
   }, [])

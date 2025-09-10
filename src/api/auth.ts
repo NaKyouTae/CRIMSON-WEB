@@ -1,4 +1,4 @@
-import apiClient from './index';
+import apiClient from '../utils/apiClient';
 import { MemberLoginRequest, MemberLoginResult } from '../../generated/common/auth';
 
 // 로그인 API

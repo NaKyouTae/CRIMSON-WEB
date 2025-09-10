@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './PlaceGroupDetail.css';
-import { placeAPI } from '../../../../api/places';
-import { showErrorMessage } from '../../../../utils/apiClient';
-import { PlaceGroup, Place } from '../../../../../generated/dto';
+import { placeAPI } from '../../../../../api/places';
+import { PlaceGroup, Place } from '../../../../../../generated/dto';
 import PlaceGroupPlaceItem from './PlaceGroupPlaceItem';
+import PlaceDetail from '../../place-detail/PlaceDetail';
 
 interface PlaceGroupDetailProps {
   placeGroup: PlaceGroup;
@@ -20,6 +20,8 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack,
   const [isLoadingPlaces, setIsLoadingPlaces] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [focusedPlaceIndex, setFocusedPlaceIndex] = useState<number>(-1);
+  const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+  const [showPlaceDetail, setShowPlaceDetail] = useState<boolean>(false);
 
   // 카테고리 목록 생성
   const getCategories = (): string[] => {
@@ -32,6 +34,7 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack,
 
   // 필터링된 장소 목록
   const getFilteredPlaces = (): Place[] => {
+    console.log('getFilteredPlaces', groupPlaces, selectedCategory);
     if (selectedCategory === '전체') {
       return groupPlaces;
     }
@@ -47,8 +50,17 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack,
   const handlePlaceItemClick = (place: Place, index: number) => {
     console.log('PlaceGroupPlaceItem 클릭:', place, index);
     setFocusedPlaceIndex(index);
+    setSelectedPlace(place);
+    setShowPlaceDetail(true);
     // 부모 컴포넌트에 포커스 이벤트 전달 (searchResults.length + index로 전달)
     onPlaceFocus?.(index);
+  };
+
+  // PlaceDetail 닫기 핸들러
+  const handleClosePlaceDetail = () => {
+    console.log('PlaceDetail 닫기');
+    setShowPlaceDetail(false);
+    setSelectedPlace(null);
   };
 
   // 뒤로가기 핸들러 (마커 초기화 및 지도 위치 초기화 포함)
@@ -60,6 +72,9 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack,
     onGroupPlacesChange?.([]);
     // 지도 위치를 대한민국 중심으로 초기화
     onResetMap?.();
+    // PlaceDetail 닫기
+    setShowPlaceDetail(false);
+    setSelectedPlace(null);
     // 부모 컴포넌트의 뒤로가기 실행
     onBack();
   };
@@ -98,18 +113,16 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack,
       
       console.log('그룹 장소 로드 결과:', result);
       
-      if (result.success && result.data) {
+      if (result.data) {
         // API에서 받은 데이터를 Place 타입에 맞게 변환
         const resultPlaces: Place[] = result.data.places;
         
         setGroupPlaces(resultPlaces);
       } else {
         setGroupPlaces([]);
-        showErrorMessage(result.error || '그룹의 장소를 불러오는데 실패했습니다.');
       }
     } catch (error) {
       console.error('그룹 장소 로드 실패:', error);
-      showErrorMessage('그룹의 장소를 불러오는데 실패했습니다.');
       setGroupPlaces([]);
     } finally {
       setIsLoadingPlaces(false);
@@ -244,6 +257,14 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack,
           )}
         </div>
       </div>
+      
+      {/* PlaceDetail 모달 */}
+      {showPlaceDetail && selectedPlace && (
+        <PlaceDetail
+          placeId={selectedPlace.locationId}
+          onClose={handleClosePlaceDetail}
+        />
+      )}
     </div>
   );
 };

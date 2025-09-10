@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import {
-  TabNavigation,
-  SearchSection,
-  CreateSection,
-  PlaceGroupSection,
-  SearchResults,
-  CreatePlaceGroupForm
-} from './';
-import PlaceGroupDetail from './dynamic/list/PlaceGroupDetail';
+import TabNavigation from './static/TabNavigation';
+import SearchSection from './static/SearchSection';
+import CreateSection from './static/CreateSection';
+import SearchResults from './dynamic/search/SearchResults';
+import CreatePlaceGroupForm from './dynamic/create/CreatePlaceGroupForm';
+import PlaceGroupDetail from './dynamic/list/place-group/PlaceGroupDetail';
+import PlaceGroupSection from './dynamic/list/place-group/PlaceGroupSection';
 import './Sidebar.css';
 import { placeAPI } from '../../api/places';
 import { KakaoPlace, PlaceGroup, Place, KakaoPlaceMeta } from '../../../generated/dto';
@@ -73,10 +71,13 @@ const Sidebar: React.FC<SidebarProps> = ({
         page: page,
         size: pageSize
       });
+
+      console.log('Search results:', result);
       
-      if (result.success) {
+      if (result.data) {
         // KakaoPlaceListResult에서 places 배열 추출
         const places = result.data?.places || [];
+        console.log('Places:', places);
         setSearchResults(places);
         setSearchResultsMeta(result.data?.meta);
         setCurrentPage(page);
@@ -141,6 +142,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   // 페이지 변경 핸들러
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    handleSearch(searchQuery, page);
   };
 
   return (
@@ -173,7 +175,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               searchQuery=""
               results={searchResults}
               currentPage={currentPage}
-              totalPages={searchResultsMeta?.pageableCount || 1}
+              totalPages={searchResultsMeta?.totalCount ? Math.ceil(searchResultsMeta.totalCount / pageSize) : 1}
               onPageChange={handlePageChange}
               onItemClick={onPlaceClick}
               onPlaceFocus={onPlaceFocus}
@@ -188,6 +190,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
               onItemClick={handlePlaceGroupClick}
+              pageSize={pageSize}
             />
           )}
         </div>

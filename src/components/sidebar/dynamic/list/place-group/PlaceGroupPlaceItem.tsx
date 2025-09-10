@@ -1,6 +1,6 @@
 import React from 'react';
 import './PlaceGroupPlaceItem.css';
-import { Place } from '../../../../../generated/dto';
+import { Place } from '../../../../../../generated/dto';
 
 interface PlaceItemProps {
   place: Place;

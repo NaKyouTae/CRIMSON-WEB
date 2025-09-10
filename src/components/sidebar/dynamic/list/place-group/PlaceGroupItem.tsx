@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './PlaceGroupItem.css';
-import { PlaceGroup } from '../../../../../generated/dto';
+import { PlaceGroup } from '../../../../../../generated/dto';
 
 interface PlaceGroupItemProps {
   item: PlaceGroup;

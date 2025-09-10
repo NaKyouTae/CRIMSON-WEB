@@ -1,4 +1,4 @@
-import apiClient from './index';
+import apiClient from '../utils/apiClient';
 import { PlaceGroupCreateRequest, PlaceGroupCreateRequest_Status, PlaceGroupCreateRequest_Category, PlaceGroupListResult } from '../../generated/place_group/place_group';
 
 export const placeGroupsAPI = {
@@ -56,6 +56,7 @@ export const createPlaceGroupRequest = (
   }
 
   return {
+    icon: '📍',
     name,
     status,
     category: categoryEnum,

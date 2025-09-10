@@ -1,6 +1,6 @@
 import React from 'react';
 import KakaoPlaceItem from './KakaoPlaceItem';
-import { Pagination } from '../../../common';
+import Pagination from '../../../common/Pagination';
 import './SearchResults.css';
 import { KakaoPlace } from '../../../../../generated/dto';
 

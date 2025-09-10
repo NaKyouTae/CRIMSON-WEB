@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './MainPage.css'
-import { Sidebar, MapContainer, PlaceDetail } from '../../components'
+import Sidebar from '../../components/sidebar/Sidebar'
+import MapContainer from '../../components/MapContainer'
+import PlaceDetail from '../../components/sidebar/dynamic/place-detail/PlaceDetail'
 import PlaceGroupMapping from '../../components/sidebar/dynamic/mapping/PlaceGroupMapping'
 import { loginAPI } from '../../api/auth'
-import { tokenStorage } from '../../api'
+import { tokenStorage } from '../../utils/tokenManager'
 import { KakaoPlace, Place } from '../../../generated/dto';
 
 interface MainPageProps {
@@ -117,7 +119,7 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
           groupPlaces={groupPlaces}
         />
         {selectedPlace && (
-          <PlaceDetail place={selectedPlace} onClose={handleCloseDetail} />
+          <PlaceDetail placeId={selectedPlace.id} onClose={handleCloseDetail} />
         )}
         {showPlaceGroupMapping && selectedPlaceForMapping && (
           <PlaceGroupMapping 

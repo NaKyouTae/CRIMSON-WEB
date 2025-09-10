@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PlaceGroupItem from './PlaceGroupItem';
-import { Pagination } from '../../../common';
+import Pagination from '../../../../common/Pagination';
 import './PlaceGroupSection.css';
-import { placeGroupsAPI } from '../../../../api/placeGroups';
-import { PlaceGroup } from '../../../../../generated/dto';
+import { placeGroupsAPI } from '../../../../../api/placeGroups';
+import { PlaceGroup } from '../../../../../../generated/dto';
 
 interface PlaceGroupSectionProps {
   activeFilter: string;
@@ -11,6 +11,7 @@ interface PlaceGroupSectionProps {
   sortOrder: string;
   setSortOrder: (order: string) => void;
   onItemClick: (item: PlaceGroup) => void;
+  pageSize: number;
 }
 
 const PlaceGroupSection: React.FC<PlaceGroupSectionProps> = ({ 
@@ -18,7 +19,8 @@ const PlaceGroupSection: React.FC<PlaceGroupSectionProps> = ({
   setActiveFilter, 
   sortOrder, 
   setSortOrder, 
-  onItemClick 
+  onItemClick,
+  pageSize,
 }) => {
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const [placeGroups, setPlaceGroups] = useState<PlaceGroup[]>([]);
@@ -26,7 +28,6 @@ const PlaceGroupSection: React.FC<PlaceGroupSectionProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [pageSize] = useState<number>(10);
 
   const handleDropdownToggle = (itemId: string) => {
     setOpenDropdownId(openDropdownId === itemId ? null : itemId);

@@ -37,6 +37,7 @@
 /* 로그인 */
 .login-wrap {width: 100dvw; height: 100dvh; background-color: var(--gray100); display: flex; align-items: center; justify-content: center;}
 .login-box {width: 48rem; padding: 4rem; background-color: var(--white); border: 1px solid var(--gray200); border-radius: .8rem; display: flex; flex-flow: column; row-gap: 4rem; align-items: center;}
+.login-box > form {width: 100%;}
 .login-box > img {height: 4rem;}
 .login-box > p {text-align: center; font-size: 1.6rem;}
 
