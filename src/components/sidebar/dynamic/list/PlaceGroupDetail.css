@@ -118,14 +118,14 @@
 .action-buttons {
   display: flex;
   gap: 8px;
-  padding: 16px;
+  padding: 8px 16px;
   border-bottom: 1px solid #e8e8e8;
   background-color: #ffffff;
 }
 
 .action-button {
   flex: 1;
-  padding: 8px 12px;
+  padding: 4px 2px;
   background-color: #f8f9fa;
   border: 1px solid #e5e5e5;
   border-radius: 6px;
@@ -133,6 +133,7 @@
   font-weight: 500;
   color: #666666;
   cursor: pointer;
+  height: 32px;
   transition: all 0.2s ease;
 }
 
@@ -171,6 +172,8 @@
   color: #666666;
   cursor: pointer;
   transition: all 0.2s ease;
+  height: 24px;
+  width: 50px;
 }
 
 .filter-tag.active {
@@ -480,13 +483,6 @@
   font-weight: 500;
 }
 
-/* PlaceItem 리스트 스타일 */
-.place-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
 .loading-results {
   text-align: center;
   padding: 40px 20px;
@@ -496,4 +492,17 @@
 .loading-results p {
   margin: 0;
   font-size: 14px;
+}
+
+.place-group-results {
+  padding: 16px;
+  overflow-y: auto;
+  border: 3px solid #d92626;
+  height: 45%;
+}
+
+.place-group-results ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }

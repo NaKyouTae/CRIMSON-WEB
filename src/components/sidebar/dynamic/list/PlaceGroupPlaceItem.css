@@ -1,0 +1,177 @@
+/* PlaceGroupPlaceItem.css */
+.place-group-place-item {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  align-items: center;
+  /* 개발용 border - 파란색 */
+  border: 2px solid #0066ff;
+  margin-bottom: 0px;
+}
+
+.place-group-place-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.place-group-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.place-group-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.place-group-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  justify-content: center;
+  min-height: 60px;
+}
+
+.place-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.place-group-name-section {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.place-group-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin: 0;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.place-group-pin {
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.place-group-pin:hover {
+  transform: scale(1.1);
+}
+
+.place-group-category {
+  font-size: 11px;
+  color: #666666;
+  font-weight: 500;
+  line-height: 1.1;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.place-group-status {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  line-height: 1.1;
+}
+
+.place-group-status-text {
+  font-weight: 500;
+}
+
+.place-group-separator {
+  color: #cccccc;
+  margin: 0 3px;
+}
+
+.place-group-location {
+  color: #666666;
+}
+
+.place-group-meta {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  color: #999999;
+  line-height: 1.1;
+}
+
+.place-group-saved-count,
+.place-group-review-count {
+  color: #666666;
+}
+
+.place-group-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+  align-items: center;
+}
+
+.place-group-map-link {
+  font-size: 10px;
+  color: #999999;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  line-height: 1.1;
+}
+
+.place-group-map-link:hover {
+  color: #ff6b6b;
+}
+
+.place-group-add-btn {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 4px;
+  height: 20px;
+  width: 40px;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  line-height: 1.1;
+}
+
+.place-group-add-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+}
+
+.place-group-add-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* 포커싱 관련 스타일 */
+.place-group-item.focused {
+  border-color: #ff6b6b;
+  background-color: #fff5f5;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+}
+

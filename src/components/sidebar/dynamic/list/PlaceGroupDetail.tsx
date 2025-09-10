@@ -1,31 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import './PlaceGroupDetail.css';
-import { Place, placeAPI } from '../../../../api/places';
+import { placeAPI } from '../../../../api/places';
 import { showErrorMessage } from '../../../../utils/apiClient';
-import PlaceItem from '../search/PlaceItem';
-import { PlaceGroup } from '../../../../../generated/dto';
-
+import { PlaceGroup, Place } from '../../../../../generated/dto';
+import PlaceGroupPlaceItem from './PlaceGroupPlaceItem';
 
 interface PlaceGroupDetailProps {
   placeGroup: PlaceGroup;
   onBack: () => void;
+  onGroupPlacesChange?: (places: Place[]) => void;
+  onPlaceFocus?: (index: number) => void;
 }
 
-const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack }) => {
+const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack, onGroupPlacesChange, onPlaceFocus }) => {
   const [activeButton, setActiveButton] = useState<string>('share');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<Place[]>([]);
   const [groupPlaces, setGroupPlaces] = useState<Place[]>([]);
-  const [isSearching, setIsSearching] = useState<boolean>(false);
   const [isLoadingPlaces, setIsLoadingPlaces] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [pageSize] = useState<number>(20);
+  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
+  const [focusedPlaceIndex, setFocusedPlaceIndex] = useState<number>(-1);
+
+  // 카테고리 목록 생성
+  const getCategories = (): string[] => {
+    const categories = groupPlaces
+      .map(place => place.categoryName)
+      .filter((category, index, self) => self.indexOf(category) === index && category)
+      .sort();
+    return ['전체', ...categories];
+  };
+
+  // 필터링된 장소 목록
+  const getFilteredPlaces = (): Place[] => {
+    if (selectedCategory === '전체') {
+      return groupPlaces;
+    }
+    return groupPlaces.filter(place => place.categoryName === selectedCategory);
+  };
+
+  // 카테고리 필터 핸들러
+  const handleCategoryFilter = (category: string) => {
+    setSelectedCategory(category);
+  };
+
+  // PlaceGroupPlaceItem 클릭 핸들러
+  const handlePlaceItemClick = (place: Place, index: number) => {
+    console.log('PlaceGroupPlaceItem 클릭:', place, index);
+    setFocusedPlaceIndex(index);
+    // 부모 컴포넌트에 포커스 이벤트 전달 (searchResults.length + index로 전달)
+    onPlaceFocus?.(index);
+  };
+
 
   // 그룹의 장소들을 로드하는 useEffect
   useEffect(() => {
     loadGroupPlaces();
   }, [placeGroup.id]);
+
+  // groupPlaces가 변경될 때마다 부모에게 전달
+  useEffect(() => {
+    onGroupPlacesChange?.(groupPlaces);
+  }, [groupPlaces, onGroupPlacesChange]);
 
   // 그룹의 장소들을 로드하는 함수
   const loadGroupPlaces = async () => {
@@ -38,18 +71,7 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack 
       
       if (result.success && result.data) {
         // API에서 받은 데이터를 Place 타입에 맞게 변환
-        const resultPlaces: Place[] = result.data.places.map(place => ({
-          id: place.id,
-          name: place.name,
-          addressName: place.address, // Place 타입의 addressName
-          address: place.address, // Place 타입의 address
-          categoryName: place.category, // Place 타입의 categoryName
-          category: place.category, // Place 타입의 category
-          phone: place.phone || '',
-          x: place.coordinates?.lng?.toString() || '0',
-          y: place.coordinates?.lat?.toString() || '0',
-          url: place.website || '',
-        }));
+        const resultPlaces: Place[] = result.data.places;
         
         setGroupPlaces(resultPlaces);
       } else {
@@ -69,74 +91,6 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack 
   const handleButtonClick = async (buttonType: string) => {
     setActiveButton(buttonType);
   };
-
-  // 검색 기능
-  const handleSearch = async (query: string, page: number = 1) => {
-    if (!query.trim()) {
-      setSearchResults([]);
-      setCurrentPage(1);
-      setTotalPages(1);
-      return;
-    }
-
-    setIsSearching(true);
-    try {
-      const result = await placeAPI.searchPlacesByKeyword({
-        query: query.trim(),
-        page: page,
-        size: pageSize
-      });
-      
-      if (result.success) {
-        // PlaceListResult에서 places 배열 추출
-        const places = result.data?.places || [];
-        setSearchResults(places);
-        setCurrentPage(page);
-        // API 응답에서 총 페이지 수를 가져오거나 계산
-        // 실제 API 응답 구조에 따라 조정 필요
-        setTotalPages(Math.ceil(places.length / pageSize));
-      } else {
-        showErrorMessage(result.error || '검색 중 오류가 발생했습니다.');
-        setSearchResults([]);
-        setCurrentPage(1);
-        setTotalPages(1);
-      }
-    } catch (error: any) {
-      showErrorMessage(`검색 중 오류가 발생했습니다: ${error.message}`);
-      setSearchResults([]);
-      setCurrentPage(1);
-      setTotalPages(1);
-    } finally {
-      setIsSearching(false);
-    }
-  };
-
-  // 검색 입력 핸들러
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-  };
-
-  // 엔터키 검색 핸들러
-  const handleSearchKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSearch(searchQuery, 1);
-    }
-  };
-
-  // 돋보기 아이콘 클릭 핸들러
-  const handleSearchClick = () => {
-    handleSearch(searchQuery, 1);
-  };
-
-  // 페이지 변경 핸들러
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      handleSearch(searchQuery, page);
-    }
-  };
-
 
   return (
     <div className="place-group-detail">
@@ -207,25 +161,26 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack 
             type="text"
             placeholder="원하는 장소를 검색해 보세요."
             className="search-input"
-            value={searchQuery}
-            onChange={handleSearchInputChange}
-            onKeyPress={handleSearchKeyPress}
+            disabled
           />
           <button 
             className="search-button"
-            onClick={handleSearchClick}
-            disabled={isSearching}
+            disabled
           >
             <img src="/img/ico/ic-search.svg" alt="검색" />
           </button>
-          {isSearching && <div className="search-loading">검색 중...</div>}
         </div>
         <div className="filter-sort-container">
           <div className="category-filters">
-            <button className="filter-tag active">카페</button>
-            <button className="filter-tag">요리주점</button>
-            <button className="filter-tag">문화</button>
-            <button className="filter-tag">음식점</button>
+            {getCategories().map((category) => (
+              <button
+                key={category}
+                className={`filter-tag ${selectedCategory === category ? 'active' : ''}`}
+                onClick={() => handleCategoryFilter(category)}
+              >
+                {category}
+              </button>
+            ))}
           </div>
           <div className="sort-section">
             <select className="sort-select">
@@ -237,26 +192,20 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack 
         </div>
       </div>
 
-      <div className="search-results">
+      <div className="place-group-results">
         {isLoadingPlaces ? (
           <div className="loading-results">
             <p>장소를 불러오는 중...</p>
           </div>
-        ) : groupPlaces.length > 0 ? (
+        ) : getFilteredPlaces().length > 0 ? (
           <ul className="place-list">
-            {groupPlaces.map((place, index) => (
-              <PlaceItem
+            {getFilteredPlaces().map((place, index) => (
+              <PlaceGroupPlaceItem
                 key={place.id || index}
                 place={place}
-                onItemClick={(place) => {
-                  // 장소 클릭 시 상세보기 (필요시 구현)
-                  console.log('장소 클릭:', place);
-                }}
-                onAddClick={(place) => {
-                  // 장소를 그룹에서 제거 (필요시 구현)
-                  console.log('장소 제거:', place);
-                }}
-                isFocused={false}
+                index={index}
+                onItemClick={handlePlaceItemClick}
+                isFocused={focusedPlaceIndex === index}
               />
             ))}
           </ul>
@@ -266,31 +215,6 @@ const PlaceGroupDetail: React.FC<PlaceGroupDetailProps> = ({ placeGroup, onBack 
           </div>
         )}
       </div>
-
-      {/* 페이지네이션 */}
-      {searchResults.length > 0 && totalPages > 1 && (
-        <div className="pagination">
-          <button 
-            className="pagination-button"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            <img src="/img/ico/ic-pagination-prev.svg" alt="이전" />
-          </button>
-          
-          <div className="pagination-info">
-            <span>{currentPage} / {totalPages}</span>
-          </div>
-          
-          <button 
-            className="pagination-button"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            <img src="/img/ico/ic-pagination-next.svg" alt="다음" />
-          </button>
-        </div>
-      )}
     </div>
   );
 };

@@ -1,28 +1,7 @@
 import { api, ApiResponse } from './index';
 import { KakaoPlaceListResult } from '../../generated/place/kako_place';
-import { PlaceCreateRequest } from '../../generated/place/place';
-
-// Place 관련 타입 정의
-export interface Place {
-  id: string;
-  name: string;
-  address: string;
-  category: string;
-  image?: string;
-  isOpen?: boolean;
-  savedCount?: number;
-  reviewCount?: number;
-  rating?: number;
-  description?: string;
-  phone?: string;
-  website?: string;
-  coordinates?: {
-    lat: number;
-    lng: number;
-  };
-  createdAt?: string;
-  updatedAt?: string;
-}
+import { PlaceCreateRequest, PlaceListResult } from '../../generated/place/place';
+import { Place } from '../../generated/dto';
 
 export interface PlaceCreateData {
   name: string;
@@ -169,7 +148,7 @@ export const placeAPI = {
   },
 
   // 그룹 ID로 장소 목록 조회
-  getPlacesByGroupId: async (placeGroupId: string): Promise<ApiResponse<Place[]>> => {
+  getPlacesByGroupId: async (placeGroupId: string): Promise<ApiResponse<PlaceListResult>> => {
     return await api.get(`/places/${placeGroupId}`);
   },
 };

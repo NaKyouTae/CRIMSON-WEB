@@ -10,7 +10,7 @@ import {
 import PlaceGroupDetail from './dynamic/list/PlaceGroupDetail';
 import './Sidebar.css';
 import { placeAPI } from '../../api/places';
-import { KakaoPlace, PlaceGroup } from '../../../generated/dto';
+import { KakaoPlace, PlaceGroup, Place } from '../../../generated/dto';
 
 
 interface SidebarProps {
@@ -26,6 +26,7 @@ interface SidebarProps {
   onResetMap?: () => void;
   onAddClick?: (place: KakaoPlace) => void;
   focusedPlaceIndex?: number;
+  onGroupPlacesChange?: (places: Place[]) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
@@ -40,7 +41,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   onPlaceFocus,
   onResetMap,
   onAddClick,
-  focusedPlaceIndex
+  focusedPlaceIndex,
+  onGroupPlacesChange
 }) => {
   const [showCreateForm, setShowCreateForm] = useState<boolean>(false);
   const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
@@ -125,7 +127,9 @@ const Sidebar: React.FC<SidebarProps> = ({
       ) : showPlaceGroupDetail ? (
         <PlaceGroupDetail 
           placeGroup={selectedPlaceGroup!} 
-          onBack={handleBackFromPlaceGroupDetail} 
+          onBack={handleBackFromPlaceGroupDetail}
+          onGroupPlacesChange={onGroupPlacesChange}
+          onPlaceFocus={onPlaceFocus}
         />
       ) : (
         <div className='side-wrap'>

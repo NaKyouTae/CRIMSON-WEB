@@ -5,7 +5,7 @@ import { Sidebar, MapContainer, PlaceDetail } from '../../components'
 import PlaceGroupMapping from '../../components/sidebar/dynamic/mapping/PlaceGroupMapping'
 import { loginAPI } from '../../api/auth'
 import { tokenStorage } from '../../api'
-import { KakaoPlace } from '../../../generated/dto';
+import { KakaoPlace, Place } from '../../../generated/dto';
 
 interface MainPageProps {
   onLogout?: () => void;
@@ -22,6 +22,7 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
   const [resetMapTrigger, setResetMapTrigger] = useState<number>(0)
   const [showPlaceGroupMapping, setShowPlaceGroupMapping] = useState<boolean>(false)
   const [selectedPlaceForMapping, setSelectedPlaceForMapping] = useState<KakaoPlace | null>(null)
+  const [groupPlaces, setGroupPlaces] = useState<Place[]>([])
 
   const handlePlaceClick = (place: KakaoPlace) => {
     setSelectedPlace(place)
@@ -48,6 +49,10 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
   const handleClosePlaceGroupMapping = () => {
     setShowPlaceGroupMapping(false)
     setSelectedPlaceForMapping(null)
+  }
+
+  const handleGroupPlacesChange = (places: Place[]) => {
+    setGroupPlaces(places)
   }
 
   const handleMappingSuccess = () => {
@@ -93,11 +98,13 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
           onResetMap={handleResetMap}
           onAddClick={handleAddClick}
           focusedPlaceIndex={focusedPlaceIndex}
+          onGroupPlacesChange={handleGroupPlacesChange}
         />
         <MapContainer 
           searchResults={searchResults} 
           focusedPlaceIndex={focusedPlaceIndex}
           resetMapTrigger={resetMapTrigger}
+          groupPlaces={groupPlaces}
         />
         {selectedPlace && (
           <PlaceDetail place={selectedPlace} onClose={handleCloseDetail} />

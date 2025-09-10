@@ -9,6 +9,15 @@ import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 export const protobufPackage = "com.spectrum.crimson.proto";
 
+export interface Member {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  createdAt: number;
+  updatedAt: number;
+}
+
 export interface Token {
   accessToken: string;
   refreshToken: string;
@@ -116,9 +125,150 @@ export interface Place {
   lat: string;
   lng: string;
   url: string;
+  member?: Member | undefined;
   createdAt: number;
   updatedAt: number;
 }
+
+function createBaseMember(): Member {
+  return { id: "", name: "", email: "", phone: "", createdAt: 0, updatedAt: 0 };
+}
+
+export const Member: MessageFns<Member> = {
+  encode(message: Member, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    if (message.email !== "") {
+      writer.uint32(26).string(message.email);
+    }
+    if (message.phone !== "") {
+      writer.uint32(34).string(message.phone);
+    }
+    if (message.createdAt !== 0) {
+      writer.uint32(784).uint64(message.createdAt);
+    }
+    if (message.updatedAt !== 0) {
+      writer.uint32(792).uint64(message.updatedAt);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): Member {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    const end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMember();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.email = reader.string();
+          continue;
+        }
+        case 4: {
+          if (tag !== 34) {
+            break;
+          }
+
+          message.phone = reader.string();
+          continue;
+        }
+        case 98: {
+          if (tag !== 784) {
+            break;
+          }
+
+          message.createdAt = longToNumber(reader.uint64());
+          continue;
+        }
+        case 99: {
+          if (tag !== 792) {
+            break;
+          }
+
+          message.updatedAt = longToNumber(reader.uint64());
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Member {
+    return {
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      email: isSet(object.email) ? globalThis.String(object.email) : "",
+      phone: isSet(object.phone) ? globalThis.String(object.phone) : "",
+      createdAt: isSet(object.createdAt) ? globalThis.Number(object.createdAt) : 0,
+      updatedAt: isSet(object.updatedAt) ? globalThis.Number(object.updatedAt) : 0,
+    };
+  },
+
+  toJSON(message: Member): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.email !== "") {
+      obj.email = message.email;
+    }
+    if (message.phone !== "") {
+      obj.phone = message.phone;
+    }
+    if (message.createdAt !== 0) {
+      obj.createdAt = Math.round(message.createdAt);
+    }
+    if (message.updatedAt !== 0) {
+      obj.updatedAt = Math.round(message.updatedAt);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Member>, I>>(base?: I): Member {
+    return Member.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Member>, I>>(object: I): Member {
+    const message = createBaseMember();
+    message.id = object.id ?? "";
+    message.name = object.name ?? "";
+    message.email = object.email ?? "";
+    message.phone = object.phone ?? "";
+    message.createdAt = object.createdAt ?? 0;
+    message.updatedAt = object.updatedAt ?? 0;
+    return message;
+  },
+};
 
 function createBaseToken(): Token {
   return { accessToken: "", refreshToken: "" };
@@ -627,6 +777,7 @@ function createBasePlace(): Place {
     lat: "",
     lng: "",
     url: "",
+    member: undefined,
     createdAt: 0,
     updatedAt: 0,
   };
@@ -660,6 +811,9 @@ export const Place: MessageFns<Place> = {
     }
     if (message.url !== "") {
       writer.uint32(74).string(message.url);
+    }
+    if (message.member !== undefined) {
+      Member.encode(message.member, writer.uint32(402).fork()).join();
     }
     if (message.createdAt !== 0) {
       writer.uint32(784).uint64(message.createdAt);
@@ -749,6 +903,14 @@ export const Place: MessageFns<Place> = {
           message.url = reader.string();
           continue;
         }
+        case 50: {
+          if (tag !== 402) {
+            break;
+          }
+
+          message.member = Member.decode(reader, reader.uint32());
+          continue;
+        }
         case 98: {
           if (tag !== 784) {
             break;
@@ -785,6 +947,7 @@ export const Place: MessageFns<Place> = {
       lat: isSet(object.lat) ? globalThis.String(object.lat) : "",
       lng: isSet(object.lng) ? globalThis.String(object.lng) : "",
       url: isSet(object.url) ? globalThis.String(object.url) : "",
+      member: isSet(object.member) ? Member.fromJSON(object.member) : undefined,
       createdAt: isSet(object.createdAt) ? globalThis.Number(object.createdAt) : 0,
       updatedAt: isSet(object.updatedAt) ? globalThis.Number(object.updatedAt) : 0,
     };
@@ -819,6 +982,9 @@ export const Place: MessageFns<Place> = {
     if (message.url !== "") {
       obj.url = message.url;
     }
+    if (message.member !== undefined) {
+      obj.member = Member.toJSON(message.member);
+    }
     if (message.createdAt !== 0) {
       obj.createdAt = Math.round(message.createdAt);
     }
@@ -842,6 +1008,9 @@ export const Place: MessageFns<Place> = {
     message.lat = object.lat ?? "";
     message.lng = object.lng ?? "";
     message.url = object.url ?? "";
+    message.member = (object.member !== undefined && object.member !== null)
+      ? Member.fromPartial(object.member)
+      : undefined;
     message.createdAt = object.createdAt ?? 0;
     message.updatedAt = object.updatedAt ?? 0;
     return message;

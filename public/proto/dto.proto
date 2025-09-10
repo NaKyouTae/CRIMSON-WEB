@@ -6,6 +6,16 @@ option java_multiple_files = true;
 option java_package = "com.spectrum.crimson.proto";
 option java_outer_classname = "DtoProto";
 
+message Member {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string phone = 4;
+
+  uint64 created_at = 98;
+  uint64 updated_at = 99;
+}
+
 message Token {
   string access_token = 1;
   string refresh_token = 2;
@@ -58,6 +68,8 @@ message Place {
   string lat = 7;
   string lng = 8;
   string url = 9;
+
+  Member member = 50;
 
   uint64 created_at = 98;
   uint64 updated_at = 99;
