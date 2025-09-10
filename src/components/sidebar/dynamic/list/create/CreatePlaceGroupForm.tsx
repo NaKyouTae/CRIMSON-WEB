@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './CreatePlaceGroupForm.css';
-import { placeGroupsAPI, createPlaceGroupRequest } from '../../../../api/placeGroups';
+import { placeGroupsAPI, createPlaceGroupRequest } from '../../../../../api/placeGroups';
 
 // 타입 정의
 interface Member {

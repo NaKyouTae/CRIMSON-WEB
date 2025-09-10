@@ -1,0 +1,4 @@
+**/backup/**
+
+# 컴포넌트 파일
+src/components/sidebar/dynamic/list/place-detail/PlaceDetail.tsx

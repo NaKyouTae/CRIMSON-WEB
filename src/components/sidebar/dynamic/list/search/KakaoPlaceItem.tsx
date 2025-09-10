@@ -1,6 +1,6 @@
 import React from 'react';
 import './KakaoPlaceItem.css';
-import { KakaoPlace } from '../../../../../generated/dto';
+import { KakaoPlace } from '../../../../../../generated/dto';
 
 interface PlaceItemProps {
   place: KakaoPlace;

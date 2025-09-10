@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './PlaceGroupMapping.css';
-import { KakaoPlace, PlaceGroup } from '../../../../../generated/dto';
-import { PlaceCreateRequest } from '../../../../../generated/place/place';
-import { placeGroupsAPI } from '../../../../api/placeGroups';
-import { placeAPI } from '../../../../api/places';
+import { KakaoPlace, PlaceGroup } from '../../../../../../generated/dto';
+import { PlaceCreateRequest } from '../../../../../../generated/place/place';
+import { placeGroupsAPI } from '../../../../../api/placeGroups';
+import { placeAPI } from '../../../../../api/places';
 
 interface PlaceGroupMappingProps {
   place: KakaoPlace;

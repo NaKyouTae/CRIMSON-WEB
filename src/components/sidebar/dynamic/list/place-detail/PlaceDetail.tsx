@@ -1,3 +1,5 @@
+// AI에서 제외
+
 import React from 'react';
 import './PlaceDetail.css';
 
@@ -7,7 +9,6 @@ interface PlaceDetailProps {
 }
 
 const PlaceDetail: React.FC<PlaceDetailProps> = ({ placeId, onClose }) => {
-  // 카카오 플레이스 iframe 컴포넌트
   const KakaoPlaceIframe = () => (
     <div className="kakao-place-container">
       <iframe

@@ -3,7 +3,7 @@ import './PlaceGroupDetail.css';
 import { placeAPI } from '../../../../../api/places';
 import { PlaceGroup, Place } from '../../../../../../generated/dto';
 import PlaceGroupPlaceItem from './PlaceGroupPlaceItem';
-import PlaceDetail from '../../place-detail/PlaceDetail';
+import PlaceDetail from '../place-detail/PlaceDetail';
 
 interface PlaceGroupDetailProps {
   placeGroup: PlaceGroup;

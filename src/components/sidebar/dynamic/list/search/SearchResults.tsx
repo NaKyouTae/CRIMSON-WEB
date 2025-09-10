@@ -1,8 +1,8 @@
 import React from 'react';
 import KakaoPlaceItem from './KakaoPlaceItem';
-import Pagination from '../../../common/Pagination';
+import Pagination from '../../../../common/Pagination';
 import './SearchResults.css';
-import { KakaoPlace } from '../../../../../generated/dto';
+import { KakaoPlace } from '../../../../../../generated/dto';
 
 interface SearchResultsProps {
   searchQuery: string;

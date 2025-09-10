@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import './MainPage.css'
 import Sidebar from '../../components/sidebar/Sidebar'
 import MapContainer from '../../components/MapContainer'
-import PlaceDetail from '../../components/sidebar/dynamic/place-detail/PlaceDetail'
-import PlaceGroupMapping from '../../components/sidebar/dynamic/mapping/PlaceGroupMapping'
+import PlaceDetail from '../../components/sidebar/dynamic/list/place-detail/PlaceDetail'
+import PlaceGroupMapping from '../../components/sidebar/dynamic/list/mapping/PlaceGroupMapping'
 import { loginAPI } from '../../api/auth'
 import { tokenStorage } from '../../utils/tokenManager'
 import { KakaoPlace, Place } from '../../../generated/dto';
@@ -111,6 +111,7 @@ const MainPage: React.FC<MainPageProps> = ({ onLogout }) => {
           focusedPlaceIndex={focusedPlaceIndex}
           onGroupPlacesChange={handleGroupPlacesChange}
           onFocusAllMarkers={handleFocusAllMarkers}
+          onClosePlaceDetail={handleCloseDetail}
         />
         <MapContainer 
           searchResults={searchResults} 

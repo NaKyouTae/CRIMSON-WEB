@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import TabNavigation from './static/TabNavigation';
 import SearchSection from './static/SearchSection';
 import CreateSection from './static/CreateSection';
-import SearchResults from './dynamic/search/SearchResults';
-import CreatePlaceGroupForm from './dynamic/create/CreatePlaceGroupForm';
+import SearchResults from './dynamic/list/search/SearchResults';
+import CreatePlaceGroupForm from './dynamic/list/create/CreatePlaceGroupForm';
 import PlaceGroupDetail from './dynamic/list/place-group/PlaceGroupDetail';
 import PlaceGroupSection from './dynamic/list/place-group/PlaceGroupSection';
 import './Sidebar.css';
@@ -26,6 +26,7 @@ interface SidebarProps {
   focusedPlaceIndex?: number;
   onGroupPlacesChange?: (places: Place[]) => void;
   onFocusAllMarkers?: () => void;
+  onClosePlaceDetail?: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
@@ -42,7 +43,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   onAddClick,
   focusedPlaceIndex,
   onGroupPlacesChange,
-  onFocusAllMarkers
+  onFocusAllMarkers,
+  onClosePlaceDetail
 }) => {
   const [showCreateForm, setShowCreateForm] = useState<boolean>(false);
   const [showSearchResults, setShowSearchResults] = useState<boolean>(false);
@@ -128,6 +130,11 @@ const Sidebar: React.FC<SidebarProps> = ({
     setSearchResults([]);
     setShowSearchResults(false);
     setCurrentPage(1);
+    
+    // PlaceDetail 닫기
+    if (onClosePlaceDetail) {
+      onClosePlaceDetail();
+    }
     
     // 부모 컴포넌트에 빈 결과 전달
     if (onSearchResults) {
